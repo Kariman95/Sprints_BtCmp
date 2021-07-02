@@ -10,17 +10,17 @@
 #include <stdio.h>
 #include "XO_header.h"
 
-char player='X';
-char grid[3][3]= {'1','2','3','4','5','6','7','8','9'};
+uint8_t player='X';
+uint8_t grid[3][3]= {'1','2','3','4','5','6','7','8','9'};
 
 /*
 * Function to print the playground of the game
 */
 void printGrid(void)
 {
-    char i,j;
+    uint8_t i,j;
 
-    system("cls");
+    system("cls");  //to remove everything on console
 
     for(i=0; i<3; i++)
     {
@@ -32,9 +32,9 @@ void printGrid(void)
     }
 }
 
-char play(void)
+uint8_t play(void)
 {
-    char position;
+    uint8_t position;
     fflush(stdin);
     printf("Player(%c), choose a position less than 10: ",player);
     scanf("%c",&position);
@@ -48,7 +48,7 @@ char play(void)
 enum E_STATUS SavePlayerPosition(char position)
 {
     enum E_STATUS status = E_OK;
-    char i,j;
+    uint8_t i,j;
 
     if(position > 9)
     {
@@ -75,13 +75,13 @@ enum E_STATUS SavePlayerPosition(char position)
 /*
 *Function to check who is the winner and returns it
 */
-char winner(void)
+uint8_t winner(void)
 {
-    char X_counter=0;
-    char O_counter=0;
-    char i;
-    char j;
-    char counter=0;
+    uint8_t X_counter=0;
+    uint8_t O_counter=0;
+    uint8_t i;
+    uint8_t j;
+    uint8_t counter=0;
     //check rows
     for(i=0; i<3; i++)
     {
