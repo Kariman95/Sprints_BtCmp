@@ -4,8 +4,9 @@
 
 int main()
 {
-    char check,pos;
-    while(winner()=='n')
+    uint8_t check,pos;
+    
+    while(winner()=='n')    //while game not finished
     {
         printGrid();
         pos=play();
