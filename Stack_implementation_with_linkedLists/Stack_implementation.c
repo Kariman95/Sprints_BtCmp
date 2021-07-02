@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * File: Stack_implementation.h                                                                    *
+ * File: Stack_implementation.c                                                                    *
  * Author: Kariman Karam                                                                           *
  * Date: 2 July 2021                                                                               *
  * Version: 1                                                                                      *
