@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "XO_header.h"
-/*
+
 int main()
 {
     char check,pos;
@@ -18,4 +18,4 @@ int main()
     else                    printf("No winner");
     return 0;
 }
-*/
+
