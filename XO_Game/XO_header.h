@@ -7,7 +7,7 @@
  **************************************************/
 
 #ifndef XO_H_
-#define Xo_H_
+#define XO_H_
 
 #include "Data_Types.h"
 
