@@ -11,8 +11,8 @@
 
 #include "Data_Types.h"
 
-extern char player;
-extern char grid[3][3];
+extern uint8_t player;
+extern uint8_t grid[3][3];
 
 enum E_STATUS {E_ERROR, E_OK, E_TAKEN, E_INVALID};
 
