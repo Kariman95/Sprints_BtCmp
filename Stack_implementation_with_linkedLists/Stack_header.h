@@ -11,7 +11,7 @@
 
 #include "Data_Types.h"
 
-#define MAXSTACKSIZE    1000
+#define MAXSTACKSIZE    100
 
 enum E_STATUS {E_ERROR, E_OK, E_FULL_STACK, E_EMPTY_STACK};
 
@@ -51,5 +51,15 @@ enum E_STATUS    pull(Stack* st, uint8_t* u8_data);
  * this function displays the stack *
  ************************************/
 void            printStack(Stack* st);
+
+/********************************************
+ * this function to check if stack is empty *
+ ********************************************/
+enum E_STATUS  isEmpty(Stack* st);
+
+/********************************************
+ * this function to check if stack is Full *
+ ********************************************/
+enum E_STATUS  isFull(Stack* st);
 
 #endif // HEADER_H_
