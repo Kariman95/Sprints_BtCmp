@@ -17,8 +17,8 @@ extern char grid[3][3];
 enum E_STATUS {E_ERROR, E_OK, E_TAKEN, E_INVALID};
 
 void printGrid(void);
-char play(void);
+uint8_t play(void);
 enum E_STATUS SavePlayerPosition(char position);
-char winner(void);
+uint8_t winner(void);
 
 #endif
