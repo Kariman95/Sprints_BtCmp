@@ -1,5 +1,5 @@
 /*******************************************************************************
- * File: Searching_algorithm_implementation.h
+ * File: Test_Cases.c
  * Author: Kariman Karam
  * Date: 2 July 2021
  * Version: 1
