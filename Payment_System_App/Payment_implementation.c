@@ -13,16 +13,16 @@
 
 
 //Server Database
-ST_accountBalance_t ST_accountBalance[20] = {100.00, "123456789",
+ST_accountBalance_t ST_accountBalance[20] = {100.00 , "123456789",
                                              6000.00, "234567891",
                                              3250.25, "567891234",
                                              1500.12, "456789123",
-                                             500.00, "258649173",
+                                             500.00 , "258649173",
                                              2100.00, "654823719",
-                                             0.00, "971362485",
-                                             1.00, "793148625",
-                                             10.12, "123123456",
-                                             0.55, "456789321"
+                                             0.00   , "971362485",
+                                             1.00   , "793148625",
+                                             10.12  , "123123456",
+                                             0.55   , "456789321"
                                             };
 
 /***********************************************
@@ -167,7 +167,11 @@ uint8_t linearSearchForCardID(void)
     {
         //printf("in for inside search\n");
         if (strcmp(ST_accountBalance[i].primaryAccountNumber, ST_cardData.primaryAccountNumber) == 0)
+        {
+            //printf("\n***id=%d***\n",i);
             return i;
+        }
+
     }
 
     return -1;
@@ -178,16 +182,18 @@ uint8_t linearSearchForCardID(void)
  *************************************************************/
 EN_transStat_t    checkIfPANExists(void)
 {
-    //printf("in PAN\n");
-    if(linearSearchForCardID() >= 0)
+    uint8_t cardID = linearSearchForCardID();
+
+    //printf("cardID=%d   in PAN\n",cardID);
+    if(cardID == 255)
     {
         //printf("in if inside PAN\n");
-        return APPROVED;
+        return DECLINED;
     }
     else
     {
         //printf("in else inside PAN\n");
-        return DECLINED;
+        return APPROVED;
     }
 }
 
@@ -196,7 +202,23 @@ EN_transStat_t    checkIfAcceptedAmountByServer(void)
 {
     uint8_t cardID = linearSearchForCardID();
 
-    if((double)ST_accountBalance[cardID].balance >= ST_terminalData.transAmount)
+    if((double)ST_accountBalance[cardID].balance >= (double)ST_terminalData.transAmount)
+    {
+        return APPROVED;
+    }
+    else
+    {
+        return DECLINED;
+    }
+}
+
+
+EN_transStat_t  checkTransactionStatus(void)
+{
+    if(   checkIfAcceptedAmountByServer()   == APPROVED
+            && checkIfAcceptedAmountByTerminal() == APPROVED
+            && checkIfExpired()                  == APPROVED
+            && checkIfPANExists()                == APPROVED)
     {
         return APPROVED;
     }
