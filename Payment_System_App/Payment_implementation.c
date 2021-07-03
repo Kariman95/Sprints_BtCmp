@@ -3,7 +3,7 @@
  * Author: Kariman Karam
  * Date: 3 July 2021
  * Version: 1
- * Description: Typedefs for standard data types
+ * Description: Declarations of functions for Payment System App
  **************************************************/
 
 #include <stdio.h>
