@@ -86,7 +86,9 @@ EN_transStat_t    checkIfAcceptedAmountByTerminal(void);
 EN_STATUS_t       sendTransDataToServer(void);
 EN_transStat_t    checkIfPANExists(void);
 EN_transStat_t    checkIfAcceptedAmountByServer(void);
-uint8_t linearSearchForCardID(void);
+uint8_t           linearSearchForCardID(void);
 void              printCardData(void);
+void              printTerminalData(void);
+EN_transStat_t    checkTransactionStatus(void);
 
 #endif // PAYMENT_H_
