@@ -1,129 +1,63 @@
-/***************************************************
- * File: Test_Cases.c
+/*******************************************************************************
+ * File: Searching_algorithm_implementation.h
  * Author: Kariman Karam
- * Date: 3 July 2021
+ * Date: 2 July 2021
  * Version: 1
- * Description: Test Cases for Payment App
- **************************************************/
+ * Description: Test Cases to test the functionality of binary search algorithm
+ *******************************************************************************/
 
-
-#include <stdio.h>
 #include <stdlib.h>
-#include "Payment_header.h"
+#include "Searching_algorithm_header.h"
 
-void TestApprovedPayment(void)
+void Test_Sorted_Array(void)
 {
-    uint8_t c;
-    do
-    {
-        readCardData();
-        readTerminalData();
-
-        if(checkTransactionStatus() == APPROVED)
-        {
-            printf("Accepted Transaction\n Test Case 1 Passed\n");
-        }
-        else
-        {
-            printf("Declined Transaction\n Test Case 1 Failed\n");
-        }
-        printf("\nDo You Want to continue(y/n)?\n");
-        fflush(stdin);
-        scanf("%c",&c);
-    }
-    while(c == 'y');
+    uint32_t arr[5] = {0,1,2,3,4};
+    if(isSorted(arr, 5) == E_SORTED)          printf("Passed TC1\n");
+    else if(isSorted(arr, 5) == E_NotSORTED)  printf("Failed TC1\n");
 }
 
-void TestDeclinedForExpiredCard(void)
+void Test_NotSorted_Array(void)
 {
-    uint8_t c;
-    do
-    {
-        readCardData();
-        readTerminalData();
-
-        if(checkIfExpired() == DECLINED)
-        {
-            printf("Declined Transaction\n Test Case 2 Passed\n");
-        }
-        else
-        {
-            printf("Accepted Transaction\n Test Case 2 Failed\n");
-        }
-        printf("\nDo You Want to continue(y/n)?\n");
-        fflush(stdin);
-        scanf("%c",&c);
-    }
-    while(c == 'y');
+    uint32_t arr[5] = {10,2,0,50,9};
+    if(isSorted(arr, 5) == E_NotSORTED)       printf("Passed TC2\n");
+    else if(isSorted(arr, 5) == E_SORTED)     printf("Failed TC2\n");
 }
 
-void TestForDeclinedAmountByServer(void)
+void Test_Selection_Sort_For_Sorted_Array(void)
 {
-    uint8_t c;
-    do
-    {
-        readCardData();
-        readTerminalData();
-
-        if(checkIfAcceptedAmountByServer() == DECLINED)
-        {
-            printf("Declined Transaction\n Test Case 3 Passed\n");
-        }
-        else
-        {
-            printf("Accepted Transaction\n Test Case 3 Failed\n");
-        }
-        printf("\nDo You Want to continue(y/n)?\n");
-        fflush(stdin);
-        scanf("%c",&c);
-    }
-    while(c == 'y');
+    uint32_t arr[5] = {0,1,2,3,4};
+    if(selectionSort(arr, 5) == E_ERROR)         printf("Passed TC3\n");
+    else if(selectionSort(arr, 5) == E_OK)       printf("Failed TC3\n");
 }
 
-void TestForDeclinedAmountByTerminal(void)
+void Test_Selection_Sort_For_NotSorted_Array(void)
 {
-    uint8_t c;
-    do
-    {
-        readCardData();
-        readTerminalData();
-
-        if(checkIfAcceptedAmountByTerminal() == DECLINED)
-        {
-            printf("Declined Transaction\n Test Case 4 Passed\n");
-        }
-        else
-        {
-            printf("Accepted Transaction\n Test Case 4 Failed\n");
-        }
-        printf("\nDo You Want to continue(y/n)?\n");
-        fflush(stdin);
-        scanf("%c",&c);
-    }
-    while(c == 'y');
+    uint32_t arr[5] = {10,2,0,50,9};
+    if(selectionSort(arr, 5) == E_OK)            printf("Passed TC4\n");
+    else if(selectionSort(arr, 5) == E_ERROR)    printf("Failed TC4\n");
 }
 
-void TestFor_PAN_NotExist(void)
+void Test_Binary_Search_For_Existing_Element(void)
 {
-    readCardData();
-    readTerminalData();
+    uint32_t arr[5] = {10,2,0,50,9};
+    if(binarySearch(arr, 5, 50) < 255)           printf("Passed TC5\n");
+    else if(binarySearch(arr, 5, 50) == -1)      printf("Failed TC5\n");
+}
 
-    if(checkIfPANExists() == DECLINED)
-    {
-        printf("Declined Transaction\n Test Case 5 Passed\n");
-    }
-    else
-    {
-        printf("Accepted Transaction\n Test Case 5 Failed\n");
-    }
+void Test_Binary_Search_For_NotExisting_Element(void)
+{
+    uint32_t arr[5] = {10,2,0,50,9};
+    if(binarySearch(arr, 5, 20) == -1)          printf("Passed TC5\n");
+    else if(binarySearch(arr, 5, 20) < 255)     printf("Failed TC5\n");
 }
 
 int main(void)
 {
-    TestApprovedPayment();  //u should input all data right to pass
-    //TestDeclinedForExpiredCard();
-    //TestForDeclinedAmountByServer();
-    TestForDeclinedAmountByTerminal();  //u should enter payment amount > 5000.00 to pass
-    //TestFor_PAN_NotExist();
+    Test_Sorted_Array();
+    Test_NotSorted_Array();
+    Test_Selection_Sort_For_Sorted_Array();
+    Test_Selection_Sort_For_NotSorted_Array();
+    Test_Binary_Search_For_Existing_Element();
+    Test_Binary_Search_For_NotExisting_Element();
     return 0;
 }
