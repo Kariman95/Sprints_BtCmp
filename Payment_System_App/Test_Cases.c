@@ -13,62 +13,94 @@
 
 void TestApprovedPayment(void)
 {
-    readCardData();
-    readTerminalData();
+    uint8_t c;
+    do
+    {
+        readCardData();
+        readTerminalData();
 
-    if(checkTransactionStatus() == APPROVED)
-    {
-        printf("Accepted Transaction\n Test Case 1 Passed\n");
+        if(checkTransactionStatus() == APPROVED)
+        {
+            printf("Accepted Transaction\n Test Case 1 Passed\n");
+        }
+        else
+        {
+            printf("Declined Transaction\n Test Case 1 Failed\n");
+        }
+        printf("\nDo You Want to continue(y/n)?\n");
+        fflush(stdin);
+        scanf("%c",&c);
     }
-    else
-    {
-        printf("Declined Transaction\n Test Case 1 Failed\n");
-    }
+    while(c == 'y');
 }
 
 void TestDeclinedForExpiredCard(void)
 {
-    readCardData();
-    readTerminalData();
+    uint8_t c;
+    do
+    {
+        readCardData();
+        readTerminalData();
 
-    if(checkIfExpired() == DECLINED)
-    {
-        printf("Declined Transaction\n Test Case 2 Passed\n");
+        if(checkIfExpired() == DECLINED)
+        {
+            printf("Declined Transaction\n Test Case 2 Passed\n");
+        }
+        else
+        {
+            printf("Accepted Transaction\n Test Case 2 Failed\n");
+        }
+        printf("\nDo You Want to continue(y/n)?\n");
+        fflush(stdin);
+        scanf("%c",&c);
     }
-    else
-    {
-        printf("Accepted Transaction\n Test Case 2 Failed\n");
-    }
+    while(c == 'y');
 }
 
 void TestForDeclinedAmountByServer(void)
 {
-    readCardData();
-    readTerminalData();
+    uint8_t c;
+    do
+    {
+        readCardData();
+        readTerminalData();
 
-    if(checkIfAcceptedAmountByServer() == DECLINED)
-    {
-        printf("Declined Transaction\n Test Case 3 Passed\n");
+        if(checkIfAcceptedAmountByServer() == DECLINED)
+        {
+            printf("Declined Transaction\n Test Case 3 Passed\n");
+        }
+        else
+        {
+            printf("Accepted Transaction\n Test Case 3 Failed\n");
+        }
+        printf("\nDo You Want to continue(y/n)?\n");
+        fflush(stdin);
+        scanf("%c",&c);
     }
-    else
-    {
-        printf("Accepted Transaction\n Test Case 3 Failed\n");
-    }
+    while(c == 'y');
 }
 
 void TestForDeclinedAmountByTerminal(void)
 {
-    readCardData();
-    readTerminalData();
+    uint8_t c;
+    do
+    {
+        readCardData();
+        readTerminalData();
 
-    if(checkIfAcceptedAmountByTerminal() == DECLINED)
-    {
-        printf("Declined Transaction\n Test Case 3 Passed\n");
+        if(checkIfAcceptedAmountByTerminal() == DECLINED)
+        {
+            printf("Declined Transaction\n Test Case 4 Passed\n");
+        }
+        else
+        {
+            printf("Accepted Transaction\n Test Case 4 Failed\n");
+        }
+        printf("\nDo You Want to continue(y/n)?\n");
+        fflush(stdin);
+        scanf("%c",&c);
     }
-    else
-    {
-        printf("Accepted Transaction\n Test Case 3 Failed\n");
-    }
+    while(c == 'y');
 }
 
 void TestFor_PAN_NotExist(void)
@@ -78,20 +110,20 @@ void TestFor_PAN_NotExist(void)
 
     if(checkIfPANExists() == DECLINED)
     {
-        printf("Declined Transaction\n Test Case 3 Passed\n");
+        printf("Declined Transaction\n Test Case 5 Passed\n");
     }
     else
     {
-        printf("Accepted Transaction\n Test Case 3 Failed\n");
+        printf("Accepted Transaction\n Test Case 5 Failed\n");
     }
 }
 
 int main(void)
 {
-    TestApprovedPayment();
-    TestDeclinedForExpiredCard();
-    TestForDeclinedAmountByServer();
-    TestForDeclinedAmountByTerminal();
-    TestFor_PAN_NotExist();
+    TestApprovedPayment();	//u should enter all data right to pass
+    //TestDeclinedForExpiredCard();
+    //TestForDeclinedAmountByServer();
+    TestForDeclinedAmountByTerminal();	//u should enter payment amount > 5000.00
+    //TestFor_PAN_NotExist();
     return 0;
 }
