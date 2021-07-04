@@ -8,7 +8,7 @@ int main()
     printArray(arr, 10);
     selectionSort(arr, 10);
     printArray(arr, 10);
-    if(binarySearch(arr, 10, 7)==1)  printf("found\n");
+    if(binarySearch(arr, 10, 7) < 255)  printf("found\n");
     else printf("not found\n");
     return 0;
 }
