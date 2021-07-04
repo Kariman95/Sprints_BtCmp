@@ -41,14 +41,14 @@ void Test_Binary_Search_For_Existing_Element(void)
 {
     uint32_t arr[5] = {10,2,0,50,9};
     if(binarySearch(arr, 5, 50) < 255)           printf("Passed TC5\n");
-    else if(binarySearch(arr, 5, 50) == 255)     printf("Failed TC5\n");
+    else if(binarySearch(arr, 5, 50) == -1)      printf("Failed TC5\n");
 }
 
 void Test_Binary_Search_For_NotExisting_Element(void)
 {
     uint32_t arr[5] = {10,2,0,50,9};
-    if(binarySearch(arr, 5, 20) == 255)          printf("Passed TC5\n");
-    else if(binarySearch(arr, 5, 20) < 255)      printf("Failed TC5\n");
+    if(binarySearch(arr, 5, 20) == -1)          printf("Passed TC5\n");
+    else if(binarySearch(arr, 5, 20) < 255)     printf("Failed TC5\n");
 }
 
 int main(void)
