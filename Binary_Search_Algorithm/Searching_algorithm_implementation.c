@@ -25,7 +25,7 @@ uint8_t     binarySearch(uint32_t* arr, uint8_t size, uint32_t number)
         }
         else if (arr[mid] == number)
         {
-            return 1;
+            return mid;
         }
         else
         {
@@ -33,7 +33,7 @@ uint8_t     binarySearch(uint32_t* arr, uint8_t size, uint32_t number)
         }
         mid = (start + end)/2;
     }
-    return -1;
+    return -1;  // =255 because it returns unsigned
 }
 
 /********************************************************
@@ -70,26 +70,32 @@ static void swap(int *num1, int *num2)
  ***********************************/
 enum E_STATUS    selectionSort(uint32_t* arr, uint8_t size)
 {
-    enum E_STATUS status = E_ERROR;
     uint8_t i, j, min_idx;
 
-    // One by one move boundary of unsorted subarray
-    for (i=0; i<size-1; i++)
+    if(isSorted(arr, size) == E_SORTED)
     {
-        status = E_OK;
-        // Find the minimum element in unsorted array
-        min_idx = i;
-        for (j=i+1; j<size; j++)
-        {
-            if (arr[j] < arr[min_idx])
-            {
-                min_idx = j;
-            }
-        }
-        // Swap the found minimum element with the first element
-        swap(&arr[min_idx], &arr[i]);
+        return E_ERROR;
     }
-    return status;
+
+    else
+    {
+        // One by one move boundary of unsorted subarray
+        for (i=0; i<size-1; i++)
+        {
+            // Find the minimum element in unsorted array
+            min_idx = i;
+            for (j=i+1; j<size; j++)
+            {
+                if (arr[j] < arr[min_idx])
+                {
+                    min_idx = j;
+                }
+            }
+            // Swap the found minimum element with the first element
+            swap(&arr[min_idx], &arr[i]);
+        }
+        return E_OK;
+    }
 }
 
 void printArray(uint32_t* arr, uint8_t size)
