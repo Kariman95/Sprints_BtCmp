@@ -3,7 +3,7 @@
  * Author: Kariman Karam
  * Date: 3 July 2021
  * Version: 1
- * Description: Declarations of functions for Payment System App
+ * Description: Typedefs for standard data types
  **************************************************/
 
 #include <stdio.h>
@@ -215,7 +215,7 @@ EN_transStat_t    checkIfAcceptedAmountByServer(void)
 
 EN_transStat_t  checkTransactionStatus(void)
 {
-    if(   checkIfAcceptedAmountByServer()   == APPROVED
+    if(   	checkIfAcceptedAmountByServer()      == APPROVED
             && checkIfAcceptedAmountByTerminal() == APPROVED
             && checkIfExpired()                  == APPROVED
             && checkIfPANExists()                == APPROVED)
