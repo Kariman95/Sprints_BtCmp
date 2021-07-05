@@ -123,7 +123,7 @@ int main(void)
     TestApprovedPayment();	//u should enter all data right to pass
     //TestDeclinedForExpiredCard();
     //TestForDeclinedAmountByServer();
-    TestForDeclinedAmountByTerminal();	//u should enter payment amount > 5000.00
+    //TestForDeclinedAmountByTerminal();	//u should enter payment amount > 5000.00
     //TestFor_PAN_NotExist();
     return 0;
 }
