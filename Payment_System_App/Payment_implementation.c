@@ -85,7 +85,7 @@ EN_transStat_t    checkIfExpired(void)
     else if(ST_cardData.cardExpirationDate[i-1] == ST_terminalData.transactionDate[j-1])
     {
         i = i-3;
-        j = j-3;
+        j = j-5;
         if(ST_cardData.cardExpirationDate[i] < ST_terminalData.transactionDate[j])
         {
             return DECLINED;
