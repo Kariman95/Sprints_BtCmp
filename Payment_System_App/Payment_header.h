@@ -92,3 +92,4 @@ void              printTerminalData(void);
 EN_transStat_t    checkTransactionStatus(void);
 
 #endif // PAYMENT_H_
+
