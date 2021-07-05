@@ -4,18 +4,28 @@
 
 int main()
 {
-    readCardData();
-    //printCardData();
-    printf("\n");
+    uint8_t c;
+    do
+    {
+        system("cls");
+        readCardData();
+        //printCardData();
+        printf("\n");
 
-    readTerminalData();
-    //printTerminalData();
-    //printf("%d\n", linearSearchForCardID());
+        readTerminalData();
+        //printTerminalData();
+        //printf("%d\n", linearSearchForCardID());
+        printf("\nVerifying Data from the server...\n");
 
+        EN_transStat_t state = checkTransactionStatus();
+        if(state == DECLINED)       printf("The Transaction is Declined\n");
+        else                        printf("The Transaction is Approved\n");
 
-    EN_transStat_t state = checkIfAcceptedAmountByServer();
-    if(state == DECLINED)       printf("Declined\n");
-    else                        printf("Approved\n");
+        printf("\nDo You Want to continue(y/n)?\n");
+        fflush(stdin);
+        scanf("%c",&c);
+    }
+    while(c == 'y');
 
     return 0;
 }
