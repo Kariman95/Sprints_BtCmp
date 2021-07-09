@@ -2,7 +2,7 @@
  * BIT_math.h
  *
  *  Created on: Jul 8, 2021
- *      Author: Kariman
+ *  Author: Kariman
  */
 
 #ifndef LIB_BIT_MATH_H_
