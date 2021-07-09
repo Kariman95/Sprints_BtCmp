@@ -13,7 +13,7 @@
 #include "../ECUAL/BTN/BTN.h"
 #include "../ECUAL/LED/LED.h"
 
-
+//App: toggle led when button is pressed
 int main(void)
 {
 	uint8_t u8_Status0;
