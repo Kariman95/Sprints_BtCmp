@@ -2,7 +2,7 @@
  * BTN.h
  *
  *  Created on: Jul 9, 2021
- *      Author: Kariman
+ *  Author: Kariman
  */
 
 #ifndef ECUAL_BTN_H_
@@ -33,6 +33,6 @@ enuErrorStatus_t	BTN_Init(void);
 * Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
 * Description     : A function to read the button status (pressed, not_pressed)
 *************************************************************************************************/
-enuErrorStatus_t	BTN_getState(uint8_t u8BtnNum, uint8_t* status);
+enuErrorStatus_t	BTN_getState(uint8_t u8BtnNum, uint8_t* u8_Status);
 
 #endif /* ECUAL_BTN_H_ */
