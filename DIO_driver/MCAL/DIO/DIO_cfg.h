@@ -2,7 +2,7 @@
  * DIO_cfg.h
  *
  *  Created on: Jul 9, 2021
- *      Author: Kariman
+ *  Author: Kariman
  */
 
 #ifndef MCAL_DIO_DIO_CFG_H_
