@@ -2,7 +2,7 @@
  * LED.c
  *
  *  Created on: Jul 9, 2021
- *      Author: Kariman
+ *  Author: Kariman
  */
 
 /*- INCLUDES----------------------------------------------*/
