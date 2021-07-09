@@ -2,7 +2,7 @@
  * LED.h
  *
  *  Created on: Jul 9, 2021
- *      Author: Kariman
+ *  Author: Kariman
  */
 
 #ifndef ECUAL_LED_LED_H_
@@ -30,7 +30,7 @@ enuErrorStatus_t	LED_Init(void);
 * Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
 * Description     : A function to turn the led on
 *************************************************************************************************/
-enuErrorStatus_t	LED_ON(uint8_t u8LedNum);
+enuErrorStatus_t	LED_ON(uint8_t u8_LedNum);
 
 /*************************************************************************************************
 * Parameters (in) : u8_LedNum(index to the led pin)
@@ -38,7 +38,7 @@ enuErrorStatus_t	LED_ON(uint8_t u8LedNum);
 * Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
 * Description     : A function to turn the led off
 *************************************************************************************************/
-enuErrorStatus_t	LED_OFF(uint8_t u8LedNum);
+enuErrorStatus_t	LED_OFF(uint8_t u8_LedNum);
 
 /*************************************************************************************************
 * Parameters (in) : u8_LedNum(index to the led pin)
