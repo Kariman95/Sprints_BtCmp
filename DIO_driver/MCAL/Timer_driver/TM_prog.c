@@ -221,11 +221,32 @@ enuErrorStatus_t Timer_GetStatus(uint8_t u8_GroupId)
 {
 	if(astrTimerConfigParameters[u8_GroupId].enuTimerModule == TIMER0)
 	{
-		while(!(GET_BIT(TIFR_R, TOV0_BIT)));
-		return E_OK;
+		switch(astrTimerConfigParameters[u8_GroupId].enuTimerMode)
+		{
+		case NORMAL:
+			/* Checking timer 0 overflow flag */
+			if(GET_BIT(TIFR_R, TOV0_BIT))
+			{
+				/* Clear timer0 OVF flag */
+				SET_BIT(TIFR_R, TOV0_BIT);
+				/* Stop the timer */
+				Timer_Stop(u8_GroupId);
+
+				/* Call the call back function */
+				pf_OVflowCallback();
+			}
+			else;
+			break;
+		case CTC:
+			break;
+		break;
+		}//end switch
 	}//end if for timer0
-	return E_ERROR;
+	else;
+
+	return E_OK;
 }//end Timer_GetStatus
+
 
 /*************************************************************************************************
 * Parameters (in) : None
