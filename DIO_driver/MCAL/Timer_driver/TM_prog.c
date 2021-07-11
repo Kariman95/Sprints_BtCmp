@@ -55,7 +55,9 @@ enuErrorStatus_t Timer_Init(void)
 				}//end if
 				else if(astrTimerConfigParameters[u8_i].enuTimerIntEn == TIMER_INT_EN)
 				{
+					//enable GIE bit
 					SET_BIT(SREG_R, SREG_I_BIT);
+					//enable OVF interrupt
 					SET_BIT(TIMSK_R, TOIE0_BIT);
 				}//end else
 				break;
@@ -63,9 +65,9 @@ enuErrorStatus_t Timer_Init(void)
 				CLR_BIT(TCCR0_R, WGM00_BIT);
 				SET_BIT(TCCR0_R, WGM01_BIT);
 
-		        /*- Toggle OC0 on compare match -*/
-		        CLR_BIT(TCCR0_R, COM01_BIT);
-		        SET_BIT(TCCR0_R, COM00_BIT);
+				/*- Toggle OC0 on compare match -*/
+				CLR_BIT(TCCR0_R, COM01_BIT);
+				SET_BIT(TCCR0_R, COM00_BIT);
 
 				/*- Selecting whether to enable or disable timer module interrupts -*/
 				if(astrTimerConfigParameters[u8_i].enuTimerIntEn == TIMER_INT_DIS)
@@ -74,7 +76,9 @@ enuErrorStatus_t Timer_Init(void)
 				}//end if
 				else if(astrTimerConfigParameters[u8_i].enuTimerIntEn == TIMER_INT_EN)
 				{
+					//enable GIE bit
 					SET_BIT(SREG_R, SREG_I_BIT);
+					//enable cpmare match interrupt
 					SET_BIT(TIMSK_R, OCIE0_BIT);
 				}//end else
 				break;
@@ -158,11 +162,6 @@ enuErrorStatus_t Timer_Init(void)
 *************************************************************************************************/
 enuErrorStatus_t Timer_Start(uint8_t u8_GroupId, uintt32_t u32_TimerValueUS, void(*pfCallback)(void))
 {
-//	uintt32_t u32_TickTime;
-////	uintt32_t u32_OverflowTime;
-//	uintt32_t u32_OverflowRem;
-//	uintt32_t u32_OverflowRemCounts;
-
 	if(astrTimerConfigParameters[u8_GroupId].enuTimerModule == TIMER0)
 	{
 		if(astrTimerConfigParameters[u8_GroupId].enuTimerMode == NORMAL)
@@ -192,22 +191,6 @@ static enuErrorStatus_t TM0_delayUs(uint8_t u8_GroupId, uintt32_t u32_Time)
 	uintt32_t TickTime = astrTimerConfigParameters[u8_GroupId].enuTimerClock / F_CPU;
 	uintt32_t numbOfTick = u32_Time / TickTime;
 	u32_OverflowNum = numbOfTick / 256;
-
-//	uintt32_t TickTime = (astrTimerConfigParameters[u8_GroupId].enuTimerClock * 1000000) / F_CPU ;
-//	uintt32_t OverflowTime =  TickTime  * 256 ;
-//	uintt32_t DesiredTime = Time;
-//
-//	u32_OverflowNum = DesiredTime / OverflowTime;
-//	uintt32_t OverflowRemTime = DesiredTime % OverflowTime;
-//	uintt32_t OverflowRemCounts = ((float)OverflowRemTime/OverflowTime)* 256;
-//
-//	TCNT0_R = 0;
-//	if(OverflowRemTime>0)
-//	{
-//		u8_TM0Preload = 256 - OverflowRemCounts;
-//		TCNT0_R = u8_TM0Preload;
-//		u32_OverflowNum++;
-//	}
 
 	return E_OK;
 }
