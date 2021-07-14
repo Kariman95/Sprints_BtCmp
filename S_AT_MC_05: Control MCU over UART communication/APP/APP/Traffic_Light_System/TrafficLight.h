@@ -1,6 +1,6 @@
 /***************************************************************
 * Task       : Traffic Light System
-* File Name	 : TrafficLight.h
+* File Name  : TrafficLight.h
 * Description: header file for taffic light app
 * Author     : Kariman
 * Date       : 13/7/2021
