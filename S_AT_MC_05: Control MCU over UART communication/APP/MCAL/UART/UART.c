@@ -49,19 +49,13 @@ enuErrorStatus_t UART_Init(unsigned short int baudrate)
 	// Baud rate= 9600 .. F_cpu 8MHz
 	UBRRH_R=0;
 	UBRRL_R=103;
+	
+        //Set baud rate
+//	uint16_t UBRRVAL=(F_CPU/(u16_Baudrate*16UL))-1;
+//	UBRRL_R=UBRRVAL; 			//low byte
+//	UBRRH_R=(UBRRVAL>>8); 	//high byte
 
 	genuInitStatus = E_OK;
-
-//		UBRRL_R = (uint8_t)baudrate;
-//	   /* Set Baud Rate high bits if needed */
-//	   if(baudrate > 255)
-//	   {
-//		   UBRRH_R = (uint8_t)( baudrate >> 8 );
-//	   }
-//	   else
-//	   {
-//		   UBRRH_R = 0;
-//	   }
 
 	return genuInitStatus;
 }//end UART_Init
