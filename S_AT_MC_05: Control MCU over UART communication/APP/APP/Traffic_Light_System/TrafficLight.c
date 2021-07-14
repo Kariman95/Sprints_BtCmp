@@ -1,25 +1,24 @@
-
-/*****************************************************************************
-* Task: Car Project
-* File Name: CAR.c
+/***************************************************************
+* Task       : Traffic Light System
+* File Name  : TrafficLight.c
 * Description: functions for the car control system app
-* Author: TEAM2
-* Date: 12/7/2021
-******************************************************************************/
+* Author     : TEAM2
+* Date       : 13/7/2021
+***************************************************************/
 
-/*- INCLUDES --------------------------------------------------*/
+/*- INCLUDES -------------------------------------------------*/
 #include "TrafficLight.h"
 #include <string.h>
 
 
-/*- APIs IMPLEMENTATION-----------------------------------*/
+/*- APIs IMPLEMENTATION---------------------------------------*/
 
-/*************************************************************************************************
+/***************************************************************
 * Parameters (in) : None
 * Parameters (out): None
 * Return Value    : void
 * Description     : A function to initialize the application
-*************************************************************************************************/
+***************************************************************/
 void TrafficLight_Init(void)
 {
 	DIO_Init();
@@ -28,28 +27,28 @@ void TrafficLight_Init(void)
 }//end TrafficLight_Init
 
 
-/*************************************************************************************************
+/***************************************************************
 * Parameters (in) : None
 * Parameters (out): None
 * Return Value    : void
 * Description     : A function to update the application
-*************************************************************************************************/
+***************************************************************/
 void TrafficLight_Update(void)
 {
 	uint8_t* u8_String = NULL_PTR;
 	uint8_t i=0;
 	UART_ReceiveString(&u8_String);
 
-	if(strcmp(&u8_String, "start")==0)
+	if(strcmp(&u8_String, "START")==0)
 	{
 		i = 1;
 	}//end if
 
-	else if(strcmp(&u8_String, "wait")==0)
+	else if(strcmp(&u8_String, "WAIT")==0)
 	{
 		i = 2;
 	}//end else if
-	else if(strcmp(&u8_String, "stop")==0)
+	else if(strcmp(&u8_String, "STOP")==0)
 	{
 		i = 3;
 	}//end else if
@@ -67,6 +66,7 @@ void TrafficLight_Update(void)
 		LED_OFF(LED2);
 		UART_SendString((uint8_t*)"Green LED is on");
 		break;
+
 	case 2:
 		u8_String = NULL_PTR;
 		LED_OFF(LED0);
@@ -74,6 +74,7 @@ void TrafficLight_Update(void)
 		LED_ON(LED2);
 		UART_SendString((uint8_t*)"Yellow LED is on");
 		break;
+
 	case 3:
 		u8_String = NULL_PTR;
 		LED_OFF(LED0);
@@ -81,10 +82,12 @@ void TrafficLight_Update(void)
 		LED_OFF(LED2);
 		UART_SendString((uint8_t*)"Red LED is on");
 		break;
+
 	case 4:
 		u8_String = NULL_PTR;
 		UART_SendString((uint8_t*)"OK");
 		break;
+
 	default:
 		u8_String = NULL_PTR;
 		LED_OFF(LED0);
