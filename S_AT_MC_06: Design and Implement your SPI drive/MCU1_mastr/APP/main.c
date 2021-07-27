@@ -1,7 +1,7 @@
 /***************************************************************
-* Task		 : Traffic Light system
+* Task		 : SPI driver
 * File Name	 : main.c
-* Description: main
+* Description    : main
 * Author	 : Kariman
 * Date		 : 13/7/2021
 ***************************************************************/
