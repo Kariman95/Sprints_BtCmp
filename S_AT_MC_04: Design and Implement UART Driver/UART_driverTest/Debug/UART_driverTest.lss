@@ -1,0 +1,3105 @@
+
+UART_driverTest.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000145a  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000054  00800060  0000145a  000014ee  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000001  008000b4  008000b4  00001542  2**0
+                  ALLOC
+  3 .stab         000014e8  00000000  00000000  00001544  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000cd1  00000000  00000000  00002a2c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+       0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+       4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+       8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+       c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+      50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+      54:	11 24       	eor	r1, r1
+      56:	1f be       	out	0x3f, r1	; 63
+      58:	cf e5       	ldi	r28, 0x5F	; 95
+      5a:	d8 e0       	ldi	r29, 0x08	; 8
+      5c:	de bf       	out	0x3e, r29	; 62
+      5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+      60:	10 e0       	ldi	r17, 0x00	; 0
+      62:	a0 e6       	ldi	r26, 0x60	; 96
+      64:	b0 e0       	ldi	r27, 0x00	; 0
+      66:	ea e5       	ldi	r30, 0x5A	; 90
+      68:	f4 e1       	ldi	r31, 0x14	; 20
+      6a:	02 c0       	rjmp	.+4      	; 0x70 <.do_copy_data_start>
+
+0000006c <.do_copy_data_loop>:
+      6c:	05 90       	lpm	r0, Z+
+      6e:	0d 92       	st	X+, r0
+
+00000070 <.do_copy_data_start>:
+      70:	a4 3b       	cpi	r26, 0xB4	; 180
+      72:	b1 07       	cpc	r27, r17
+      74:	d9 f7       	brne	.-10     	; 0x6c <.do_copy_data_loop>
+
+00000076 <__do_clear_bss>:
+      76:	10 e0       	ldi	r17, 0x00	; 0
+      78:	a4 eb       	ldi	r26, 0xB4	; 180
+      7a:	b0 e0       	ldi	r27, 0x00	; 0
+      7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+      7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+      80:	a5 3b       	cpi	r26, 0xB5	; 181
+      82:	b1 07       	cpc	r27, r17
+      84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+      86:	0e 94 13 0a 	call	0x1426	; 0x1426 <main>
+      8a:	0c 94 2b 0a 	jmp	0x1456	; 0x1456 <_exit>
+
+0000008e <__bad_interrupt>:
+      8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <UART_Init>:
+      92:	df 93       	push	r29
+      94:	cf 93       	push	r28
+      96:	cd b7       	in	r28, 0x3d	; 61
+      98:	de b7       	in	r29, 0x3e	; 62
+      9a:	ab e2       	ldi	r26, 0x2B	; 43
+      9c:	b0 e0       	ldi	r27, 0x00	; 0
+      9e:	eb e2       	ldi	r30, 0x2B	; 43
+      a0:	f0 e0       	ldi	r31, 0x00	; 0
+      a2:	80 81       	ld	r24, Z
+      a4:	82 60       	ori	r24, 0x02	; 2
+      a6:	8c 93       	st	X, r24
+      a8:	aa e2       	ldi	r26, 0x2A	; 42
+      aa:	b0 e0       	ldi	r27, 0x00	; 0
+      ac:	ea e2       	ldi	r30, 0x2A	; 42
+      ae:	f0 e0       	ldi	r31, 0x00	; 0
+      b0:	80 81       	ld	r24, Z
+      b2:	80 61       	ori	r24, 0x10	; 16
+      b4:	8c 93       	st	X, r24
+      b6:	aa e2       	ldi	r26, 0x2A	; 42
+      b8:	b0 e0       	ldi	r27, 0x00	; 0
+      ba:	ea e2       	ldi	r30, 0x2A	; 42
+      bc:	f0 e0       	ldi	r31, 0x00	; 0
+      be:	80 81       	ld	r24, Z
+      c0:	88 60       	ori	r24, 0x08	; 8
+      c2:	8c 93       	st	X, r24
+      c4:	a0 e4       	ldi	r26, 0x40	; 64
+      c6:	b0 e0       	ldi	r27, 0x00	; 0
+      c8:	e0 e4       	ldi	r30, 0x40	; 64
+      ca:	f0 e0       	ldi	r31, 0x00	; 0
+      cc:	80 81       	ld	r24, Z
+      ce:	8f 7b       	andi	r24, 0xBF	; 191
+      d0:	8c 93       	st	X, r24
+      d2:	a0 e4       	ldi	r26, 0x40	; 64
+      d4:	b0 e0       	ldi	r27, 0x00	; 0
+      d6:	e0 e4       	ldi	r30, 0x40	; 64
+      d8:	f0 e0       	ldi	r31, 0x00	; 0
+      da:	80 81       	ld	r24, Z
+      dc:	8f 7d       	andi	r24, 0xDF	; 223
+      de:	8c 93       	st	X, r24
+      e0:	a0 e4       	ldi	r26, 0x40	; 64
+      e2:	b0 e0       	ldi	r27, 0x00	; 0
+      e4:	e0 e4       	ldi	r30, 0x40	; 64
+      e6:	f0 e0       	ldi	r31, 0x00	; 0
+      e8:	80 81       	ld	r24, Z
+      ea:	8f 7e       	andi	r24, 0xEF	; 239
+      ec:	8c 93       	st	X, r24
+      ee:	a0 e4       	ldi	r26, 0x40	; 64
+      f0:	b0 e0       	ldi	r27, 0x00	; 0
+      f2:	e0 e4       	ldi	r30, 0x40	; 64
+      f4:	f0 e0       	ldi	r31, 0x00	; 0
+      f6:	80 81       	ld	r24, Z
+      f8:	87 7f       	andi	r24, 0xF7	; 247
+      fa:	8c 93       	st	X, r24
+      fc:	a0 e4       	ldi	r26, 0x40	; 64
+      fe:	b0 e0       	ldi	r27, 0x00	; 0
+     100:	e0 e4       	ldi	r30, 0x40	; 64
+     102:	f0 e0       	ldi	r31, 0x00	; 0
+     104:	80 81       	ld	r24, Z
+     106:	82 60       	ori	r24, 0x02	; 2
+     108:	8c 93       	st	X, r24
+     10a:	a0 e4       	ldi	r26, 0x40	; 64
+     10c:	b0 e0       	ldi	r27, 0x00	; 0
+     10e:	e0 e4       	ldi	r30, 0x40	; 64
+     110:	f0 e0       	ldi	r31, 0x00	; 0
+     112:	80 81       	ld	r24, Z
+     114:	84 60       	ori	r24, 0x04	; 4
+     116:	8c 93       	st	X, r24
+     118:	aa e2       	ldi	r26, 0x2A	; 42
+     11a:	b0 e0       	ldi	r27, 0x00	; 0
+     11c:	ea e2       	ldi	r30, 0x2A	; 42
+     11e:	f0 e0       	ldi	r31, 0x00	; 0
+     120:	80 81       	ld	r24, Z
+     122:	84 60       	ori	r24, 0x04	; 4
+     124:	8c 93       	st	X, r24
+     126:	e0 e4       	ldi	r30, 0x40	; 64
+     128:	f0 e0       	ldi	r31, 0x00	; 0
+     12a:	10 82       	st	Z, r1
+     12c:	e9 e2       	ldi	r30, 0x29	; 41
+     12e:	f0 e0       	ldi	r31, 0x00	; 0
+     130:	87 e6       	ldi	r24, 0x67	; 103
+     132:	80 83       	st	Z, r24
+     134:	81 e0       	ldi	r24, 0x01	; 1
+     136:	80 93 b4 00 	sts	0x00B4, r24
+     13a:	80 91 b4 00 	lds	r24, 0x00B4
+     13e:	cf 91       	pop	r28
+     140:	df 91       	pop	r29
+     142:	08 95       	ret
+
+00000144 <UART_SendData>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to send data via UART
+*************************************************************************************************/
+enuErrorStatus_t UART_SendData(uint8_t u8Data)
+{
+     144:	df 93       	push	r29
+     146:	cf 93       	push	r28
+     148:	00 d0       	rcall	.+0      	; 0x14a <UART_SendData+0x6>
+     14a:	cd b7       	in	r28, 0x3d	; 61
+     14c:	de b7       	in	r29, 0x3e	; 62
+     14e:	89 83       	std	Y+1, r24	; 0x01
+	if(genuUARTInitStatus == E_ERROR)
+     150:	80 91 b4 00 	lds	r24, 0x00B4
+     154:	88 23       	and	r24, r24
+     156:	11 f4       	brne	.+4      	; 0x15c <UART_SendData+0x18>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+     158:	1a 82       	std	Y+2, r1	; 0x02
+     15a:	0f c0       	rjmp	.+30     	; 0x17a <UART_SendData+0x36>
+	}//end if
+
+	/* Wait for empty transmit buffer */
+	while (!(GET_BIT(UCSRA_R, UDRE_B)));
+     15c:	eb e2       	ldi	r30, 0x2B	; 43
+     15e:	f0 e0       	ldi	r31, 0x00	; 0
+     160:	80 81       	ld	r24, Z
+     162:	88 2f       	mov	r24, r24
+     164:	90 e0       	ldi	r25, 0x00	; 0
+     166:	80 72       	andi	r24, 0x20	; 32
+     168:	90 70       	andi	r25, 0x00	; 0
+     16a:	00 97       	sbiw	r24, 0x00	; 0
+     16c:	b9 f3       	breq	.-18     	; 0x15c <UART_SendData+0x18>
+
+	/* Put data into buffer, sends the data */
+	UDR_R = u8Data;
+     16e:	ec e2       	ldi	r30, 0x2C	; 44
+     170:	f0 e0       	ldi	r31, 0x00	; 0
+     172:	89 81       	ldd	r24, Y+1	; 0x01
+     174:	80 83       	st	Z, r24
+
+	return E_OK;
+     176:	81 e0       	ldi	r24, 0x01	; 1
+     178:	8a 83       	std	Y+2, r24	; 0x02
+     17a:	8a 81       	ldd	r24, Y+2	; 0x02
+}//end UART_SendData
+     17c:	0f 90       	pop	r0
+     17e:	0f 90       	pop	r0
+     180:	cf 91       	pop	r28
+     182:	df 91       	pop	r29
+     184:	08 95       	ret
+
+00000186 <UART_ReceiveData>:
+* Parameters (out): pu16Data
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to receive data via UART
+*************************************************************************************************/
+enuErrorStatus_t UART_ReceiveData(uint8_t* pu8Data)
+{
+     186:	df 93       	push	r29
+     188:	cf 93       	push	r28
+     18a:	00 d0       	rcall	.+0      	; 0x18c <UART_ReceiveData+0x6>
+     18c:	0f 92       	push	r0
+     18e:	cd b7       	in	r28, 0x3d	; 61
+     190:	de b7       	in	r29, 0x3e	; 62
+     192:	9a 83       	std	Y+2, r25	; 0x02
+     194:	89 83       	std	Y+1, r24	; 0x01
+	if(genuUARTInitStatus == E_ERROR)
+     196:	80 91 b4 00 	lds	r24, 0x00B4
+     19a:	88 23       	and	r24, r24
+     19c:	11 f4       	brne	.+4      	; 0x1a2 <UART_ReceiveData+0x1c>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+     19e:	1b 82       	std	Y+3, r1	; 0x03
+     1a0:	0d c0       	rjmp	.+26     	; 0x1bc <UART_ReceiveData+0x36>
+	}//end if
+
+	/* Wait for data to be received */
+	while(!(GET_BIT(UCSRA_R, RXC_B)));
+     1a2:	eb e2       	ldi	r30, 0x2B	; 43
+     1a4:	f0 e0       	ldi	r31, 0x00	; 0
+     1a6:	80 81       	ld	r24, Z
+     1a8:	88 23       	and	r24, r24
+     1aa:	dc f7       	brge	.-10     	; 0x1a2 <UART_ReceiveData+0x1c>
+
+	/* Get and return received data from buffer */
+	*pu8Data = UDR_R;
+     1ac:	ec e2       	ldi	r30, 0x2C	; 44
+     1ae:	f0 e0       	ldi	r31, 0x00	; 0
+     1b0:	80 81       	ld	r24, Z
+     1b2:	e9 81       	ldd	r30, Y+1	; 0x01
+     1b4:	fa 81       	ldd	r31, Y+2	; 0x02
+     1b6:	80 83       	st	Z, r24
+
+	return E_OK;
+     1b8:	81 e0       	ldi	r24, 0x01	; 1
+     1ba:	8b 83       	std	Y+3, r24	; 0x03
+     1bc:	8b 81       	ldd	r24, Y+3	; 0x03
+}//end UART_ReceiveData
+     1be:	0f 90       	pop	r0
+     1c0:	0f 90       	pop	r0
+     1c2:	0f 90       	pop	r0
+     1c4:	cf 91       	pop	r28
+     1c6:	df 91       	pop	r29
+     1c8:	08 95       	ret
+
+000001ca <UART_RecieveDataNoBLOCK>:
+* Parameters (out): pu16Data
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to receive data via UART
+*************************************************************************************************/
+enuErrorStatus_t UART_RecieveDataNoBLOCK(uint8_t* pu8Data)
+{
+     1ca:	df 93       	push	r29
+     1cc:	cf 93       	push	r28
+     1ce:	00 d0       	rcall	.+0      	; 0x1d0 <UART_RecieveDataNoBLOCK+0x6>
+     1d0:	00 d0       	rcall	.+0      	; 0x1d2 <UART_RecieveDataNoBLOCK+0x8>
+     1d2:	cd b7       	in	r28, 0x3d	; 61
+     1d4:	de b7       	in	r29, 0x3e	; 62
+     1d6:	9b 83       	std	Y+3, r25	; 0x03
+     1d8:	8a 83       	std	Y+2, r24	; 0x02
+	if(genuUARTInitStatus == E_ERROR)
+     1da:	80 91 b4 00 	lds	r24, 0x00B4
+     1de:	88 23       	and	r24, r24
+     1e0:	11 f4       	brne	.+4      	; 0x1e6 <UART_RecieveDataNoBLOCK+0x1c>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+     1e2:	1c 82       	std	Y+4, r1	; 0x04
+     1e4:	10 c0       	rjmp	.+32     	; 0x206 <UART_RecieveDataNoBLOCK+0x3c>
+	}//end if
+
+	enuErrorStatus_t enuStatus = E_ERROR;
+     1e6:	19 82       	std	Y+1, r1	; 0x01
+
+    if (GET_BIT(UCSRA_R, RXC_B))
+     1e8:	eb e2       	ldi	r30, 0x2B	; 43
+     1ea:	f0 e0       	ldi	r31, 0x00	; 0
+     1ec:	80 81       	ld	r24, Z
+     1ee:	88 23       	and	r24, r24
+     1f0:	44 f4       	brge	.+16     	; 0x202 <UART_RecieveDataNoBLOCK+0x38>
+    {
+        *pu8Data = UDR_R;
+     1f2:	ec e2       	ldi	r30, 0x2C	; 44
+     1f4:	f0 e0       	ldi	r31, 0x00	; 0
+     1f6:	80 81       	ld	r24, Z
+     1f8:	ea 81       	ldd	r30, Y+2	; 0x02
+     1fa:	fb 81       	ldd	r31, Y+3	; 0x03
+     1fc:	80 83       	st	Z, r24
+        enuStatus = E_OK;
+     1fe:	81 e0       	ldi	r24, 0x01	; 1
+     200:	89 83       	std	Y+1, r24	; 0x01
+    }
+    else
+    {
+        /* do nothing */
+    }
+    return enuStatus;
+     202:	89 81       	ldd	r24, Y+1	; 0x01
+     204:	8c 83       	std	Y+4, r24	; 0x04
+     206:	8c 81       	ldd	r24, Y+4	; 0x04
+
+	return E_OK;
+}//end UART_RecieveDataNoBLOCKING
+     208:	0f 90       	pop	r0
+     20a:	0f 90       	pop	r0
+     20c:	0f 90       	pop	r0
+     20e:	0f 90       	pop	r0
+     210:	cf 91       	pop	r28
+     212:	df 91       	pop	r29
+     214:	08 95       	ret
+
+00000216 <UART_SendDataNoBLOCK>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to send data via UART without blocking the system
+*************************************************************************************************/
+enuErrorStatus_t UART_SendDataNoBLOCK(uint8_t u8Data)
+{
+     216:	df 93       	push	r29
+     218:	cf 93       	push	r28
+     21a:	00 d0       	rcall	.+0      	; 0x21c <UART_SendDataNoBLOCK+0x6>
+     21c:	0f 92       	push	r0
+     21e:	cd b7       	in	r28, 0x3d	; 61
+     220:	de b7       	in	r29, 0x3e	; 62
+     222:	8a 83       	std	Y+2, r24	; 0x02
+	if(genuUARTInitStatus == E_ERROR)
+     224:	80 91 b4 00 	lds	r24, 0x00B4
+     228:	88 23       	and	r24, r24
+     22a:	11 f4       	brne	.+4      	; 0x230 <UART_SendDataNoBLOCK+0x1a>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+     22c:	1b 82       	std	Y+3, r1	; 0x03
+     22e:	12 c0       	rjmp	.+36     	; 0x254 <UART_SendDataNoBLOCK+0x3e>
+	}//end if
+
+	enuErrorStatus_t enuStatus = E_ERROR;
+     230:	19 82       	std	Y+1, r1	; 0x01
+
+    if (GET_BIT(UCSRA_R, UDRE_B))
+     232:	eb e2       	ldi	r30, 0x2B	; 43
+     234:	f0 e0       	ldi	r31, 0x00	; 0
+     236:	80 81       	ld	r24, Z
+     238:	88 2f       	mov	r24, r24
+     23a:	90 e0       	ldi	r25, 0x00	; 0
+     23c:	80 72       	andi	r24, 0x20	; 32
+     23e:	90 70       	andi	r25, 0x00	; 0
+     240:	00 97       	sbiw	r24, 0x00	; 0
+     242:	31 f0       	breq	.+12     	; 0x250 <UART_SendDataNoBLOCK+0x3a>
+    {
+        UDR_R = u8Data;
+     244:	ec e2       	ldi	r30, 0x2C	; 44
+     246:	f0 e0       	ldi	r31, 0x00	; 0
+     248:	8a 81       	ldd	r24, Y+2	; 0x02
+     24a:	80 83       	st	Z, r24
+        enuStatus = E_OK;
+     24c:	81 e0       	ldi	r24, 0x01	; 1
+     24e:	89 83       	std	Y+1, r24	; 0x01
+    }
+    else
+    {
+        /* do nothing */
+    }
+    return enuStatus;
+     250:	89 81       	ldd	r24, Y+1	; 0x01
+     252:	8b 83       	std	Y+3, r24	; 0x03
+     254:	8b 81       	ldd	r24, Y+3	; 0x03
+
+	return E_OK;
+}//end UART_RecieveDataNoBLOCKING
+     256:	0f 90       	pop	r0
+     258:	0f 90       	pop	r0
+     25a:	0f 90       	pop	r0
+     25c:	cf 91       	pop	r28
+     25e:	df 91       	pop	r29
+     260:	08 95       	ret
+
+00000262 <UART_SendString>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to send string via UART
+*************************************************************************************************/
+enuErrorStatus_t UART_SendString(uint8_t* pu8String)
+{
+     262:	df 93       	push	r29
+     264:	cf 93       	push	r28
+     266:	00 d0       	rcall	.+0      	; 0x268 <UART_SendString+0x6>
+     268:	00 d0       	rcall	.+0      	; 0x26a <UART_SendString+0x8>
+     26a:	cd b7       	in	r28, 0x3d	; 61
+     26c:	de b7       	in	r29, 0x3e	; 62
+     26e:	9b 83       	std	Y+3, r25	; 0x03
+     270:	8a 83       	std	Y+2, r24	; 0x02
+	uint8_t u8i=0;
+     272:	19 82       	std	Y+1, r1	; 0x01
+
+	if(genuUARTInitStatus == E_ERROR || pu8String == NULL_PTR)
+     274:	80 91 b4 00 	lds	r24, 0x00B4
+     278:	88 23       	and	r24, r24
+     27a:	21 f0       	breq	.+8      	; 0x284 <UART_SendString+0x22>
+     27c:	8a 81       	ldd	r24, Y+2	; 0x02
+     27e:	9b 81       	ldd	r25, Y+3	; 0x03
+     280:	00 97       	sbiw	r24, 0x00	; 0
+     282:	11 f4       	brne	.+4      	; 0x288 <UART_SendString+0x26>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+     284:	1c 82       	std	Y+4, r1	; 0x04
+     286:	26 c0       	rjmp	.+76     	; 0x2d4 <UART_SendString+0x72>
+	}//end if
+
+	for(u8i=0; u8i<MAXSIZE; u8i++)
+     288:	19 82       	std	Y+1, r1	; 0x01
+     28a:	19 c0       	rjmp	.+50     	; 0x2be <UART_SendString+0x5c>
+	{
+		UART_SendData(pu8String[u8i]);
+     28c:	89 81       	ldd	r24, Y+1	; 0x01
+     28e:	28 2f       	mov	r18, r24
+     290:	30 e0       	ldi	r19, 0x00	; 0
+     292:	8a 81       	ldd	r24, Y+2	; 0x02
+     294:	9b 81       	ldd	r25, Y+3	; 0x03
+     296:	fc 01       	movw	r30, r24
+     298:	e2 0f       	add	r30, r18
+     29a:	f3 1f       	adc	r31, r19
+     29c:	80 81       	ld	r24, Z
+     29e:	0e 94 a2 00 	call	0x144	; 0x144 <UART_SendData>
+		if(pu8String[u8i] =='\0')
+     2a2:	89 81       	ldd	r24, Y+1	; 0x01
+     2a4:	28 2f       	mov	r18, r24
+     2a6:	30 e0       	ldi	r19, 0x00	; 0
+     2a8:	8a 81       	ldd	r24, Y+2	; 0x02
+     2aa:	9b 81       	ldd	r25, Y+3	; 0x03
+     2ac:	fc 01       	movw	r30, r24
+     2ae:	e2 0f       	add	r30, r18
+     2b0:	f3 1f       	adc	r31, r19
+     2b2:	80 81       	ld	r24, Z
+     2b4:	88 23       	and	r24, r24
+     2b6:	31 f0       	breq	.+12     	; 0x2c4 <UART_SendString+0x62>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+	}//end if
+
+	for(u8i=0; u8i<MAXSIZE; u8i++)
+     2b8:	89 81       	ldd	r24, Y+1	; 0x01
+     2ba:	8f 5f       	subi	r24, 0xFF	; 255
+     2bc:	89 83       	std	Y+1, r24	; 0x01
+     2be:	89 81       	ldd	r24, Y+1	; 0x01
+     2c0:	8f 3f       	cpi	r24, 0xFF	; 255
+     2c2:	21 f7       	brne	.-56     	; 0x28c <UART_SendString+0x2a>
+		if(pu8String[u8i] =='\0')
+		{
+			break;
+		}
+	}
+	UART_SendData('\r');
+     2c4:	8d e0       	ldi	r24, 0x0D	; 13
+     2c6:	0e 94 a2 00 	call	0x144	; 0x144 <UART_SendData>
+	UART_SendData('\n');
+     2ca:	8a e0       	ldi	r24, 0x0A	; 10
+     2cc:	0e 94 a2 00 	call	0x144	; 0x144 <UART_SendData>
+
+	return E_OK;
+     2d0:	81 e0       	ldi	r24, 0x01	; 1
+     2d2:	8c 83       	std	Y+4, r24	; 0x04
+     2d4:	8c 81       	ldd	r24, Y+4	; 0x04
+}//end UART_SendString
+     2d6:	0f 90       	pop	r0
+     2d8:	0f 90       	pop	r0
+     2da:	0f 90       	pop	r0
+     2dc:	0f 90       	pop	r0
+     2de:	cf 91       	pop	r28
+     2e0:	df 91       	pop	r29
+     2e2:	08 95       	ret
+
+000002e4 <UART_ReceiveString>:
+* Parameters (out): pu8String
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to receive string via UART
+*************************************************************************************************/
+enuErrorStatus_t UART_ReceiveString(uint8_t* pu8String)
+{
+     2e4:	df 93       	push	r29
+     2e6:	cf 93       	push	r28
+     2e8:	00 d0       	rcall	.+0      	; 0x2ea <UART_ReceiveString+0x6>
+     2ea:	00 d0       	rcall	.+0      	; 0x2ec <UART_ReceiveString+0x8>
+     2ec:	cd b7       	in	r28, 0x3d	; 61
+     2ee:	de b7       	in	r29, 0x3e	; 62
+     2f0:	9b 83       	std	Y+3, r25	; 0x03
+     2f2:	8a 83       	std	Y+2, r24	; 0x02
+	uint8_t u8i=0;
+     2f4:	19 82       	std	Y+1, r1	; 0x01
+
+	if(genuUARTInitStatus == E_ERROR)
+     2f6:	80 91 b4 00 	lds	r24, 0x00B4
+     2fa:	88 23       	and	r24, r24
+     2fc:	11 f4       	brne	.+4      	; 0x302 <UART_ReceiveString+0x1e>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+     2fe:	1c 82       	std	Y+4, r1	; 0x04
+     300:	32 c0       	rjmp	.+100    	; 0x366 <UART_ReceiveString+0x82>
+	}//end if
+
+	for(u8i=0; u8i<MAXSIZE; u8i++)
+     302:	19 82       	std	Y+1, r1	; 0x01
+     304:	22 c0       	rjmp	.+68     	; 0x34a <UART_ReceiveString+0x66>
+	{
+		UART_ReceiveData(&pu8String[u8i]);
+     306:	89 81       	ldd	r24, Y+1	; 0x01
+     308:	28 2f       	mov	r18, r24
+     30a:	30 e0       	ldi	r19, 0x00	; 0
+     30c:	8a 81       	ldd	r24, Y+2	; 0x02
+     30e:	9b 81       	ldd	r25, Y+3	; 0x03
+     310:	82 0f       	add	r24, r18
+     312:	93 1f       	adc	r25, r19
+     314:	0e 94 c3 00 	call	0x186	; 0x186 <UART_ReceiveData>
+		if(pu8String[u8i] =='\r' || pu8String[u8i] =='\n')
+     318:	89 81       	ldd	r24, Y+1	; 0x01
+     31a:	28 2f       	mov	r18, r24
+     31c:	30 e0       	ldi	r19, 0x00	; 0
+     31e:	8a 81       	ldd	r24, Y+2	; 0x02
+     320:	9b 81       	ldd	r25, Y+3	; 0x03
+     322:	fc 01       	movw	r30, r24
+     324:	e2 0f       	add	r30, r18
+     326:	f3 1f       	adc	r31, r19
+     328:	80 81       	ld	r24, Z
+     32a:	8d 30       	cpi	r24, 0x0D	; 13
+     32c:	89 f0       	breq	.+34     	; 0x350 <UART_ReceiveString+0x6c>
+     32e:	89 81       	ldd	r24, Y+1	; 0x01
+     330:	28 2f       	mov	r18, r24
+     332:	30 e0       	ldi	r19, 0x00	; 0
+     334:	8a 81       	ldd	r24, Y+2	; 0x02
+     336:	9b 81       	ldd	r25, Y+3	; 0x03
+     338:	fc 01       	movw	r30, r24
+     33a:	e2 0f       	add	r30, r18
+     33c:	f3 1f       	adc	r31, r19
+     33e:	80 81       	ld	r24, Z
+     340:	8a 30       	cpi	r24, 0x0A	; 10
+     342:	31 f0       	breq	.+12     	; 0x350 <UART_ReceiveString+0x6c>
+	{
+		//if uart is not initialized
+		return E_ERROR;
+	}//end if
+
+	for(u8i=0; u8i<MAXSIZE; u8i++)
+     344:	89 81       	ldd	r24, Y+1	; 0x01
+     346:	8f 5f       	subi	r24, 0xFF	; 255
+     348:	89 83       	std	Y+1, r24	; 0x01
+     34a:	89 81       	ldd	r24, Y+1	; 0x01
+     34c:	8f 3f       	cpi	r24, 0xFF	; 255
+     34e:	d9 f6       	brne	.-74     	; 0x306 <UART_ReceiveString+0x22>
+		if(pu8String[u8i] =='\r' || pu8String[u8i] =='\n')
+		{
+			break;
+		}
+	}
+	pu8String[u8i]='\0';
+     350:	89 81       	ldd	r24, Y+1	; 0x01
+     352:	28 2f       	mov	r18, r24
+     354:	30 e0       	ldi	r19, 0x00	; 0
+     356:	8a 81       	ldd	r24, Y+2	; 0x02
+     358:	9b 81       	ldd	r25, Y+3	; 0x03
+     35a:	fc 01       	movw	r30, r24
+     35c:	e2 0f       	add	r30, r18
+     35e:	f3 1f       	adc	r31, r19
+     360:	10 82       	st	Z, r1
+	return E_OK;
+     362:	81 e0       	ldi	r24, 0x01	; 1
+     364:	8c 83       	std	Y+4, r24	; 0x04
+     366:	8c 81       	ldd	r24, Y+4	; 0x04
+}//end UART_ReceiveString
+     368:	0f 90       	pop	r0
+     36a:	0f 90       	pop	r0
+     36c:	0f 90       	pop	r0
+     36e:	0f 90       	pop	r0
+     370:	cf 91       	pop	r28
+     372:	df 91       	pop	r29
+     374:	08 95       	ret
+
+00000376 <Test_UART_Init>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to test UART initialization
+*************************************************************************************************/
+enuErrorStatus_t Test_UART_Init(void)
+{
+     376:	df 93       	push	r29
+     378:	cf 93       	push	r28
+     37a:	cd b7       	in	r28, 0x3d	; 61
+     37c:	de b7       	in	r29, 0x3e	; 62
+	return genuUARTInitStatus;
+     37e:	80 91 b4 00 	lds	r24, 0x00B4
+}//end Test_UART_Init
+     382:	cf 91       	pop	r28
+     384:	df 91       	pop	r29
+     386:	08 95       	ret
+
+00000388 <Test_UART_SendData>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to test sending data via UART
+*************************************************************************************************/
+enuErrorStatus_t Test_UART_SendData(void)
+{
+     388:	df 93       	push	r29
+     38a:	cf 93       	push	r28
+     38c:	cd b7       	in	r28, 0x3d	; 61
+     38e:	de b7       	in	r29, 0x3e	; 62
+	return UART_SendData('k');
+     390:	8b e6       	ldi	r24, 0x6B	; 107
+     392:	0e 94 a2 00 	call	0x144	; 0x144 <UART_SendData>
+}//end Test_UART_Init
+     396:	cf 91       	pop	r28
+     398:	df 91       	pop	r29
+     39a:	08 95       	ret
+
+0000039c <Test_UART_SendString>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to test sending string via UART
+*************************************************************************************************/
+enuErrorStatus_t Test_UART_SendString(void)
+{
+     39c:	df 93       	push	r29
+     39e:	cf 93       	push	r28
+     3a0:	cd b7       	in	r28, 0x3d	; 61
+     3a2:	de b7       	in	r29, 0x3e	; 62
+	return UART_SendString((uint8_t*)"Hello");
+     3a4:	80 e6       	ldi	r24, 0x60	; 96
+     3a6:	90 e0       	ldi	r25, 0x00	; 0
+     3a8:	0e 94 31 01 	call	0x262	; 0x262 <UART_SendString>
+}//end Test_UART_Init
+     3ac:	cf 91       	pop	r28
+     3ae:	df 91       	pop	r29
+     3b0:	08 95       	ret
+
+000003b2 <Test_UART_ReceiveData>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to test receiving data via UART
+*************************************************************************************************/
+enuErrorStatus_t Test_UART_ReceiveData(void)
+{
+     3b2:	df 93       	push	r29
+     3b4:	cf 93       	push	r28
+     3b6:	0f 92       	push	r0
+     3b8:	cd b7       	in	r28, 0x3d	; 61
+     3ba:	de b7       	in	r29, 0x3e	; 62
+	uint8_t pu8_Data;
+	return UART_ReceiveData(&pu8_Data);
+     3bc:	ce 01       	movw	r24, r28
+     3be:	01 96       	adiw	r24, 0x01	; 1
+     3c0:	0e 94 c3 00 	call	0x186	; 0x186 <UART_ReceiveData>
+}//end Test_UART_Init
+     3c4:	0f 90       	pop	r0
+     3c6:	cf 91       	pop	r28
+     3c8:	df 91       	pop	r29
+     3ca:	08 95       	ret
+
+000003cc <Test_UART_ReceiveString>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to test receiving string via UART
+*************************************************************************************************/
+enuErrorStatus_t Test_UART_ReceiveString(void)
+{
+     3cc:	df 93       	push	r29
+     3ce:	cf 93       	push	r28
+     3d0:	00 d0       	rcall	.+0      	; 0x3d2 <Test_UART_ReceiveString+0x6>
+     3d2:	cd b7       	in	r28, 0x3d	; 61
+     3d4:	de b7       	in	r29, 0x3e	; 62
+	uint8_t *u8_String;
+	return UART_ReceiveString(&u8_String);
+     3d6:	ce 01       	movw	r24, r28
+     3d8:	01 96       	adiw	r24, 0x01	; 1
+     3da:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_ReceiveString>
+}//end Test_UART_Init
+     3de:	0f 90       	pop	r0
+     3e0:	0f 90       	pop	r0
+     3e2:	cf 91       	pop	r28
+     3e4:	df 91       	pop	r29
+     3e6:	08 95       	ret
+
+000003e8 <DIO_Init>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to initialize all the DIO groups according to the configuration
+*************************************************************************************************/
+enuErrorStatus_t DIO_Init(void)
+{
+     3e8:	df 93       	push	r29
+     3ea:	cf 93       	push	r28
+     3ec:	0f 92       	push	r0
+     3ee:	cd b7       	in	r28, 0x3d	; 61
+     3f0:	de b7       	in	r29, 0x3e	; 62
+	uint8_t u8_i;
+
+	for(u8_i=0; u8_i<DIO_GROUPS_NO; u8_i++)
+     3f2:	19 82       	std	Y+1, r1	; 0x01
+     3f4:	02 c4       	rjmp	.+2052   	; 0xbfa <__stack+0x39b>
+	{
+		//set the pin direction (input, output)
+		if(astrDIOConfigParameters[u8_i].enuPinDir == INPUT)
+     3f6:	89 81       	ldd	r24, Y+1	; 0x01
+     3f8:	28 2f       	mov	r18, r24
+     3fa:	30 e0       	ldi	r19, 0x00	; 0
+     3fc:	c9 01       	movw	r24, r18
+     3fe:	88 0f       	add	r24, r24
+     400:	99 1f       	adc	r25, r25
+     402:	82 0f       	add	r24, r18
+     404:	93 1f       	adc	r25, r19
+     406:	fc 01       	movw	r30, r24
+     408:	e9 59       	subi	r30, 0x99	; 153
+     40a:	ff 4f       	sbci	r31, 0xFF	; 255
+     40c:	80 81       	ld	r24, Z
+     40e:	88 23       	and	r24, r24
+     410:	09 f0       	breq	.+2      	; 0x414 <DIO_Init+0x2c>
+     412:	ed c0       	rjmp	.+474    	; 0x5ee <DIO_Init+0x206>
+		{
+			//if PORTA
+			if((astrDIOConfigParameters[u8_i].enuPinNo >= 0) && (astrDIOConfigParameters[u8_i].enuPinNo < 8))
+     414:	89 81       	ldd	r24, Y+1	; 0x01
+     416:	28 2f       	mov	r18, r24
+     418:	30 e0       	ldi	r19, 0x00	; 0
+     41a:	c9 01       	movw	r24, r18
+     41c:	88 0f       	add	r24, r24
+     41e:	99 1f       	adc	r25, r25
+     420:	82 0f       	add	r24, r18
+     422:	93 1f       	adc	r25, r19
+     424:	fc 01       	movw	r30, r24
+     426:	ea 59       	subi	r30, 0x9A	; 154
+     428:	ff 4f       	sbci	r31, 0xFF	; 255
+     42a:	80 81       	ld	r24, Z
+     42c:	88 30       	cpi	r24, 0x08	; 8
+     42e:	00 f5       	brcc	.+64     	; 0x470 <DIO_Init+0x88>
+			{
+				CLR_BIT(DDRA_R, astrDIOConfigParameters[u8_i].enuPinNo);
+     430:	aa e3       	ldi	r26, 0x3A	; 58
+     432:	b0 e0       	ldi	r27, 0x00	; 0
+     434:	ea e3       	ldi	r30, 0x3A	; 58
+     436:	f0 e0       	ldi	r31, 0x00	; 0
+     438:	80 81       	ld	r24, Z
+     43a:	48 2f       	mov	r20, r24
+     43c:	89 81       	ldd	r24, Y+1	; 0x01
+     43e:	28 2f       	mov	r18, r24
+     440:	30 e0       	ldi	r19, 0x00	; 0
+     442:	c9 01       	movw	r24, r18
+     444:	88 0f       	add	r24, r24
+     446:	99 1f       	adc	r25, r25
+     448:	82 0f       	add	r24, r18
+     44a:	93 1f       	adc	r25, r19
+     44c:	fc 01       	movw	r30, r24
+     44e:	ea 59       	subi	r30, 0x9A	; 154
+     450:	ff 4f       	sbci	r31, 0xFF	; 255
+     452:	80 81       	ld	r24, Z
+     454:	28 2f       	mov	r18, r24
+     456:	30 e0       	ldi	r19, 0x00	; 0
+     458:	81 e0       	ldi	r24, 0x01	; 1
+     45a:	90 e0       	ldi	r25, 0x00	; 0
+     45c:	02 2e       	mov	r0, r18
+     45e:	02 c0       	rjmp	.+4      	; 0x464 <DIO_Init+0x7c>
+     460:	88 0f       	add	r24, r24
+     462:	99 1f       	adc	r25, r25
+     464:	0a 94       	dec	r0
+     466:	e2 f7       	brpl	.-8      	; 0x460 <DIO_Init+0x78>
+     468:	80 95       	com	r24
+     46a:	84 23       	and	r24, r20
+     46c:	8c 93       	st	X, r24
+     46e:	b3 c1       	rjmp	.+870    	; 0x7d6 <DIO_Init+0x3ee>
+			}//end if
+
+			//if PORTB
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 8) && (astrDIOConfigParameters[u8_i].enuPinNo < 16))
+     470:	89 81       	ldd	r24, Y+1	; 0x01
+     472:	28 2f       	mov	r18, r24
+     474:	30 e0       	ldi	r19, 0x00	; 0
+     476:	c9 01       	movw	r24, r18
+     478:	88 0f       	add	r24, r24
+     47a:	99 1f       	adc	r25, r25
+     47c:	82 0f       	add	r24, r18
+     47e:	93 1f       	adc	r25, r19
+     480:	fc 01       	movw	r30, r24
+     482:	ea 59       	subi	r30, 0x9A	; 154
+     484:	ff 4f       	sbci	r31, 0xFF	; 255
+     486:	80 81       	ld	r24, Z
+     488:	88 30       	cpi	r24, 0x08	; 8
+     48a:	88 f1       	brcs	.+98     	; 0x4ee <DIO_Init+0x106>
+     48c:	89 81       	ldd	r24, Y+1	; 0x01
+     48e:	28 2f       	mov	r18, r24
+     490:	30 e0       	ldi	r19, 0x00	; 0
+     492:	c9 01       	movw	r24, r18
+     494:	88 0f       	add	r24, r24
+     496:	99 1f       	adc	r25, r25
+     498:	82 0f       	add	r24, r18
+     49a:	93 1f       	adc	r25, r19
+     49c:	fc 01       	movw	r30, r24
+     49e:	ea 59       	subi	r30, 0x9A	; 154
+     4a0:	ff 4f       	sbci	r31, 0xFF	; 255
+     4a2:	80 81       	ld	r24, Z
+     4a4:	80 31       	cpi	r24, 0x10	; 16
+     4a6:	18 f5       	brcc	.+70     	; 0x4ee <DIO_Init+0x106>
+			{
+				CLR_BIT(DDRB_R,(astrDIOConfigParameters[u8_i].enuPinNo - 8));
+     4a8:	a7 e3       	ldi	r26, 0x37	; 55
+     4aa:	b0 e0       	ldi	r27, 0x00	; 0
+     4ac:	e7 e3       	ldi	r30, 0x37	; 55
+     4ae:	f0 e0       	ldi	r31, 0x00	; 0
+     4b0:	80 81       	ld	r24, Z
+     4b2:	48 2f       	mov	r20, r24
+     4b4:	89 81       	ldd	r24, Y+1	; 0x01
+     4b6:	28 2f       	mov	r18, r24
+     4b8:	30 e0       	ldi	r19, 0x00	; 0
+     4ba:	c9 01       	movw	r24, r18
+     4bc:	88 0f       	add	r24, r24
+     4be:	99 1f       	adc	r25, r25
+     4c0:	82 0f       	add	r24, r18
+     4c2:	93 1f       	adc	r25, r19
+     4c4:	fc 01       	movw	r30, r24
+     4c6:	ea 59       	subi	r30, 0x9A	; 154
+     4c8:	ff 4f       	sbci	r31, 0xFF	; 255
+     4ca:	80 81       	ld	r24, Z
+     4cc:	88 2f       	mov	r24, r24
+     4ce:	90 e0       	ldi	r25, 0x00	; 0
+     4d0:	9c 01       	movw	r18, r24
+     4d2:	28 50       	subi	r18, 0x08	; 8
+     4d4:	30 40       	sbci	r19, 0x00	; 0
+     4d6:	81 e0       	ldi	r24, 0x01	; 1
+     4d8:	90 e0       	ldi	r25, 0x00	; 0
+     4da:	02 2e       	mov	r0, r18
+     4dc:	02 c0       	rjmp	.+4      	; 0x4e2 <DIO_Init+0xfa>
+     4de:	88 0f       	add	r24, r24
+     4e0:	99 1f       	adc	r25, r25
+     4e2:	0a 94       	dec	r0
+     4e4:	e2 f7       	brpl	.-8      	; 0x4de <DIO_Init+0xf6>
+     4e6:	80 95       	com	r24
+     4e8:	84 23       	and	r24, r20
+     4ea:	8c 93       	st	X, r24
+     4ec:	74 c1       	rjmp	.+744    	; 0x7d6 <DIO_Init+0x3ee>
+			}//end else if
+
+			//if PORTC
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 16) && (astrDIOConfigParameters[u8_i].enuPinNo < 24))
+     4ee:	89 81       	ldd	r24, Y+1	; 0x01
+     4f0:	28 2f       	mov	r18, r24
+     4f2:	30 e0       	ldi	r19, 0x00	; 0
+     4f4:	c9 01       	movw	r24, r18
+     4f6:	88 0f       	add	r24, r24
+     4f8:	99 1f       	adc	r25, r25
+     4fa:	82 0f       	add	r24, r18
+     4fc:	93 1f       	adc	r25, r19
+     4fe:	fc 01       	movw	r30, r24
+     500:	ea 59       	subi	r30, 0x9A	; 154
+     502:	ff 4f       	sbci	r31, 0xFF	; 255
+     504:	80 81       	ld	r24, Z
+     506:	80 31       	cpi	r24, 0x10	; 16
+     508:	88 f1       	brcs	.+98     	; 0x56c <DIO_Init+0x184>
+     50a:	89 81       	ldd	r24, Y+1	; 0x01
+     50c:	28 2f       	mov	r18, r24
+     50e:	30 e0       	ldi	r19, 0x00	; 0
+     510:	c9 01       	movw	r24, r18
+     512:	88 0f       	add	r24, r24
+     514:	99 1f       	adc	r25, r25
+     516:	82 0f       	add	r24, r18
+     518:	93 1f       	adc	r25, r19
+     51a:	fc 01       	movw	r30, r24
+     51c:	ea 59       	subi	r30, 0x9A	; 154
+     51e:	ff 4f       	sbci	r31, 0xFF	; 255
+     520:	80 81       	ld	r24, Z
+     522:	88 31       	cpi	r24, 0x18	; 24
+     524:	18 f5       	brcc	.+70     	; 0x56c <DIO_Init+0x184>
+			{
+				CLR_BIT(DDRC_R,(astrDIOConfigParameters[u8_i].enuPinNo - 16));
+     526:	a4 e3       	ldi	r26, 0x34	; 52
+     528:	b0 e0       	ldi	r27, 0x00	; 0
+     52a:	e4 e3       	ldi	r30, 0x34	; 52
+     52c:	f0 e0       	ldi	r31, 0x00	; 0
+     52e:	80 81       	ld	r24, Z
+     530:	48 2f       	mov	r20, r24
+     532:	89 81       	ldd	r24, Y+1	; 0x01
+     534:	28 2f       	mov	r18, r24
+     536:	30 e0       	ldi	r19, 0x00	; 0
+     538:	c9 01       	movw	r24, r18
+     53a:	88 0f       	add	r24, r24
+     53c:	99 1f       	adc	r25, r25
+     53e:	82 0f       	add	r24, r18
+     540:	93 1f       	adc	r25, r19
+     542:	fc 01       	movw	r30, r24
+     544:	ea 59       	subi	r30, 0x9A	; 154
+     546:	ff 4f       	sbci	r31, 0xFF	; 255
+     548:	80 81       	ld	r24, Z
+     54a:	88 2f       	mov	r24, r24
+     54c:	90 e0       	ldi	r25, 0x00	; 0
+     54e:	9c 01       	movw	r18, r24
+     550:	20 51       	subi	r18, 0x10	; 16
+     552:	30 40       	sbci	r19, 0x00	; 0
+     554:	81 e0       	ldi	r24, 0x01	; 1
+     556:	90 e0       	ldi	r25, 0x00	; 0
+     558:	02 2e       	mov	r0, r18
+     55a:	02 c0       	rjmp	.+4      	; 0x560 <DIO_Init+0x178>
+     55c:	88 0f       	add	r24, r24
+     55e:	99 1f       	adc	r25, r25
+     560:	0a 94       	dec	r0
+     562:	e2 f7       	brpl	.-8      	; 0x55c <DIO_Init+0x174>
+     564:	80 95       	com	r24
+     566:	84 23       	and	r24, r20
+     568:	8c 93       	st	X, r24
+     56a:	35 c1       	rjmp	.+618    	; 0x7d6 <DIO_Init+0x3ee>
+			}//end else if
+
+			//if PORTD
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 24) && (astrDIOConfigParameters[u8_i].enuPinNo < 32))
+     56c:	89 81       	ldd	r24, Y+1	; 0x01
+     56e:	28 2f       	mov	r18, r24
+     570:	30 e0       	ldi	r19, 0x00	; 0
+     572:	c9 01       	movw	r24, r18
+     574:	88 0f       	add	r24, r24
+     576:	99 1f       	adc	r25, r25
+     578:	82 0f       	add	r24, r18
+     57a:	93 1f       	adc	r25, r19
+     57c:	fc 01       	movw	r30, r24
+     57e:	ea 59       	subi	r30, 0x9A	; 154
+     580:	ff 4f       	sbci	r31, 0xFF	; 255
+     582:	80 81       	ld	r24, Z
+     584:	88 31       	cpi	r24, 0x18	; 24
+     586:	08 f4       	brcc	.+2      	; 0x58a <DIO_Init+0x1a2>
+     588:	26 c1       	rjmp	.+588    	; 0x7d6 <DIO_Init+0x3ee>
+     58a:	89 81       	ldd	r24, Y+1	; 0x01
+     58c:	28 2f       	mov	r18, r24
+     58e:	30 e0       	ldi	r19, 0x00	; 0
+     590:	c9 01       	movw	r24, r18
+     592:	88 0f       	add	r24, r24
+     594:	99 1f       	adc	r25, r25
+     596:	82 0f       	add	r24, r18
+     598:	93 1f       	adc	r25, r19
+     59a:	fc 01       	movw	r30, r24
+     59c:	ea 59       	subi	r30, 0x9A	; 154
+     59e:	ff 4f       	sbci	r31, 0xFF	; 255
+     5a0:	80 81       	ld	r24, Z
+     5a2:	80 32       	cpi	r24, 0x20	; 32
+     5a4:	08 f0       	brcs	.+2      	; 0x5a8 <DIO_Init+0x1c0>
+     5a6:	17 c1       	rjmp	.+558    	; 0x7d6 <DIO_Init+0x3ee>
+			{
+				CLR_BIT(DDRD_R,(astrDIOConfigParameters[u8_i].enuPinNo - 24));
+     5a8:	a1 e3       	ldi	r26, 0x31	; 49
+     5aa:	b0 e0       	ldi	r27, 0x00	; 0
+     5ac:	e1 e3       	ldi	r30, 0x31	; 49
+     5ae:	f0 e0       	ldi	r31, 0x00	; 0
+     5b0:	80 81       	ld	r24, Z
+     5b2:	48 2f       	mov	r20, r24
+     5b4:	89 81       	ldd	r24, Y+1	; 0x01
+     5b6:	28 2f       	mov	r18, r24
+     5b8:	30 e0       	ldi	r19, 0x00	; 0
+     5ba:	c9 01       	movw	r24, r18
+     5bc:	88 0f       	add	r24, r24
+     5be:	99 1f       	adc	r25, r25
+     5c0:	82 0f       	add	r24, r18
+     5c2:	93 1f       	adc	r25, r19
+     5c4:	fc 01       	movw	r30, r24
+     5c6:	ea 59       	subi	r30, 0x9A	; 154
+     5c8:	ff 4f       	sbci	r31, 0xFF	; 255
+     5ca:	80 81       	ld	r24, Z
+     5cc:	88 2f       	mov	r24, r24
+     5ce:	90 e0       	ldi	r25, 0x00	; 0
+     5d0:	9c 01       	movw	r18, r24
+     5d2:	28 51       	subi	r18, 0x18	; 24
+     5d4:	30 40       	sbci	r19, 0x00	; 0
+     5d6:	81 e0       	ldi	r24, 0x01	; 1
+     5d8:	90 e0       	ldi	r25, 0x00	; 0
+     5da:	02 2e       	mov	r0, r18
+     5dc:	02 c0       	rjmp	.+4      	; 0x5e2 <DIO_Init+0x1fa>
+     5de:	88 0f       	add	r24, r24
+     5e0:	99 1f       	adc	r25, r25
+     5e2:	0a 94       	dec	r0
+     5e4:	e2 f7       	brpl	.-8      	; 0x5de <DIO_Init+0x1f6>
+     5e6:	80 95       	com	r24
+     5e8:	84 23       	and	r24, r20
+     5ea:	8c 93       	st	X, r24
+     5ec:	f4 c0       	rjmp	.+488    	; 0x7d6 <DIO_Init+0x3ee>
+			}//end else if
+		}//end if
+
+		else if(astrDIOConfigParameters[u8_i].enuPinDir == OUTPUT)
+     5ee:	89 81       	ldd	r24, Y+1	; 0x01
+     5f0:	28 2f       	mov	r18, r24
+     5f2:	30 e0       	ldi	r19, 0x00	; 0
+     5f4:	c9 01       	movw	r24, r18
+     5f6:	88 0f       	add	r24, r24
+     5f8:	99 1f       	adc	r25, r25
+     5fa:	82 0f       	add	r24, r18
+     5fc:	93 1f       	adc	r25, r19
+     5fe:	fc 01       	movw	r30, r24
+     600:	e9 59       	subi	r30, 0x99	; 153
+     602:	ff 4f       	sbci	r31, 0xFF	; 255
+     604:	80 81       	ld	r24, Z
+     606:	81 30       	cpi	r24, 0x01	; 1
+     608:	09 f0       	breq	.+2      	; 0x60c <DIO_Init+0x224>
+     60a:	e5 c0       	rjmp	.+458    	; 0x7d6 <DIO_Init+0x3ee>
+		{
+			if((astrDIOConfigParameters[u8_i].enuPinNo >= 0) && (astrDIOConfigParameters[u8_i].enuPinNo < 8))	//if porta
+     60c:	89 81       	ldd	r24, Y+1	; 0x01
+     60e:	28 2f       	mov	r18, r24
+     610:	30 e0       	ldi	r19, 0x00	; 0
+     612:	c9 01       	movw	r24, r18
+     614:	88 0f       	add	r24, r24
+     616:	99 1f       	adc	r25, r25
+     618:	82 0f       	add	r24, r18
+     61a:	93 1f       	adc	r25, r19
+     61c:	fc 01       	movw	r30, r24
+     61e:	ea 59       	subi	r30, 0x9A	; 154
+     620:	ff 4f       	sbci	r31, 0xFF	; 255
+     622:	80 81       	ld	r24, Z
+     624:	88 30       	cpi	r24, 0x08	; 8
+     626:	f8 f4       	brcc	.+62     	; 0x666 <DIO_Init+0x27e>
+			{
+				SET_BIT(DDRA_R, astrDIOConfigParameters[u8_i].enuPinNo);
+     628:	aa e3       	ldi	r26, 0x3A	; 58
+     62a:	b0 e0       	ldi	r27, 0x00	; 0
+     62c:	ea e3       	ldi	r30, 0x3A	; 58
+     62e:	f0 e0       	ldi	r31, 0x00	; 0
+     630:	80 81       	ld	r24, Z
+     632:	48 2f       	mov	r20, r24
+     634:	89 81       	ldd	r24, Y+1	; 0x01
+     636:	28 2f       	mov	r18, r24
+     638:	30 e0       	ldi	r19, 0x00	; 0
+     63a:	c9 01       	movw	r24, r18
+     63c:	88 0f       	add	r24, r24
+     63e:	99 1f       	adc	r25, r25
+     640:	82 0f       	add	r24, r18
+     642:	93 1f       	adc	r25, r19
+     644:	fc 01       	movw	r30, r24
+     646:	ea 59       	subi	r30, 0x9A	; 154
+     648:	ff 4f       	sbci	r31, 0xFF	; 255
+     64a:	80 81       	ld	r24, Z
+     64c:	28 2f       	mov	r18, r24
+     64e:	30 e0       	ldi	r19, 0x00	; 0
+     650:	81 e0       	ldi	r24, 0x01	; 1
+     652:	90 e0       	ldi	r25, 0x00	; 0
+     654:	02 2e       	mov	r0, r18
+     656:	02 c0       	rjmp	.+4      	; 0x65c <DIO_Init+0x274>
+     658:	88 0f       	add	r24, r24
+     65a:	99 1f       	adc	r25, r25
+     65c:	0a 94       	dec	r0
+     65e:	e2 f7       	brpl	.-8      	; 0x658 <DIO_Init+0x270>
+     660:	84 2b       	or	r24, r20
+     662:	8c 93       	st	X, r24
+     664:	b8 c0       	rjmp	.+368    	; 0x7d6 <DIO_Init+0x3ee>
+			}//end if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 8) && (astrDIOConfigParameters[u8_i].enuPinNo < 16))	//if portb
+     666:	89 81       	ldd	r24, Y+1	; 0x01
+     668:	28 2f       	mov	r18, r24
+     66a:	30 e0       	ldi	r19, 0x00	; 0
+     66c:	c9 01       	movw	r24, r18
+     66e:	88 0f       	add	r24, r24
+     670:	99 1f       	adc	r25, r25
+     672:	82 0f       	add	r24, r18
+     674:	93 1f       	adc	r25, r19
+     676:	fc 01       	movw	r30, r24
+     678:	ea 59       	subi	r30, 0x9A	; 154
+     67a:	ff 4f       	sbci	r31, 0xFF	; 255
+     67c:	80 81       	ld	r24, Z
+     67e:	88 30       	cpi	r24, 0x08	; 8
+     680:	80 f1       	brcs	.+96     	; 0x6e2 <DIO_Init+0x2fa>
+     682:	89 81       	ldd	r24, Y+1	; 0x01
+     684:	28 2f       	mov	r18, r24
+     686:	30 e0       	ldi	r19, 0x00	; 0
+     688:	c9 01       	movw	r24, r18
+     68a:	88 0f       	add	r24, r24
+     68c:	99 1f       	adc	r25, r25
+     68e:	82 0f       	add	r24, r18
+     690:	93 1f       	adc	r25, r19
+     692:	fc 01       	movw	r30, r24
+     694:	ea 59       	subi	r30, 0x9A	; 154
+     696:	ff 4f       	sbci	r31, 0xFF	; 255
+     698:	80 81       	ld	r24, Z
+     69a:	80 31       	cpi	r24, 0x10	; 16
+     69c:	10 f5       	brcc	.+68     	; 0x6e2 <DIO_Init+0x2fa>
+			{
+				SET_BIT(DDRB_R,(astrDIOConfigParameters[u8_i].enuPinNo - 8));
+     69e:	a7 e3       	ldi	r26, 0x37	; 55
+     6a0:	b0 e0       	ldi	r27, 0x00	; 0
+     6a2:	e7 e3       	ldi	r30, 0x37	; 55
+     6a4:	f0 e0       	ldi	r31, 0x00	; 0
+     6a6:	80 81       	ld	r24, Z
+     6a8:	48 2f       	mov	r20, r24
+     6aa:	89 81       	ldd	r24, Y+1	; 0x01
+     6ac:	28 2f       	mov	r18, r24
+     6ae:	30 e0       	ldi	r19, 0x00	; 0
+     6b0:	c9 01       	movw	r24, r18
+     6b2:	88 0f       	add	r24, r24
+     6b4:	99 1f       	adc	r25, r25
+     6b6:	82 0f       	add	r24, r18
+     6b8:	93 1f       	adc	r25, r19
+     6ba:	fc 01       	movw	r30, r24
+     6bc:	ea 59       	subi	r30, 0x9A	; 154
+     6be:	ff 4f       	sbci	r31, 0xFF	; 255
+     6c0:	80 81       	ld	r24, Z
+     6c2:	88 2f       	mov	r24, r24
+     6c4:	90 e0       	ldi	r25, 0x00	; 0
+     6c6:	9c 01       	movw	r18, r24
+     6c8:	28 50       	subi	r18, 0x08	; 8
+     6ca:	30 40       	sbci	r19, 0x00	; 0
+     6cc:	81 e0       	ldi	r24, 0x01	; 1
+     6ce:	90 e0       	ldi	r25, 0x00	; 0
+     6d0:	02 2e       	mov	r0, r18
+     6d2:	02 c0       	rjmp	.+4      	; 0x6d8 <DIO_Init+0x2f0>
+     6d4:	88 0f       	add	r24, r24
+     6d6:	99 1f       	adc	r25, r25
+     6d8:	0a 94       	dec	r0
+     6da:	e2 f7       	brpl	.-8      	; 0x6d4 <DIO_Init+0x2ec>
+     6dc:	84 2b       	or	r24, r20
+     6de:	8c 93       	st	X, r24
+     6e0:	7a c0       	rjmp	.+244    	; 0x7d6 <DIO_Init+0x3ee>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 16) && (astrDIOConfigParameters[u8_i].enuPinNo < 24))	//if portc
+     6e2:	89 81       	ldd	r24, Y+1	; 0x01
+     6e4:	28 2f       	mov	r18, r24
+     6e6:	30 e0       	ldi	r19, 0x00	; 0
+     6e8:	c9 01       	movw	r24, r18
+     6ea:	88 0f       	add	r24, r24
+     6ec:	99 1f       	adc	r25, r25
+     6ee:	82 0f       	add	r24, r18
+     6f0:	93 1f       	adc	r25, r19
+     6f2:	fc 01       	movw	r30, r24
+     6f4:	ea 59       	subi	r30, 0x9A	; 154
+     6f6:	ff 4f       	sbci	r31, 0xFF	; 255
+     6f8:	80 81       	ld	r24, Z
+     6fa:	80 31       	cpi	r24, 0x10	; 16
+     6fc:	80 f1       	brcs	.+96     	; 0x75e <DIO_Init+0x376>
+     6fe:	89 81       	ldd	r24, Y+1	; 0x01
+     700:	28 2f       	mov	r18, r24
+     702:	30 e0       	ldi	r19, 0x00	; 0
+     704:	c9 01       	movw	r24, r18
+     706:	88 0f       	add	r24, r24
+     708:	99 1f       	adc	r25, r25
+     70a:	82 0f       	add	r24, r18
+     70c:	93 1f       	adc	r25, r19
+     70e:	fc 01       	movw	r30, r24
+     710:	ea 59       	subi	r30, 0x9A	; 154
+     712:	ff 4f       	sbci	r31, 0xFF	; 255
+     714:	80 81       	ld	r24, Z
+     716:	88 31       	cpi	r24, 0x18	; 24
+     718:	10 f5       	brcc	.+68     	; 0x75e <DIO_Init+0x376>
+			{
+				SET_BIT(DDRC_R,(astrDIOConfigParameters[u8_i].enuPinNo - 16));
+     71a:	a4 e3       	ldi	r26, 0x34	; 52
+     71c:	b0 e0       	ldi	r27, 0x00	; 0
+     71e:	e4 e3       	ldi	r30, 0x34	; 52
+     720:	f0 e0       	ldi	r31, 0x00	; 0
+     722:	80 81       	ld	r24, Z
+     724:	48 2f       	mov	r20, r24
+     726:	89 81       	ldd	r24, Y+1	; 0x01
+     728:	28 2f       	mov	r18, r24
+     72a:	30 e0       	ldi	r19, 0x00	; 0
+     72c:	c9 01       	movw	r24, r18
+     72e:	88 0f       	add	r24, r24
+     730:	99 1f       	adc	r25, r25
+     732:	82 0f       	add	r24, r18
+     734:	93 1f       	adc	r25, r19
+     736:	fc 01       	movw	r30, r24
+     738:	ea 59       	subi	r30, 0x9A	; 154
+     73a:	ff 4f       	sbci	r31, 0xFF	; 255
+     73c:	80 81       	ld	r24, Z
+     73e:	88 2f       	mov	r24, r24
+     740:	90 e0       	ldi	r25, 0x00	; 0
+     742:	9c 01       	movw	r18, r24
+     744:	20 51       	subi	r18, 0x10	; 16
+     746:	30 40       	sbci	r19, 0x00	; 0
+     748:	81 e0       	ldi	r24, 0x01	; 1
+     74a:	90 e0       	ldi	r25, 0x00	; 0
+     74c:	02 2e       	mov	r0, r18
+     74e:	02 c0       	rjmp	.+4      	; 0x754 <DIO_Init+0x36c>
+     750:	88 0f       	add	r24, r24
+     752:	99 1f       	adc	r25, r25
+     754:	0a 94       	dec	r0
+     756:	e2 f7       	brpl	.-8      	; 0x750 <DIO_Init+0x368>
+     758:	84 2b       	or	r24, r20
+     75a:	8c 93       	st	X, r24
+     75c:	3c c0       	rjmp	.+120    	; 0x7d6 <DIO_Init+0x3ee>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 24) && (astrDIOConfigParameters[u8_i].enuPinNo < 32))	//if portd
+     75e:	89 81       	ldd	r24, Y+1	; 0x01
+     760:	28 2f       	mov	r18, r24
+     762:	30 e0       	ldi	r19, 0x00	; 0
+     764:	c9 01       	movw	r24, r18
+     766:	88 0f       	add	r24, r24
+     768:	99 1f       	adc	r25, r25
+     76a:	82 0f       	add	r24, r18
+     76c:	93 1f       	adc	r25, r19
+     76e:	fc 01       	movw	r30, r24
+     770:	ea 59       	subi	r30, 0x9A	; 154
+     772:	ff 4f       	sbci	r31, 0xFF	; 255
+     774:	80 81       	ld	r24, Z
+     776:	88 31       	cpi	r24, 0x18	; 24
+     778:	70 f1       	brcs	.+92     	; 0x7d6 <DIO_Init+0x3ee>
+     77a:	89 81       	ldd	r24, Y+1	; 0x01
+     77c:	28 2f       	mov	r18, r24
+     77e:	30 e0       	ldi	r19, 0x00	; 0
+     780:	c9 01       	movw	r24, r18
+     782:	88 0f       	add	r24, r24
+     784:	99 1f       	adc	r25, r25
+     786:	82 0f       	add	r24, r18
+     788:	93 1f       	adc	r25, r19
+     78a:	fc 01       	movw	r30, r24
+     78c:	ea 59       	subi	r30, 0x9A	; 154
+     78e:	ff 4f       	sbci	r31, 0xFF	; 255
+     790:	80 81       	ld	r24, Z
+     792:	80 32       	cpi	r24, 0x20	; 32
+     794:	00 f5       	brcc	.+64     	; 0x7d6 <DIO_Init+0x3ee>
+			{
+				SET_BIT(DDRD_R,(astrDIOConfigParameters[u8_i].enuPinNo - 24));
+     796:	a1 e3       	ldi	r26, 0x31	; 49
+     798:	b0 e0       	ldi	r27, 0x00	; 0
+     79a:	e1 e3       	ldi	r30, 0x31	; 49
+     79c:	f0 e0       	ldi	r31, 0x00	; 0
+     79e:	80 81       	ld	r24, Z
+     7a0:	48 2f       	mov	r20, r24
+     7a2:	89 81       	ldd	r24, Y+1	; 0x01
+     7a4:	28 2f       	mov	r18, r24
+     7a6:	30 e0       	ldi	r19, 0x00	; 0
+     7a8:	c9 01       	movw	r24, r18
+     7aa:	88 0f       	add	r24, r24
+     7ac:	99 1f       	adc	r25, r25
+     7ae:	82 0f       	add	r24, r18
+     7b0:	93 1f       	adc	r25, r19
+     7b2:	fc 01       	movw	r30, r24
+     7b4:	ea 59       	subi	r30, 0x9A	; 154
+     7b6:	ff 4f       	sbci	r31, 0xFF	; 255
+     7b8:	80 81       	ld	r24, Z
+     7ba:	88 2f       	mov	r24, r24
+     7bc:	90 e0       	ldi	r25, 0x00	; 0
+     7be:	9c 01       	movw	r18, r24
+     7c0:	28 51       	subi	r18, 0x18	; 24
+     7c2:	30 40       	sbci	r19, 0x00	; 0
+     7c4:	81 e0       	ldi	r24, 0x01	; 1
+     7c6:	90 e0       	ldi	r25, 0x00	; 0
+     7c8:	02 c0       	rjmp	.+4      	; 0x7ce <DIO_Init+0x3e6>
+     7ca:	88 0f       	add	r24, r24
+     7cc:	99 1f       	adc	r25, r25
+     7ce:	2a 95       	dec	r18
+     7d0:	e2 f7       	brpl	.-8      	; 0x7ca <DIO_Init+0x3e2>
+     7d2:	84 2b       	or	r24, r20
+     7d4:	8c 93       	st	X, r24
+			}//end else if
+		}//end else if
+
+		//enable or disable pull-up resistor
+		if(astrDIOConfigParameters[u8_i].enuPinDir == INPUT &&
+     7d6:	89 81       	ldd	r24, Y+1	; 0x01
+     7d8:	28 2f       	mov	r18, r24
+     7da:	30 e0       	ldi	r19, 0x00	; 0
+     7dc:	c9 01       	movw	r24, r18
+     7de:	88 0f       	add	r24, r24
+     7e0:	99 1f       	adc	r25, r25
+     7e2:	82 0f       	add	r24, r18
+     7e4:	93 1f       	adc	r25, r19
+     7e6:	fc 01       	movw	r30, r24
+     7e8:	e9 59       	subi	r30, 0x99	; 153
+     7ea:	ff 4f       	sbci	r31, 0xFF	; 255
+     7ec:	80 81       	ld	r24, Z
+     7ee:	88 23       	and	r24, r24
+     7f0:	09 f0       	breq	.+2      	; 0x7f4 <DIO_Init+0x40c>
+     7f2:	fc c0       	rjmp	.+504    	; 0x9ec <__stack+0x18d>
+     7f4:	89 81       	ldd	r24, Y+1	; 0x01
+     7f6:	28 2f       	mov	r18, r24
+     7f8:	30 e0       	ldi	r19, 0x00	; 0
+     7fa:	c9 01       	movw	r24, r18
+     7fc:	88 0f       	add	r24, r24
+     7fe:	99 1f       	adc	r25, r25
+     800:	82 0f       	add	r24, r18
+     802:	93 1f       	adc	r25, r19
+     804:	fc 01       	movw	r30, r24
+     806:	e8 59       	subi	r30, 0x98	; 152
+     808:	ff 4f       	sbci	r31, 0xFF	; 255
+     80a:	80 81       	ld	r24, Z
+     80c:	88 23       	and	r24, r24
+     80e:	09 f0       	breq	.+2      	; 0x812 <DIO_Init+0x42a>
+     810:	ed c0       	rjmp	.+474    	; 0x9ec <__stack+0x18d>
+		   astrDIOConfigParameters[u8_i].enuPullupResEn == NO_CONNECTION)
+		{
+			if((astrDIOConfigParameters[u8_i].enuPinNo >= 0) && (astrDIOConfigParameters[u8_i].enuPinNo < 8))	//if porta
+     812:	89 81       	ldd	r24, Y+1	; 0x01
+     814:	28 2f       	mov	r18, r24
+     816:	30 e0       	ldi	r19, 0x00	; 0
+     818:	c9 01       	movw	r24, r18
+     81a:	88 0f       	add	r24, r24
+     81c:	99 1f       	adc	r25, r25
+     81e:	82 0f       	add	r24, r18
+     820:	93 1f       	adc	r25, r19
+     822:	fc 01       	movw	r30, r24
+     824:	ea 59       	subi	r30, 0x9A	; 154
+     826:	ff 4f       	sbci	r31, 0xFF	; 255
+     828:	80 81       	ld	r24, Z
+     82a:	88 30       	cpi	r24, 0x08	; 8
+     82c:	00 f5       	brcc	.+64     	; 0x86e <__stack+0xf>
+			{
+				CLR_BIT(PORTA_R, astrDIOConfigParameters[u8_i].enuPinNo);
+     82e:	ab e3       	ldi	r26, 0x3B	; 59
+     830:	b0 e0       	ldi	r27, 0x00	; 0
+     832:	eb e3       	ldi	r30, 0x3B	; 59
+     834:	f0 e0       	ldi	r31, 0x00	; 0
+     836:	80 81       	ld	r24, Z
+     838:	48 2f       	mov	r20, r24
+     83a:	89 81       	ldd	r24, Y+1	; 0x01
+     83c:	28 2f       	mov	r18, r24
+     83e:	30 e0       	ldi	r19, 0x00	; 0
+     840:	c9 01       	movw	r24, r18
+     842:	88 0f       	add	r24, r24
+     844:	99 1f       	adc	r25, r25
+     846:	82 0f       	add	r24, r18
+     848:	93 1f       	adc	r25, r19
+     84a:	fc 01       	movw	r30, r24
+     84c:	ea 59       	subi	r30, 0x9A	; 154
+     84e:	ff 4f       	sbci	r31, 0xFF	; 255
+     850:	80 81       	ld	r24, Z
+     852:	28 2f       	mov	r18, r24
+     854:	30 e0       	ldi	r19, 0x00	; 0
+     856:	81 e0       	ldi	r24, 0x01	; 1
+     858:	90 e0       	ldi	r25, 0x00	; 0
+     85a:	02 2e       	mov	r0, r18
+     85c:	02 c0       	rjmp	.+4      	; 0x862 <__stack+0x3>
+     85e:	88 0f       	add	r24, r24
+     860:	99 1f       	adc	r25, r25
+     862:	0a 94       	dec	r0
+     864:	e2 f7       	brpl	.-8      	; 0x85e <DIO_Init+0x476>
+     866:	80 95       	com	r24
+     868:	84 23       	and	r24, r20
+     86a:	8c 93       	st	X, r24
+     86c:	c3 c1       	rjmp	.+902    	; 0xbf4 <__stack+0x395>
+			}//end if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 8) && (astrDIOConfigParameters[u8_i].enuPinNo < 16))	//if portb
+     86e:	89 81       	ldd	r24, Y+1	; 0x01
+     870:	28 2f       	mov	r18, r24
+     872:	30 e0       	ldi	r19, 0x00	; 0
+     874:	c9 01       	movw	r24, r18
+     876:	88 0f       	add	r24, r24
+     878:	99 1f       	adc	r25, r25
+     87a:	82 0f       	add	r24, r18
+     87c:	93 1f       	adc	r25, r19
+     87e:	fc 01       	movw	r30, r24
+     880:	ea 59       	subi	r30, 0x9A	; 154
+     882:	ff 4f       	sbci	r31, 0xFF	; 255
+     884:	80 81       	ld	r24, Z
+     886:	88 30       	cpi	r24, 0x08	; 8
+     888:	88 f1       	brcs	.+98     	; 0x8ec <__stack+0x8d>
+     88a:	89 81       	ldd	r24, Y+1	; 0x01
+     88c:	28 2f       	mov	r18, r24
+     88e:	30 e0       	ldi	r19, 0x00	; 0
+     890:	c9 01       	movw	r24, r18
+     892:	88 0f       	add	r24, r24
+     894:	99 1f       	adc	r25, r25
+     896:	82 0f       	add	r24, r18
+     898:	93 1f       	adc	r25, r19
+     89a:	fc 01       	movw	r30, r24
+     89c:	ea 59       	subi	r30, 0x9A	; 154
+     89e:	ff 4f       	sbci	r31, 0xFF	; 255
+     8a0:	80 81       	ld	r24, Z
+     8a2:	80 31       	cpi	r24, 0x10	; 16
+     8a4:	18 f5       	brcc	.+70     	; 0x8ec <__stack+0x8d>
+			{
+				CLR_BIT(PORTB_R,(astrDIOConfigParameters[u8_i].enuPinNo - 8));
+     8a6:	a8 e3       	ldi	r26, 0x38	; 56
+     8a8:	b0 e0       	ldi	r27, 0x00	; 0
+     8aa:	e8 e3       	ldi	r30, 0x38	; 56
+     8ac:	f0 e0       	ldi	r31, 0x00	; 0
+     8ae:	80 81       	ld	r24, Z
+     8b0:	48 2f       	mov	r20, r24
+     8b2:	89 81       	ldd	r24, Y+1	; 0x01
+     8b4:	28 2f       	mov	r18, r24
+     8b6:	30 e0       	ldi	r19, 0x00	; 0
+     8b8:	c9 01       	movw	r24, r18
+     8ba:	88 0f       	add	r24, r24
+     8bc:	99 1f       	adc	r25, r25
+     8be:	82 0f       	add	r24, r18
+     8c0:	93 1f       	adc	r25, r19
+     8c2:	fc 01       	movw	r30, r24
+     8c4:	ea 59       	subi	r30, 0x9A	; 154
+     8c6:	ff 4f       	sbci	r31, 0xFF	; 255
+     8c8:	80 81       	ld	r24, Z
+     8ca:	88 2f       	mov	r24, r24
+     8cc:	90 e0       	ldi	r25, 0x00	; 0
+     8ce:	9c 01       	movw	r18, r24
+     8d0:	28 50       	subi	r18, 0x08	; 8
+     8d2:	30 40       	sbci	r19, 0x00	; 0
+     8d4:	81 e0       	ldi	r24, 0x01	; 1
+     8d6:	90 e0       	ldi	r25, 0x00	; 0
+     8d8:	02 2e       	mov	r0, r18
+     8da:	02 c0       	rjmp	.+4      	; 0x8e0 <__stack+0x81>
+     8dc:	88 0f       	add	r24, r24
+     8de:	99 1f       	adc	r25, r25
+     8e0:	0a 94       	dec	r0
+     8e2:	e2 f7       	brpl	.-8      	; 0x8dc <__stack+0x7d>
+     8e4:	80 95       	com	r24
+     8e6:	84 23       	and	r24, r20
+     8e8:	8c 93       	st	X, r24
+     8ea:	84 c1       	rjmp	.+776    	; 0xbf4 <__stack+0x395>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 16) && (astrDIOConfigParameters[u8_i].enuPinNo < 24))	//if portc
+     8ec:	89 81       	ldd	r24, Y+1	; 0x01
+     8ee:	28 2f       	mov	r18, r24
+     8f0:	30 e0       	ldi	r19, 0x00	; 0
+     8f2:	c9 01       	movw	r24, r18
+     8f4:	88 0f       	add	r24, r24
+     8f6:	99 1f       	adc	r25, r25
+     8f8:	82 0f       	add	r24, r18
+     8fa:	93 1f       	adc	r25, r19
+     8fc:	fc 01       	movw	r30, r24
+     8fe:	ea 59       	subi	r30, 0x9A	; 154
+     900:	ff 4f       	sbci	r31, 0xFF	; 255
+     902:	80 81       	ld	r24, Z
+     904:	80 31       	cpi	r24, 0x10	; 16
+     906:	88 f1       	brcs	.+98     	; 0x96a <__stack+0x10b>
+     908:	89 81       	ldd	r24, Y+1	; 0x01
+     90a:	28 2f       	mov	r18, r24
+     90c:	30 e0       	ldi	r19, 0x00	; 0
+     90e:	c9 01       	movw	r24, r18
+     910:	88 0f       	add	r24, r24
+     912:	99 1f       	adc	r25, r25
+     914:	82 0f       	add	r24, r18
+     916:	93 1f       	adc	r25, r19
+     918:	fc 01       	movw	r30, r24
+     91a:	ea 59       	subi	r30, 0x9A	; 154
+     91c:	ff 4f       	sbci	r31, 0xFF	; 255
+     91e:	80 81       	ld	r24, Z
+     920:	88 31       	cpi	r24, 0x18	; 24
+     922:	18 f5       	brcc	.+70     	; 0x96a <__stack+0x10b>
+			{
+				CLR_BIT(PORTC_R,(astrDIOConfigParameters[u8_i].enuPinNo - 16));
+     924:	a5 e3       	ldi	r26, 0x35	; 53
+     926:	b0 e0       	ldi	r27, 0x00	; 0
+     928:	e5 e3       	ldi	r30, 0x35	; 53
+     92a:	f0 e0       	ldi	r31, 0x00	; 0
+     92c:	80 81       	ld	r24, Z
+     92e:	48 2f       	mov	r20, r24
+     930:	89 81       	ldd	r24, Y+1	; 0x01
+     932:	28 2f       	mov	r18, r24
+     934:	30 e0       	ldi	r19, 0x00	; 0
+     936:	c9 01       	movw	r24, r18
+     938:	88 0f       	add	r24, r24
+     93a:	99 1f       	adc	r25, r25
+     93c:	82 0f       	add	r24, r18
+     93e:	93 1f       	adc	r25, r19
+     940:	fc 01       	movw	r30, r24
+     942:	ea 59       	subi	r30, 0x9A	; 154
+     944:	ff 4f       	sbci	r31, 0xFF	; 255
+     946:	80 81       	ld	r24, Z
+     948:	88 2f       	mov	r24, r24
+     94a:	90 e0       	ldi	r25, 0x00	; 0
+     94c:	9c 01       	movw	r18, r24
+     94e:	20 51       	subi	r18, 0x10	; 16
+     950:	30 40       	sbci	r19, 0x00	; 0
+     952:	81 e0       	ldi	r24, 0x01	; 1
+     954:	90 e0       	ldi	r25, 0x00	; 0
+     956:	02 2e       	mov	r0, r18
+     958:	02 c0       	rjmp	.+4      	; 0x95e <__stack+0xff>
+     95a:	88 0f       	add	r24, r24
+     95c:	99 1f       	adc	r25, r25
+     95e:	0a 94       	dec	r0
+     960:	e2 f7       	brpl	.-8      	; 0x95a <__stack+0xfb>
+     962:	80 95       	com	r24
+     964:	84 23       	and	r24, r20
+     966:	8c 93       	st	X, r24
+     968:	45 c1       	rjmp	.+650    	; 0xbf4 <__stack+0x395>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 24) && (astrDIOConfigParameters[u8_i].enuPinNo < 32))	//if portd
+     96a:	89 81       	ldd	r24, Y+1	; 0x01
+     96c:	28 2f       	mov	r18, r24
+     96e:	30 e0       	ldi	r19, 0x00	; 0
+     970:	c9 01       	movw	r24, r18
+     972:	88 0f       	add	r24, r24
+     974:	99 1f       	adc	r25, r25
+     976:	82 0f       	add	r24, r18
+     978:	93 1f       	adc	r25, r19
+     97a:	fc 01       	movw	r30, r24
+     97c:	ea 59       	subi	r30, 0x9A	; 154
+     97e:	ff 4f       	sbci	r31, 0xFF	; 255
+     980:	80 81       	ld	r24, Z
+     982:	88 31       	cpi	r24, 0x18	; 24
+     984:	08 f4       	brcc	.+2      	; 0x988 <__stack+0x129>
+     986:	36 c1       	rjmp	.+620    	; 0xbf4 <__stack+0x395>
+     988:	89 81       	ldd	r24, Y+1	; 0x01
+     98a:	28 2f       	mov	r18, r24
+     98c:	30 e0       	ldi	r19, 0x00	; 0
+     98e:	c9 01       	movw	r24, r18
+     990:	88 0f       	add	r24, r24
+     992:	99 1f       	adc	r25, r25
+     994:	82 0f       	add	r24, r18
+     996:	93 1f       	adc	r25, r19
+     998:	fc 01       	movw	r30, r24
+     99a:	ea 59       	subi	r30, 0x9A	; 154
+     99c:	ff 4f       	sbci	r31, 0xFF	; 255
+     99e:	80 81       	ld	r24, Z
+     9a0:	80 32       	cpi	r24, 0x20	; 32
+     9a2:	08 f0       	brcs	.+2      	; 0x9a6 <__stack+0x147>
+     9a4:	27 c1       	rjmp	.+590    	; 0xbf4 <__stack+0x395>
+			{
+				CLR_BIT(PORTD_R,(astrDIOConfigParameters[u8_i].enuPinNo - 24));
+     9a6:	a2 e3       	ldi	r26, 0x32	; 50
+     9a8:	b0 e0       	ldi	r27, 0x00	; 0
+     9aa:	e2 e3       	ldi	r30, 0x32	; 50
+     9ac:	f0 e0       	ldi	r31, 0x00	; 0
+     9ae:	80 81       	ld	r24, Z
+     9b0:	48 2f       	mov	r20, r24
+     9b2:	89 81       	ldd	r24, Y+1	; 0x01
+     9b4:	28 2f       	mov	r18, r24
+     9b6:	30 e0       	ldi	r19, 0x00	; 0
+     9b8:	c9 01       	movw	r24, r18
+     9ba:	88 0f       	add	r24, r24
+     9bc:	99 1f       	adc	r25, r25
+     9be:	82 0f       	add	r24, r18
+     9c0:	93 1f       	adc	r25, r19
+     9c2:	fc 01       	movw	r30, r24
+     9c4:	ea 59       	subi	r30, 0x9A	; 154
+     9c6:	ff 4f       	sbci	r31, 0xFF	; 255
+     9c8:	80 81       	ld	r24, Z
+     9ca:	88 2f       	mov	r24, r24
+     9cc:	90 e0       	ldi	r25, 0x00	; 0
+     9ce:	9c 01       	movw	r18, r24
+     9d0:	28 51       	subi	r18, 0x18	; 24
+     9d2:	30 40       	sbci	r19, 0x00	; 0
+     9d4:	81 e0       	ldi	r24, 0x01	; 1
+     9d6:	90 e0       	ldi	r25, 0x00	; 0
+     9d8:	02 2e       	mov	r0, r18
+     9da:	02 c0       	rjmp	.+4      	; 0x9e0 <__stack+0x181>
+     9dc:	88 0f       	add	r24, r24
+     9de:	99 1f       	adc	r25, r25
+     9e0:	0a 94       	dec	r0
+     9e2:	e2 f7       	brpl	.-8      	; 0x9dc <__stack+0x17d>
+     9e4:	80 95       	com	r24
+     9e6:	84 23       	and	r24, r20
+     9e8:	8c 93       	st	X, r24
+     9ea:	04 c1       	rjmp	.+520    	; 0xbf4 <__stack+0x395>
+			}//end else if
+		}//end if
+
+		else if(astrDIOConfigParameters[u8_i].enuPinDir == INPUT &&
+     9ec:	89 81       	ldd	r24, Y+1	; 0x01
+     9ee:	28 2f       	mov	r18, r24
+     9f0:	30 e0       	ldi	r19, 0x00	; 0
+     9f2:	c9 01       	movw	r24, r18
+     9f4:	88 0f       	add	r24, r24
+     9f6:	99 1f       	adc	r25, r25
+     9f8:	82 0f       	add	r24, r18
+     9fa:	93 1f       	adc	r25, r19
+     9fc:	fc 01       	movw	r30, r24
+     9fe:	e9 59       	subi	r30, 0x99	; 153
+     a00:	ff 4f       	sbci	r31, 0xFF	; 255
+     a02:	80 81       	ld	r24, Z
+     a04:	88 23       	and	r24, r24
+     a06:	09 f0       	breq	.+2      	; 0xa0a <__stack+0x1ab>
+     a08:	f5 c0       	rjmp	.+490    	; 0xbf4 <__stack+0x395>
+     a0a:	89 81       	ldd	r24, Y+1	; 0x01
+     a0c:	28 2f       	mov	r18, r24
+     a0e:	30 e0       	ldi	r19, 0x00	; 0
+     a10:	c9 01       	movw	r24, r18
+     a12:	88 0f       	add	r24, r24
+     a14:	99 1f       	adc	r25, r25
+     a16:	82 0f       	add	r24, r18
+     a18:	93 1f       	adc	r25, r19
+     a1a:	fc 01       	movw	r30, r24
+     a1c:	e8 59       	subi	r30, 0x98	; 152
+     a1e:	ff 4f       	sbci	r31, 0xFF	; 255
+     a20:	80 81       	ld	r24, Z
+     a22:	81 30       	cpi	r24, 0x01	; 1
+     a24:	09 f0       	breq	.+2      	; 0xa28 <__stack+0x1c9>
+     a26:	e6 c0       	rjmp	.+460    	; 0xbf4 <__stack+0x395>
+				astrDIOConfigParameters[u8_i].enuPullupResEn == PULL_UP_ENABLE)
+		{
+			if((astrDIOConfigParameters[u8_i].enuPinNo >= 0) && (astrDIOConfigParameters[u8_i].enuPinNo < 8))	//if porta
+     a28:	89 81       	ldd	r24, Y+1	; 0x01
+     a2a:	28 2f       	mov	r18, r24
+     a2c:	30 e0       	ldi	r19, 0x00	; 0
+     a2e:	c9 01       	movw	r24, r18
+     a30:	88 0f       	add	r24, r24
+     a32:	99 1f       	adc	r25, r25
+     a34:	82 0f       	add	r24, r18
+     a36:	93 1f       	adc	r25, r19
+     a38:	fc 01       	movw	r30, r24
+     a3a:	ea 59       	subi	r30, 0x9A	; 154
+     a3c:	ff 4f       	sbci	r31, 0xFF	; 255
+     a3e:	80 81       	ld	r24, Z
+     a40:	88 30       	cpi	r24, 0x08	; 8
+     a42:	f8 f4       	brcc	.+62     	; 0xa82 <__stack+0x223>
+			{
+				SET_BIT(PORTA_R, astrDIOConfigParameters[u8_i].enuPinNo);
+     a44:	ab e3       	ldi	r26, 0x3B	; 59
+     a46:	b0 e0       	ldi	r27, 0x00	; 0
+     a48:	eb e3       	ldi	r30, 0x3B	; 59
+     a4a:	f0 e0       	ldi	r31, 0x00	; 0
+     a4c:	80 81       	ld	r24, Z
+     a4e:	48 2f       	mov	r20, r24
+     a50:	89 81       	ldd	r24, Y+1	; 0x01
+     a52:	28 2f       	mov	r18, r24
+     a54:	30 e0       	ldi	r19, 0x00	; 0
+     a56:	c9 01       	movw	r24, r18
+     a58:	88 0f       	add	r24, r24
+     a5a:	99 1f       	adc	r25, r25
+     a5c:	82 0f       	add	r24, r18
+     a5e:	93 1f       	adc	r25, r19
+     a60:	fc 01       	movw	r30, r24
+     a62:	ea 59       	subi	r30, 0x9A	; 154
+     a64:	ff 4f       	sbci	r31, 0xFF	; 255
+     a66:	80 81       	ld	r24, Z
+     a68:	28 2f       	mov	r18, r24
+     a6a:	30 e0       	ldi	r19, 0x00	; 0
+     a6c:	81 e0       	ldi	r24, 0x01	; 1
+     a6e:	90 e0       	ldi	r25, 0x00	; 0
+     a70:	02 2e       	mov	r0, r18
+     a72:	02 c0       	rjmp	.+4      	; 0xa78 <__stack+0x219>
+     a74:	88 0f       	add	r24, r24
+     a76:	99 1f       	adc	r25, r25
+     a78:	0a 94       	dec	r0
+     a7a:	e2 f7       	brpl	.-8      	; 0xa74 <__stack+0x215>
+     a7c:	84 2b       	or	r24, r20
+     a7e:	8c 93       	st	X, r24
+     a80:	b9 c0       	rjmp	.+370    	; 0xbf4 <__stack+0x395>
+			}//end if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 8) && (astrDIOConfigParameters[u8_i].enuPinNo < 16))	//if portb
+     a82:	89 81       	ldd	r24, Y+1	; 0x01
+     a84:	28 2f       	mov	r18, r24
+     a86:	30 e0       	ldi	r19, 0x00	; 0
+     a88:	c9 01       	movw	r24, r18
+     a8a:	88 0f       	add	r24, r24
+     a8c:	99 1f       	adc	r25, r25
+     a8e:	82 0f       	add	r24, r18
+     a90:	93 1f       	adc	r25, r19
+     a92:	fc 01       	movw	r30, r24
+     a94:	ea 59       	subi	r30, 0x9A	; 154
+     a96:	ff 4f       	sbci	r31, 0xFF	; 255
+     a98:	80 81       	ld	r24, Z
+     a9a:	88 30       	cpi	r24, 0x08	; 8
+     a9c:	80 f1       	brcs	.+96     	; 0xafe <__stack+0x29f>
+     a9e:	89 81       	ldd	r24, Y+1	; 0x01
+     aa0:	28 2f       	mov	r18, r24
+     aa2:	30 e0       	ldi	r19, 0x00	; 0
+     aa4:	c9 01       	movw	r24, r18
+     aa6:	88 0f       	add	r24, r24
+     aa8:	99 1f       	adc	r25, r25
+     aaa:	82 0f       	add	r24, r18
+     aac:	93 1f       	adc	r25, r19
+     aae:	fc 01       	movw	r30, r24
+     ab0:	ea 59       	subi	r30, 0x9A	; 154
+     ab2:	ff 4f       	sbci	r31, 0xFF	; 255
+     ab4:	80 81       	ld	r24, Z
+     ab6:	80 31       	cpi	r24, 0x10	; 16
+     ab8:	10 f5       	brcc	.+68     	; 0xafe <__stack+0x29f>
+			{
+				SET_BIT(PORTB_R,(astrDIOConfigParameters[u8_i].enuPinNo - 8));
+     aba:	a8 e3       	ldi	r26, 0x38	; 56
+     abc:	b0 e0       	ldi	r27, 0x00	; 0
+     abe:	e8 e3       	ldi	r30, 0x38	; 56
+     ac0:	f0 e0       	ldi	r31, 0x00	; 0
+     ac2:	80 81       	ld	r24, Z
+     ac4:	48 2f       	mov	r20, r24
+     ac6:	89 81       	ldd	r24, Y+1	; 0x01
+     ac8:	28 2f       	mov	r18, r24
+     aca:	30 e0       	ldi	r19, 0x00	; 0
+     acc:	c9 01       	movw	r24, r18
+     ace:	88 0f       	add	r24, r24
+     ad0:	99 1f       	adc	r25, r25
+     ad2:	82 0f       	add	r24, r18
+     ad4:	93 1f       	adc	r25, r19
+     ad6:	fc 01       	movw	r30, r24
+     ad8:	ea 59       	subi	r30, 0x9A	; 154
+     ada:	ff 4f       	sbci	r31, 0xFF	; 255
+     adc:	80 81       	ld	r24, Z
+     ade:	88 2f       	mov	r24, r24
+     ae0:	90 e0       	ldi	r25, 0x00	; 0
+     ae2:	9c 01       	movw	r18, r24
+     ae4:	28 50       	subi	r18, 0x08	; 8
+     ae6:	30 40       	sbci	r19, 0x00	; 0
+     ae8:	81 e0       	ldi	r24, 0x01	; 1
+     aea:	90 e0       	ldi	r25, 0x00	; 0
+     aec:	02 2e       	mov	r0, r18
+     aee:	02 c0       	rjmp	.+4      	; 0xaf4 <__stack+0x295>
+     af0:	88 0f       	add	r24, r24
+     af2:	99 1f       	adc	r25, r25
+     af4:	0a 94       	dec	r0
+     af6:	e2 f7       	brpl	.-8      	; 0xaf0 <__stack+0x291>
+     af8:	84 2b       	or	r24, r20
+     afa:	8c 93       	st	X, r24
+     afc:	7b c0       	rjmp	.+246    	; 0xbf4 <__stack+0x395>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 16) && (astrDIOConfigParameters[u8_i].enuPinNo < 24))	//if portc
+     afe:	89 81       	ldd	r24, Y+1	; 0x01
+     b00:	28 2f       	mov	r18, r24
+     b02:	30 e0       	ldi	r19, 0x00	; 0
+     b04:	c9 01       	movw	r24, r18
+     b06:	88 0f       	add	r24, r24
+     b08:	99 1f       	adc	r25, r25
+     b0a:	82 0f       	add	r24, r18
+     b0c:	93 1f       	adc	r25, r19
+     b0e:	fc 01       	movw	r30, r24
+     b10:	ea 59       	subi	r30, 0x9A	; 154
+     b12:	ff 4f       	sbci	r31, 0xFF	; 255
+     b14:	80 81       	ld	r24, Z
+     b16:	80 31       	cpi	r24, 0x10	; 16
+     b18:	80 f1       	brcs	.+96     	; 0xb7a <__stack+0x31b>
+     b1a:	89 81       	ldd	r24, Y+1	; 0x01
+     b1c:	28 2f       	mov	r18, r24
+     b1e:	30 e0       	ldi	r19, 0x00	; 0
+     b20:	c9 01       	movw	r24, r18
+     b22:	88 0f       	add	r24, r24
+     b24:	99 1f       	adc	r25, r25
+     b26:	82 0f       	add	r24, r18
+     b28:	93 1f       	adc	r25, r19
+     b2a:	fc 01       	movw	r30, r24
+     b2c:	ea 59       	subi	r30, 0x9A	; 154
+     b2e:	ff 4f       	sbci	r31, 0xFF	; 255
+     b30:	80 81       	ld	r24, Z
+     b32:	88 31       	cpi	r24, 0x18	; 24
+     b34:	10 f5       	brcc	.+68     	; 0xb7a <__stack+0x31b>
+			{
+				SET_BIT(PORTC_R,(astrDIOConfigParameters[u8_i].enuPinNo - 16));
+     b36:	a5 e3       	ldi	r26, 0x35	; 53
+     b38:	b0 e0       	ldi	r27, 0x00	; 0
+     b3a:	e5 e3       	ldi	r30, 0x35	; 53
+     b3c:	f0 e0       	ldi	r31, 0x00	; 0
+     b3e:	80 81       	ld	r24, Z
+     b40:	48 2f       	mov	r20, r24
+     b42:	89 81       	ldd	r24, Y+1	; 0x01
+     b44:	28 2f       	mov	r18, r24
+     b46:	30 e0       	ldi	r19, 0x00	; 0
+     b48:	c9 01       	movw	r24, r18
+     b4a:	88 0f       	add	r24, r24
+     b4c:	99 1f       	adc	r25, r25
+     b4e:	82 0f       	add	r24, r18
+     b50:	93 1f       	adc	r25, r19
+     b52:	fc 01       	movw	r30, r24
+     b54:	ea 59       	subi	r30, 0x9A	; 154
+     b56:	ff 4f       	sbci	r31, 0xFF	; 255
+     b58:	80 81       	ld	r24, Z
+     b5a:	88 2f       	mov	r24, r24
+     b5c:	90 e0       	ldi	r25, 0x00	; 0
+     b5e:	9c 01       	movw	r18, r24
+     b60:	20 51       	subi	r18, 0x10	; 16
+     b62:	30 40       	sbci	r19, 0x00	; 0
+     b64:	81 e0       	ldi	r24, 0x01	; 1
+     b66:	90 e0       	ldi	r25, 0x00	; 0
+     b68:	02 2e       	mov	r0, r18
+     b6a:	02 c0       	rjmp	.+4      	; 0xb70 <__stack+0x311>
+     b6c:	88 0f       	add	r24, r24
+     b6e:	99 1f       	adc	r25, r25
+     b70:	0a 94       	dec	r0
+     b72:	e2 f7       	brpl	.-8      	; 0xb6c <__stack+0x30d>
+     b74:	84 2b       	or	r24, r20
+     b76:	8c 93       	st	X, r24
+     b78:	3d c0       	rjmp	.+122    	; 0xbf4 <__stack+0x395>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_i].enuPinNo >= 24) && (astrDIOConfigParameters[u8_i].enuPinNo < 32))	//if portd
+     b7a:	89 81       	ldd	r24, Y+1	; 0x01
+     b7c:	28 2f       	mov	r18, r24
+     b7e:	30 e0       	ldi	r19, 0x00	; 0
+     b80:	c9 01       	movw	r24, r18
+     b82:	88 0f       	add	r24, r24
+     b84:	99 1f       	adc	r25, r25
+     b86:	82 0f       	add	r24, r18
+     b88:	93 1f       	adc	r25, r19
+     b8a:	fc 01       	movw	r30, r24
+     b8c:	ea 59       	subi	r30, 0x9A	; 154
+     b8e:	ff 4f       	sbci	r31, 0xFF	; 255
+     b90:	80 81       	ld	r24, Z
+     b92:	88 31       	cpi	r24, 0x18	; 24
+     b94:	78 f1       	brcs	.+94     	; 0xbf4 <__stack+0x395>
+     b96:	89 81       	ldd	r24, Y+1	; 0x01
+     b98:	28 2f       	mov	r18, r24
+     b9a:	30 e0       	ldi	r19, 0x00	; 0
+     b9c:	c9 01       	movw	r24, r18
+     b9e:	88 0f       	add	r24, r24
+     ba0:	99 1f       	adc	r25, r25
+     ba2:	82 0f       	add	r24, r18
+     ba4:	93 1f       	adc	r25, r19
+     ba6:	fc 01       	movw	r30, r24
+     ba8:	ea 59       	subi	r30, 0x9A	; 154
+     baa:	ff 4f       	sbci	r31, 0xFF	; 255
+     bac:	80 81       	ld	r24, Z
+     bae:	80 32       	cpi	r24, 0x20	; 32
+     bb0:	08 f5       	brcc	.+66     	; 0xbf4 <__stack+0x395>
+			{
+				SET_BIT(PORTD_R,(astrDIOConfigParameters[u8_i].enuPinNo - 24));
+     bb2:	a2 e3       	ldi	r26, 0x32	; 50
+     bb4:	b0 e0       	ldi	r27, 0x00	; 0
+     bb6:	e2 e3       	ldi	r30, 0x32	; 50
+     bb8:	f0 e0       	ldi	r31, 0x00	; 0
+     bba:	80 81       	ld	r24, Z
+     bbc:	48 2f       	mov	r20, r24
+     bbe:	89 81       	ldd	r24, Y+1	; 0x01
+     bc0:	28 2f       	mov	r18, r24
+     bc2:	30 e0       	ldi	r19, 0x00	; 0
+     bc4:	c9 01       	movw	r24, r18
+     bc6:	88 0f       	add	r24, r24
+     bc8:	99 1f       	adc	r25, r25
+     bca:	82 0f       	add	r24, r18
+     bcc:	93 1f       	adc	r25, r19
+     bce:	fc 01       	movw	r30, r24
+     bd0:	ea 59       	subi	r30, 0x9A	; 154
+     bd2:	ff 4f       	sbci	r31, 0xFF	; 255
+     bd4:	80 81       	ld	r24, Z
+     bd6:	88 2f       	mov	r24, r24
+     bd8:	90 e0       	ldi	r25, 0x00	; 0
+     bda:	9c 01       	movw	r18, r24
+     bdc:	28 51       	subi	r18, 0x18	; 24
+     bde:	30 40       	sbci	r19, 0x00	; 0
+     be0:	81 e0       	ldi	r24, 0x01	; 1
+     be2:	90 e0       	ldi	r25, 0x00	; 0
+     be4:	02 2e       	mov	r0, r18
+     be6:	02 c0       	rjmp	.+4      	; 0xbec <__stack+0x38d>
+     be8:	88 0f       	add	r24, r24
+     bea:	99 1f       	adc	r25, r25
+     bec:	0a 94       	dec	r0
+     bee:	e2 f7       	brpl	.-8      	; 0xbe8 <__stack+0x389>
+     bf0:	84 2b       	or	r24, r20
+     bf2:	8c 93       	st	X, r24
+*************************************************************************************************/
+enuErrorStatus_t DIO_Init(void)
+{
+	uint8_t u8_i;
+
+	for(u8_i=0; u8_i<DIO_GROUPS_NO; u8_i++)
+     bf4:	89 81       	ldd	r24, Y+1	; 0x01
+     bf6:	8f 5f       	subi	r24, 0xFF	; 255
+     bf8:	89 83       	std	Y+1, r24	; 0x01
+     bfa:	89 81       	ldd	r24, Y+1	; 0x01
+     bfc:	8a 31       	cpi	r24, 0x1A	; 26
+     bfe:	08 f4       	brcc	.+2      	; 0xc02 <__stack+0x3a3>
+     c00:	fa cb       	rjmp	.-2060   	; 0x3f6 <DIO_Init+0xe>
+				SET_BIT(PORTD_R,(astrDIOConfigParameters[u8_i].enuPinNo - 24));
+			}//end else if
+		}//end else if
+
+	}//end for
+    return E_OK;
+     c02:	81 e0       	ldi	r24, 0x01	; 1
+}//end DIO_Init
+     c04:	0f 90       	pop	r0
+     c06:	cf 91       	pop	r28
+     c08:	df 91       	pop	r29
+     c0a:	08 95       	ret
+
+00000c0c <DIO_Write>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to write a digital value into the selected DIO pin
+*************************************************************************************************/
+enuErrorStatus_t DIO_Write(uint8_t u8_GroupId, uint8_t u8_Data)
+{
+     c0c:	df 93       	push	r29
+     c0e:	cf 93       	push	r28
+     c10:	00 d0       	rcall	.+0      	; 0xc12 <DIO_Write+0x6>
+     c12:	cd b7       	in	r28, 0x3d	; 61
+     c14:	de b7       	in	r29, 0x3e	; 62
+     c16:	89 83       	std	Y+1, r24	; 0x01
+     c18:	6a 83       	std	Y+2, r22	; 0x02
+//	if(DIO_Init() == E_ERROR)	return E_ERROR;
+//	else{
+
+		if (u8_Data == LOW)
+     c1a:	8a 81       	ldd	r24, Y+2	; 0x02
+     c1c:	88 23       	and	r24, r24
+     c1e:	09 f0       	breq	.+2      	; 0xc22 <DIO_Write+0x16>
+     c20:	ed c0       	rjmp	.+474    	; 0xdfc <DIO_Write+0x1f0>
+	    {
+			if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 0) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 8))	//if porta
+     c22:	89 81       	ldd	r24, Y+1	; 0x01
+     c24:	28 2f       	mov	r18, r24
+     c26:	30 e0       	ldi	r19, 0x00	; 0
+     c28:	c9 01       	movw	r24, r18
+     c2a:	88 0f       	add	r24, r24
+     c2c:	99 1f       	adc	r25, r25
+     c2e:	82 0f       	add	r24, r18
+     c30:	93 1f       	adc	r25, r19
+     c32:	fc 01       	movw	r30, r24
+     c34:	ea 59       	subi	r30, 0x9A	; 154
+     c36:	ff 4f       	sbci	r31, 0xFF	; 255
+     c38:	80 81       	ld	r24, Z
+     c3a:	88 30       	cpi	r24, 0x08	; 8
+     c3c:	00 f5       	brcc	.+64     	; 0xc7e <DIO_Write+0x72>
+			{
+				CLR_BIT(PORTA_R, astrDIOConfigParameters[u8_GroupId].enuPinNo);
+     c3e:	ab e3       	ldi	r26, 0x3B	; 59
+     c40:	b0 e0       	ldi	r27, 0x00	; 0
+     c42:	eb e3       	ldi	r30, 0x3B	; 59
+     c44:	f0 e0       	ldi	r31, 0x00	; 0
+     c46:	80 81       	ld	r24, Z
+     c48:	48 2f       	mov	r20, r24
+     c4a:	89 81       	ldd	r24, Y+1	; 0x01
+     c4c:	28 2f       	mov	r18, r24
+     c4e:	30 e0       	ldi	r19, 0x00	; 0
+     c50:	c9 01       	movw	r24, r18
+     c52:	88 0f       	add	r24, r24
+     c54:	99 1f       	adc	r25, r25
+     c56:	82 0f       	add	r24, r18
+     c58:	93 1f       	adc	r25, r19
+     c5a:	fc 01       	movw	r30, r24
+     c5c:	ea 59       	subi	r30, 0x9A	; 154
+     c5e:	ff 4f       	sbci	r31, 0xFF	; 255
+     c60:	80 81       	ld	r24, Z
+     c62:	28 2f       	mov	r18, r24
+     c64:	30 e0       	ldi	r19, 0x00	; 0
+     c66:	81 e0       	ldi	r24, 0x01	; 1
+     c68:	90 e0       	ldi	r25, 0x00	; 0
+     c6a:	02 2e       	mov	r0, r18
+     c6c:	02 c0       	rjmp	.+4      	; 0xc72 <DIO_Write+0x66>
+     c6e:	88 0f       	add	r24, r24
+     c70:	99 1f       	adc	r25, r25
+     c72:	0a 94       	dec	r0
+     c74:	e2 f7       	brpl	.-8      	; 0xc6e <DIO_Write+0x62>
+     c76:	80 95       	com	r24
+     c78:	84 23       	and	r24, r20
+     c7a:	8c 93       	st	X, r24
+     c7c:	a9 c1       	rjmp	.+850    	; 0xfd0 <DIO_Write+0x3c4>
+			}//end if
+			else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 8) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 16))	//if portb
+     c7e:	89 81       	ldd	r24, Y+1	; 0x01
+     c80:	28 2f       	mov	r18, r24
+     c82:	30 e0       	ldi	r19, 0x00	; 0
+     c84:	c9 01       	movw	r24, r18
+     c86:	88 0f       	add	r24, r24
+     c88:	99 1f       	adc	r25, r25
+     c8a:	82 0f       	add	r24, r18
+     c8c:	93 1f       	adc	r25, r19
+     c8e:	fc 01       	movw	r30, r24
+     c90:	ea 59       	subi	r30, 0x9A	; 154
+     c92:	ff 4f       	sbci	r31, 0xFF	; 255
+     c94:	80 81       	ld	r24, Z
+     c96:	88 30       	cpi	r24, 0x08	; 8
+     c98:	88 f1       	brcs	.+98     	; 0xcfc <DIO_Write+0xf0>
+     c9a:	89 81       	ldd	r24, Y+1	; 0x01
+     c9c:	28 2f       	mov	r18, r24
+     c9e:	30 e0       	ldi	r19, 0x00	; 0
+     ca0:	c9 01       	movw	r24, r18
+     ca2:	88 0f       	add	r24, r24
+     ca4:	99 1f       	adc	r25, r25
+     ca6:	82 0f       	add	r24, r18
+     ca8:	93 1f       	adc	r25, r19
+     caa:	fc 01       	movw	r30, r24
+     cac:	ea 59       	subi	r30, 0x9A	; 154
+     cae:	ff 4f       	sbci	r31, 0xFF	; 255
+     cb0:	80 81       	ld	r24, Z
+     cb2:	80 31       	cpi	r24, 0x10	; 16
+     cb4:	18 f5       	brcc	.+70     	; 0xcfc <DIO_Write+0xf0>
+			{
+				CLR_BIT(PORTB_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 8));
+     cb6:	a8 e3       	ldi	r26, 0x38	; 56
+     cb8:	b0 e0       	ldi	r27, 0x00	; 0
+     cba:	e8 e3       	ldi	r30, 0x38	; 56
+     cbc:	f0 e0       	ldi	r31, 0x00	; 0
+     cbe:	80 81       	ld	r24, Z
+     cc0:	48 2f       	mov	r20, r24
+     cc2:	89 81       	ldd	r24, Y+1	; 0x01
+     cc4:	28 2f       	mov	r18, r24
+     cc6:	30 e0       	ldi	r19, 0x00	; 0
+     cc8:	c9 01       	movw	r24, r18
+     cca:	88 0f       	add	r24, r24
+     ccc:	99 1f       	adc	r25, r25
+     cce:	82 0f       	add	r24, r18
+     cd0:	93 1f       	adc	r25, r19
+     cd2:	fc 01       	movw	r30, r24
+     cd4:	ea 59       	subi	r30, 0x9A	; 154
+     cd6:	ff 4f       	sbci	r31, 0xFF	; 255
+     cd8:	80 81       	ld	r24, Z
+     cda:	88 2f       	mov	r24, r24
+     cdc:	90 e0       	ldi	r25, 0x00	; 0
+     cde:	9c 01       	movw	r18, r24
+     ce0:	28 50       	subi	r18, 0x08	; 8
+     ce2:	30 40       	sbci	r19, 0x00	; 0
+     ce4:	81 e0       	ldi	r24, 0x01	; 1
+     ce6:	90 e0       	ldi	r25, 0x00	; 0
+     ce8:	02 2e       	mov	r0, r18
+     cea:	02 c0       	rjmp	.+4      	; 0xcf0 <DIO_Write+0xe4>
+     cec:	88 0f       	add	r24, r24
+     cee:	99 1f       	adc	r25, r25
+     cf0:	0a 94       	dec	r0
+     cf2:	e2 f7       	brpl	.-8      	; 0xcec <DIO_Write+0xe0>
+     cf4:	80 95       	com	r24
+     cf6:	84 23       	and	r24, r20
+     cf8:	8c 93       	st	X, r24
+     cfa:	6a c1       	rjmp	.+724    	; 0xfd0 <DIO_Write+0x3c4>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 16) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 24))	//if portc
+     cfc:	89 81       	ldd	r24, Y+1	; 0x01
+     cfe:	28 2f       	mov	r18, r24
+     d00:	30 e0       	ldi	r19, 0x00	; 0
+     d02:	c9 01       	movw	r24, r18
+     d04:	88 0f       	add	r24, r24
+     d06:	99 1f       	adc	r25, r25
+     d08:	82 0f       	add	r24, r18
+     d0a:	93 1f       	adc	r25, r19
+     d0c:	fc 01       	movw	r30, r24
+     d0e:	ea 59       	subi	r30, 0x9A	; 154
+     d10:	ff 4f       	sbci	r31, 0xFF	; 255
+     d12:	80 81       	ld	r24, Z
+     d14:	80 31       	cpi	r24, 0x10	; 16
+     d16:	88 f1       	brcs	.+98     	; 0xd7a <DIO_Write+0x16e>
+     d18:	89 81       	ldd	r24, Y+1	; 0x01
+     d1a:	28 2f       	mov	r18, r24
+     d1c:	30 e0       	ldi	r19, 0x00	; 0
+     d1e:	c9 01       	movw	r24, r18
+     d20:	88 0f       	add	r24, r24
+     d22:	99 1f       	adc	r25, r25
+     d24:	82 0f       	add	r24, r18
+     d26:	93 1f       	adc	r25, r19
+     d28:	fc 01       	movw	r30, r24
+     d2a:	ea 59       	subi	r30, 0x9A	; 154
+     d2c:	ff 4f       	sbci	r31, 0xFF	; 255
+     d2e:	80 81       	ld	r24, Z
+     d30:	88 31       	cpi	r24, 0x18	; 24
+     d32:	18 f5       	brcc	.+70     	; 0xd7a <DIO_Write+0x16e>
+			{
+				CLR_BIT(PORTC_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 16));
+     d34:	a5 e3       	ldi	r26, 0x35	; 53
+     d36:	b0 e0       	ldi	r27, 0x00	; 0
+     d38:	e5 e3       	ldi	r30, 0x35	; 53
+     d3a:	f0 e0       	ldi	r31, 0x00	; 0
+     d3c:	80 81       	ld	r24, Z
+     d3e:	48 2f       	mov	r20, r24
+     d40:	89 81       	ldd	r24, Y+1	; 0x01
+     d42:	28 2f       	mov	r18, r24
+     d44:	30 e0       	ldi	r19, 0x00	; 0
+     d46:	c9 01       	movw	r24, r18
+     d48:	88 0f       	add	r24, r24
+     d4a:	99 1f       	adc	r25, r25
+     d4c:	82 0f       	add	r24, r18
+     d4e:	93 1f       	adc	r25, r19
+     d50:	fc 01       	movw	r30, r24
+     d52:	ea 59       	subi	r30, 0x9A	; 154
+     d54:	ff 4f       	sbci	r31, 0xFF	; 255
+     d56:	80 81       	ld	r24, Z
+     d58:	88 2f       	mov	r24, r24
+     d5a:	90 e0       	ldi	r25, 0x00	; 0
+     d5c:	9c 01       	movw	r18, r24
+     d5e:	20 51       	subi	r18, 0x10	; 16
+     d60:	30 40       	sbci	r19, 0x00	; 0
+     d62:	81 e0       	ldi	r24, 0x01	; 1
+     d64:	90 e0       	ldi	r25, 0x00	; 0
+     d66:	02 2e       	mov	r0, r18
+     d68:	02 c0       	rjmp	.+4      	; 0xd6e <DIO_Write+0x162>
+     d6a:	88 0f       	add	r24, r24
+     d6c:	99 1f       	adc	r25, r25
+     d6e:	0a 94       	dec	r0
+     d70:	e2 f7       	brpl	.-8      	; 0xd6a <DIO_Write+0x15e>
+     d72:	80 95       	com	r24
+     d74:	84 23       	and	r24, r20
+     d76:	8c 93       	st	X, r24
+     d78:	2b c1       	rjmp	.+598    	; 0xfd0 <DIO_Write+0x3c4>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 24) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 32))	//if portd
+     d7a:	89 81       	ldd	r24, Y+1	; 0x01
+     d7c:	28 2f       	mov	r18, r24
+     d7e:	30 e0       	ldi	r19, 0x00	; 0
+     d80:	c9 01       	movw	r24, r18
+     d82:	88 0f       	add	r24, r24
+     d84:	99 1f       	adc	r25, r25
+     d86:	82 0f       	add	r24, r18
+     d88:	93 1f       	adc	r25, r19
+     d8a:	fc 01       	movw	r30, r24
+     d8c:	ea 59       	subi	r30, 0x9A	; 154
+     d8e:	ff 4f       	sbci	r31, 0xFF	; 255
+     d90:	80 81       	ld	r24, Z
+     d92:	88 31       	cpi	r24, 0x18	; 24
+     d94:	08 f4       	brcc	.+2      	; 0xd98 <DIO_Write+0x18c>
+     d96:	1c c1       	rjmp	.+568    	; 0xfd0 <DIO_Write+0x3c4>
+     d98:	89 81       	ldd	r24, Y+1	; 0x01
+     d9a:	28 2f       	mov	r18, r24
+     d9c:	30 e0       	ldi	r19, 0x00	; 0
+     d9e:	c9 01       	movw	r24, r18
+     da0:	88 0f       	add	r24, r24
+     da2:	99 1f       	adc	r25, r25
+     da4:	82 0f       	add	r24, r18
+     da6:	93 1f       	adc	r25, r19
+     da8:	fc 01       	movw	r30, r24
+     daa:	ea 59       	subi	r30, 0x9A	; 154
+     dac:	ff 4f       	sbci	r31, 0xFF	; 255
+     dae:	80 81       	ld	r24, Z
+     db0:	80 32       	cpi	r24, 0x20	; 32
+     db2:	08 f0       	brcs	.+2      	; 0xdb6 <DIO_Write+0x1aa>
+     db4:	0d c1       	rjmp	.+538    	; 0xfd0 <DIO_Write+0x3c4>
+			{
+				CLR_BIT(PORTD_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 24));
+     db6:	a2 e3       	ldi	r26, 0x32	; 50
+     db8:	b0 e0       	ldi	r27, 0x00	; 0
+     dba:	e2 e3       	ldi	r30, 0x32	; 50
+     dbc:	f0 e0       	ldi	r31, 0x00	; 0
+     dbe:	80 81       	ld	r24, Z
+     dc0:	48 2f       	mov	r20, r24
+     dc2:	89 81       	ldd	r24, Y+1	; 0x01
+     dc4:	28 2f       	mov	r18, r24
+     dc6:	30 e0       	ldi	r19, 0x00	; 0
+     dc8:	c9 01       	movw	r24, r18
+     dca:	88 0f       	add	r24, r24
+     dcc:	99 1f       	adc	r25, r25
+     dce:	82 0f       	add	r24, r18
+     dd0:	93 1f       	adc	r25, r19
+     dd2:	fc 01       	movw	r30, r24
+     dd4:	ea 59       	subi	r30, 0x9A	; 154
+     dd6:	ff 4f       	sbci	r31, 0xFF	; 255
+     dd8:	80 81       	ld	r24, Z
+     dda:	88 2f       	mov	r24, r24
+     ddc:	90 e0       	ldi	r25, 0x00	; 0
+     dde:	9c 01       	movw	r18, r24
+     de0:	28 51       	subi	r18, 0x18	; 24
+     de2:	30 40       	sbci	r19, 0x00	; 0
+     de4:	81 e0       	ldi	r24, 0x01	; 1
+     de6:	90 e0       	ldi	r25, 0x00	; 0
+     de8:	02 2e       	mov	r0, r18
+     dea:	02 c0       	rjmp	.+4      	; 0xdf0 <DIO_Write+0x1e4>
+     dec:	88 0f       	add	r24, r24
+     dee:	99 1f       	adc	r25, r25
+     df0:	0a 94       	dec	r0
+     df2:	e2 f7       	brpl	.-8      	; 0xdec <DIO_Write+0x1e0>
+     df4:	80 95       	com	r24
+     df6:	84 23       	and	r24, r20
+     df8:	8c 93       	st	X, r24
+     dfa:	ea c0       	rjmp	.+468    	; 0xfd0 <DIO_Write+0x3c4>
+			}//end else if
+	    }//end if
+
+	    else if(u8_Data == HIGH)
+     dfc:	8a 81       	ldd	r24, Y+2	; 0x02
+     dfe:	81 30       	cpi	r24, 0x01	; 1
+     e00:	09 f0       	breq	.+2      	; 0xe04 <DIO_Write+0x1f8>
+     e02:	e6 c0       	rjmp	.+460    	; 0xfd0 <DIO_Write+0x3c4>
+	    {
+			if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 0) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 8))	//if porta
+     e04:	89 81       	ldd	r24, Y+1	; 0x01
+     e06:	28 2f       	mov	r18, r24
+     e08:	30 e0       	ldi	r19, 0x00	; 0
+     e0a:	c9 01       	movw	r24, r18
+     e0c:	88 0f       	add	r24, r24
+     e0e:	99 1f       	adc	r25, r25
+     e10:	82 0f       	add	r24, r18
+     e12:	93 1f       	adc	r25, r19
+     e14:	fc 01       	movw	r30, r24
+     e16:	ea 59       	subi	r30, 0x9A	; 154
+     e18:	ff 4f       	sbci	r31, 0xFF	; 255
+     e1a:	80 81       	ld	r24, Z
+     e1c:	88 30       	cpi	r24, 0x08	; 8
+     e1e:	f8 f4       	brcc	.+62     	; 0xe5e <DIO_Write+0x252>
+			{
+				SET_BIT(PORTA_R, astrDIOConfigParameters[u8_GroupId].enuPinNo);
+     e20:	ab e3       	ldi	r26, 0x3B	; 59
+     e22:	b0 e0       	ldi	r27, 0x00	; 0
+     e24:	eb e3       	ldi	r30, 0x3B	; 59
+     e26:	f0 e0       	ldi	r31, 0x00	; 0
+     e28:	80 81       	ld	r24, Z
+     e2a:	48 2f       	mov	r20, r24
+     e2c:	89 81       	ldd	r24, Y+1	; 0x01
+     e2e:	28 2f       	mov	r18, r24
+     e30:	30 e0       	ldi	r19, 0x00	; 0
+     e32:	c9 01       	movw	r24, r18
+     e34:	88 0f       	add	r24, r24
+     e36:	99 1f       	adc	r25, r25
+     e38:	82 0f       	add	r24, r18
+     e3a:	93 1f       	adc	r25, r19
+     e3c:	fc 01       	movw	r30, r24
+     e3e:	ea 59       	subi	r30, 0x9A	; 154
+     e40:	ff 4f       	sbci	r31, 0xFF	; 255
+     e42:	80 81       	ld	r24, Z
+     e44:	28 2f       	mov	r18, r24
+     e46:	30 e0       	ldi	r19, 0x00	; 0
+     e48:	81 e0       	ldi	r24, 0x01	; 1
+     e4a:	90 e0       	ldi	r25, 0x00	; 0
+     e4c:	02 2e       	mov	r0, r18
+     e4e:	02 c0       	rjmp	.+4      	; 0xe54 <DIO_Write+0x248>
+     e50:	88 0f       	add	r24, r24
+     e52:	99 1f       	adc	r25, r25
+     e54:	0a 94       	dec	r0
+     e56:	e2 f7       	brpl	.-8      	; 0xe50 <DIO_Write+0x244>
+     e58:	84 2b       	or	r24, r20
+     e5a:	8c 93       	st	X, r24
+     e5c:	b9 c0       	rjmp	.+370    	; 0xfd0 <DIO_Write+0x3c4>
+			}//end if
+			else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 8) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 16))	//if portb
+     e5e:	89 81       	ldd	r24, Y+1	; 0x01
+     e60:	28 2f       	mov	r18, r24
+     e62:	30 e0       	ldi	r19, 0x00	; 0
+     e64:	c9 01       	movw	r24, r18
+     e66:	88 0f       	add	r24, r24
+     e68:	99 1f       	adc	r25, r25
+     e6a:	82 0f       	add	r24, r18
+     e6c:	93 1f       	adc	r25, r19
+     e6e:	fc 01       	movw	r30, r24
+     e70:	ea 59       	subi	r30, 0x9A	; 154
+     e72:	ff 4f       	sbci	r31, 0xFF	; 255
+     e74:	80 81       	ld	r24, Z
+     e76:	88 30       	cpi	r24, 0x08	; 8
+     e78:	80 f1       	brcs	.+96     	; 0xeda <DIO_Write+0x2ce>
+     e7a:	89 81       	ldd	r24, Y+1	; 0x01
+     e7c:	28 2f       	mov	r18, r24
+     e7e:	30 e0       	ldi	r19, 0x00	; 0
+     e80:	c9 01       	movw	r24, r18
+     e82:	88 0f       	add	r24, r24
+     e84:	99 1f       	adc	r25, r25
+     e86:	82 0f       	add	r24, r18
+     e88:	93 1f       	adc	r25, r19
+     e8a:	fc 01       	movw	r30, r24
+     e8c:	ea 59       	subi	r30, 0x9A	; 154
+     e8e:	ff 4f       	sbci	r31, 0xFF	; 255
+     e90:	80 81       	ld	r24, Z
+     e92:	80 31       	cpi	r24, 0x10	; 16
+     e94:	10 f5       	brcc	.+68     	; 0xeda <DIO_Write+0x2ce>
+			{
+				SET_BIT(PORTB_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 8));
+     e96:	a8 e3       	ldi	r26, 0x38	; 56
+     e98:	b0 e0       	ldi	r27, 0x00	; 0
+     e9a:	e8 e3       	ldi	r30, 0x38	; 56
+     e9c:	f0 e0       	ldi	r31, 0x00	; 0
+     e9e:	80 81       	ld	r24, Z
+     ea0:	48 2f       	mov	r20, r24
+     ea2:	89 81       	ldd	r24, Y+1	; 0x01
+     ea4:	28 2f       	mov	r18, r24
+     ea6:	30 e0       	ldi	r19, 0x00	; 0
+     ea8:	c9 01       	movw	r24, r18
+     eaa:	88 0f       	add	r24, r24
+     eac:	99 1f       	adc	r25, r25
+     eae:	82 0f       	add	r24, r18
+     eb0:	93 1f       	adc	r25, r19
+     eb2:	fc 01       	movw	r30, r24
+     eb4:	ea 59       	subi	r30, 0x9A	; 154
+     eb6:	ff 4f       	sbci	r31, 0xFF	; 255
+     eb8:	80 81       	ld	r24, Z
+     eba:	88 2f       	mov	r24, r24
+     ebc:	90 e0       	ldi	r25, 0x00	; 0
+     ebe:	9c 01       	movw	r18, r24
+     ec0:	28 50       	subi	r18, 0x08	; 8
+     ec2:	30 40       	sbci	r19, 0x00	; 0
+     ec4:	81 e0       	ldi	r24, 0x01	; 1
+     ec6:	90 e0       	ldi	r25, 0x00	; 0
+     ec8:	02 2e       	mov	r0, r18
+     eca:	02 c0       	rjmp	.+4      	; 0xed0 <DIO_Write+0x2c4>
+     ecc:	88 0f       	add	r24, r24
+     ece:	99 1f       	adc	r25, r25
+     ed0:	0a 94       	dec	r0
+     ed2:	e2 f7       	brpl	.-8      	; 0xecc <DIO_Write+0x2c0>
+     ed4:	84 2b       	or	r24, r20
+     ed6:	8c 93       	st	X, r24
+     ed8:	7b c0       	rjmp	.+246    	; 0xfd0 <DIO_Write+0x3c4>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 16) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 24))	//if portc
+     eda:	89 81       	ldd	r24, Y+1	; 0x01
+     edc:	28 2f       	mov	r18, r24
+     ede:	30 e0       	ldi	r19, 0x00	; 0
+     ee0:	c9 01       	movw	r24, r18
+     ee2:	88 0f       	add	r24, r24
+     ee4:	99 1f       	adc	r25, r25
+     ee6:	82 0f       	add	r24, r18
+     ee8:	93 1f       	adc	r25, r19
+     eea:	fc 01       	movw	r30, r24
+     eec:	ea 59       	subi	r30, 0x9A	; 154
+     eee:	ff 4f       	sbci	r31, 0xFF	; 255
+     ef0:	80 81       	ld	r24, Z
+     ef2:	80 31       	cpi	r24, 0x10	; 16
+     ef4:	80 f1       	brcs	.+96     	; 0xf56 <DIO_Write+0x34a>
+     ef6:	89 81       	ldd	r24, Y+1	; 0x01
+     ef8:	28 2f       	mov	r18, r24
+     efa:	30 e0       	ldi	r19, 0x00	; 0
+     efc:	c9 01       	movw	r24, r18
+     efe:	88 0f       	add	r24, r24
+     f00:	99 1f       	adc	r25, r25
+     f02:	82 0f       	add	r24, r18
+     f04:	93 1f       	adc	r25, r19
+     f06:	fc 01       	movw	r30, r24
+     f08:	ea 59       	subi	r30, 0x9A	; 154
+     f0a:	ff 4f       	sbci	r31, 0xFF	; 255
+     f0c:	80 81       	ld	r24, Z
+     f0e:	88 31       	cpi	r24, 0x18	; 24
+     f10:	10 f5       	brcc	.+68     	; 0xf56 <DIO_Write+0x34a>
+			{
+				SET_BIT(PORTC_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 16));
+     f12:	a5 e3       	ldi	r26, 0x35	; 53
+     f14:	b0 e0       	ldi	r27, 0x00	; 0
+     f16:	e5 e3       	ldi	r30, 0x35	; 53
+     f18:	f0 e0       	ldi	r31, 0x00	; 0
+     f1a:	80 81       	ld	r24, Z
+     f1c:	48 2f       	mov	r20, r24
+     f1e:	89 81       	ldd	r24, Y+1	; 0x01
+     f20:	28 2f       	mov	r18, r24
+     f22:	30 e0       	ldi	r19, 0x00	; 0
+     f24:	c9 01       	movw	r24, r18
+     f26:	88 0f       	add	r24, r24
+     f28:	99 1f       	adc	r25, r25
+     f2a:	82 0f       	add	r24, r18
+     f2c:	93 1f       	adc	r25, r19
+     f2e:	fc 01       	movw	r30, r24
+     f30:	ea 59       	subi	r30, 0x9A	; 154
+     f32:	ff 4f       	sbci	r31, 0xFF	; 255
+     f34:	80 81       	ld	r24, Z
+     f36:	88 2f       	mov	r24, r24
+     f38:	90 e0       	ldi	r25, 0x00	; 0
+     f3a:	9c 01       	movw	r18, r24
+     f3c:	20 51       	subi	r18, 0x10	; 16
+     f3e:	30 40       	sbci	r19, 0x00	; 0
+     f40:	81 e0       	ldi	r24, 0x01	; 1
+     f42:	90 e0       	ldi	r25, 0x00	; 0
+     f44:	02 2e       	mov	r0, r18
+     f46:	02 c0       	rjmp	.+4      	; 0xf4c <DIO_Write+0x340>
+     f48:	88 0f       	add	r24, r24
+     f4a:	99 1f       	adc	r25, r25
+     f4c:	0a 94       	dec	r0
+     f4e:	e2 f7       	brpl	.-8      	; 0xf48 <DIO_Write+0x33c>
+     f50:	84 2b       	or	r24, r20
+     f52:	8c 93       	st	X, r24
+     f54:	3d c0       	rjmp	.+122    	; 0xfd0 <DIO_Write+0x3c4>
+			}//end else if
+			else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 24) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 32))	//if portd
+     f56:	89 81       	ldd	r24, Y+1	; 0x01
+     f58:	28 2f       	mov	r18, r24
+     f5a:	30 e0       	ldi	r19, 0x00	; 0
+     f5c:	c9 01       	movw	r24, r18
+     f5e:	88 0f       	add	r24, r24
+     f60:	99 1f       	adc	r25, r25
+     f62:	82 0f       	add	r24, r18
+     f64:	93 1f       	adc	r25, r19
+     f66:	fc 01       	movw	r30, r24
+     f68:	ea 59       	subi	r30, 0x9A	; 154
+     f6a:	ff 4f       	sbci	r31, 0xFF	; 255
+     f6c:	80 81       	ld	r24, Z
+     f6e:	88 31       	cpi	r24, 0x18	; 24
+     f70:	78 f1       	brcs	.+94     	; 0xfd0 <DIO_Write+0x3c4>
+     f72:	89 81       	ldd	r24, Y+1	; 0x01
+     f74:	28 2f       	mov	r18, r24
+     f76:	30 e0       	ldi	r19, 0x00	; 0
+     f78:	c9 01       	movw	r24, r18
+     f7a:	88 0f       	add	r24, r24
+     f7c:	99 1f       	adc	r25, r25
+     f7e:	82 0f       	add	r24, r18
+     f80:	93 1f       	adc	r25, r19
+     f82:	fc 01       	movw	r30, r24
+     f84:	ea 59       	subi	r30, 0x9A	; 154
+     f86:	ff 4f       	sbci	r31, 0xFF	; 255
+     f88:	80 81       	ld	r24, Z
+     f8a:	80 32       	cpi	r24, 0x20	; 32
+     f8c:	08 f5       	brcc	.+66     	; 0xfd0 <DIO_Write+0x3c4>
+			{
+				SET_BIT(PORTD_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 24));
+     f8e:	a2 e3       	ldi	r26, 0x32	; 50
+     f90:	b0 e0       	ldi	r27, 0x00	; 0
+     f92:	e2 e3       	ldi	r30, 0x32	; 50
+     f94:	f0 e0       	ldi	r31, 0x00	; 0
+     f96:	80 81       	ld	r24, Z
+     f98:	48 2f       	mov	r20, r24
+     f9a:	89 81       	ldd	r24, Y+1	; 0x01
+     f9c:	28 2f       	mov	r18, r24
+     f9e:	30 e0       	ldi	r19, 0x00	; 0
+     fa0:	c9 01       	movw	r24, r18
+     fa2:	88 0f       	add	r24, r24
+     fa4:	99 1f       	adc	r25, r25
+     fa6:	82 0f       	add	r24, r18
+     fa8:	93 1f       	adc	r25, r19
+     faa:	fc 01       	movw	r30, r24
+     fac:	ea 59       	subi	r30, 0x9A	; 154
+     fae:	ff 4f       	sbci	r31, 0xFF	; 255
+     fb0:	80 81       	ld	r24, Z
+     fb2:	88 2f       	mov	r24, r24
+     fb4:	90 e0       	ldi	r25, 0x00	; 0
+     fb6:	9c 01       	movw	r18, r24
+     fb8:	28 51       	subi	r18, 0x18	; 24
+     fba:	30 40       	sbci	r19, 0x00	; 0
+     fbc:	81 e0       	ldi	r24, 0x01	; 1
+     fbe:	90 e0       	ldi	r25, 0x00	; 0
+     fc0:	02 2e       	mov	r0, r18
+     fc2:	02 c0       	rjmp	.+4      	; 0xfc8 <DIO_Write+0x3bc>
+     fc4:	88 0f       	add	r24, r24
+     fc6:	99 1f       	adc	r25, r25
+     fc8:	0a 94       	dec	r0
+     fca:	e2 f7       	brpl	.-8      	; 0xfc4 <DIO_Write+0x3b8>
+     fcc:	84 2b       	or	r24, r20
+     fce:	8c 93       	st	X, r24
+			}//end else if
+	    }//end else if
+		return E_OK;
+     fd0:	81 e0       	ldi	r24, 0x01	; 1
+}//end DIO_write
+     fd2:	0f 90       	pop	r0
+     fd4:	0f 90       	pop	r0
+     fd6:	cf 91       	pop	r28
+     fd8:	df 91       	pop	r29
+     fda:	08 95       	ret
+
+00000fdc <DIO_Read>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to read a digital value from the selected DIO pin
+*************************************************************************************************/
+enuErrorStatus_t DIO_Read(uint8_t u8_GroupId, uint8_t* pu8_Data)
+{
+     fdc:	df 93       	push	r29
+     fde:	cf 93       	push	r28
+     fe0:	00 d0       	rcall	.+0      	; 0xfe2 <DIO_Read+0x6>
+     fe2:	00 d0       	rcall	.+0      	; 0xfe4 <DIO_Read+0x8>
+     fe4:	cd b7       	in	r28, 0x3d	; 61
+     fe6:	de b7       	in	r29, 0x3e	; 62
+     fe8:	89 83       	std	Y+1, r24	; 0x01
+     fea:	7b 83       	std	Y+3, r23	; 0x03
+     fec:	6a 83       	std	Y+2, r22	; 0x02
+	if(pu8_Data == NULL_PTR)		return E_ERROR;
+     fee:	8a 81       	ldd	r24, Y+2	; 0x02
+     ff0:	9b 81       	ldd	r25, Y+3	; 0x03
+     ff2:	00 97       	sbiw	r24, 0x00	; 0
+     ff4:	11 f4       	brne	.+4      	; 0xffa <DIO_Read+0x1e>
+     ff6:	1c 82       	std	Y+4, r1	; 0x04
+     ff8:	e8 c0       	rjmp	.+464    	; 0x11ca <DIO_Read+0x1ee>
+	else
+	{
+		if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 0) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 8))	//if porta
+     ffa:	89 81       	ldd	r24, Y+1	; 0x01
+     ffc:	28 2f       	mov	r18, r24
+     ffe:	30 e0       	ldi	r19, 0x00	; 0
+    1000:	c9 01       	movw	r24, r18
+    1002:	88 0f       	add	r24, r24
+    1004:	99 1f       	adc	r25, r25
+    1006:	82 0f       	add	r24, r18
+    1008:	93 1f       	adc	r25, r19
+    100a:	fc 01       	movw	r30, r24
+    100c:	ea 59       	subi	r30, 0x9A	; 154
+    100e:	ff 4f       	sbci	r31, 0xFF	; 255
+    1010:	80 81       	ld	r24, Z
+    1012:	88 30       	cpi	r24, 0x08	; 8
+    1014:	f8 f4       	brcc	.+62     	; 0x1054 <DIO_Read+0x78>
+		{
+			*pu8_Data = GET_BIT(PINA_R, astrDIOConfigParameters[u8_GroupId].enuPinNo);
+    1016:	e9 e3       	ldi	r30, 0x39	; 57
+    1018:	f0 e0       	ldi	r31, 0x00	; 0
+    101a:	80 81       	ld	r24, Z
+    101c:	48 2f       	mov	r20, r24
+    101e:	89 81       	ldd	r24, Y+1	; 0x01
+    1020:	28 2f       	mov	r18, r24
+    1022:	30 e0       	ldi	r19, 0x00	; 0
+    1024:	c9 01       	movw	r24, r18
+    1026:	88 0f       	add	r24, r24
+    1028:	99 1f       	adc	r25, r25
+    102a:	82 0f       	add	r24, r18
+    102c:	93 1f       	adc	r25, r19
+    102e:	fc 01       	movw	r30, r24
+    1030:	ea 59       	subi	r30, 0x9A	; 154
+    1032:	ff 4f       	sbci	r31, 0xFF	; 255
+    1034:	80 81       	ld	r24, Z
+    1036:	28 2f       	mov	r18, r24
+    1038:	30 e0       	ldi	r19, 0x00	; 0
+    103a:	81 e0       	ldi	r24, 0x01	; 1
+    103c:	90 e0       	ldi	r25, 0x00	; 0
+    103e:	02 2e       	mov	r0, r18
+    1040:	02 c0       	rjmp	.+4      	; 0x1046 <DIO_Read+0x6a>
+    1042:	88 0f       	add	r24, r24
+    1044:	99 1f       	adc	r25, r25
+    1046:	0a 94       	dec	r0
+    1048:	e2 f7       	brpl	.-8      	; 0x1042 <DIO_Read+0x66>
+    104a:	84 23       	and	r24, r20
+    104c:	ea 81       	ldd	r30, Y+2	; 0x02
+    104e:	fb 81       	ldd	r31, Y+3	; 0x03
+    1050:	80 83       	st	Z, r24
+    1052:	b9 c0       	rjmp	.+370    	; 0x11c6 <DIO_Read+0x1ea>
+		}//end if
+		else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 8) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 16))	//if portb
+    1054:	89 81       	ldd	r24, Y+1	; 0x01
+    1056:	28 2f       	mov	r18, r24
+    1058:	30 e0       	ldi	r19, 0x00	; 0
+    105a:	c9 01       	movw	r24, r18
+    105c:	88 0f       	add	r24, r24
+    105e:	99 1f       	adc	r25, r25
+    1060:	82 0f       	add	r24, r18
+    1062:	93 1f       	adc	r25, r19
+    1064:	fc 01       	movw	r30, r24
+    1066:	ea 59       	subi	r30, 0x9A	; 154
+    1068:	ff 4f       	sbci	r31, 0xFF	; 255
+    106a:	80 81       	ld	r24, Z
+    106c:	88 30       	cpi	r24, 0x08	; 8
+    106e:	80 f1       	brcs	.+96     	; 0x10d0 <DIO_Read+0xf4>
+    1070:	89 81       	ldd	r24, Y+1	; 0x01
+    1072:	28 2f       	mov	r18, r24
+    1074:	30 e0       	ldi	r19, 0x00	; 0
+    1076:	c9 01       	movw	r24, r18
+    1078:	88 0f       	add	r24, r24
+    107a:	99 1f       	adc	r25, r25
+    107c:	82 0f       	add	r24, r18
+    107e:	93 1f       	adc	r25, r19
+    1080:	fc 01       	movw	r30, r24
+    1082:	ea 59       	subi	r30, 0x9A	; 154
+    1084:	ff 4f       	sbci	r31, 0xFF	; 255
+    1086:	80 81       	ld	r24, Z
+    1088:	80 31       	cpi	r24, 0x10	; 16
+    108a:	10 f5       	brcc	.+68     	; 0x10d0 <DIO_Read+0xf4>
+		{
+			*pu8_Data = GET_BIT(PINB_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 8));
+    108c:	e6 e3       	ldi	r30, 0x36	; 54
+    108e:	f0 e0       	ldi	r31, 0x00	; 0
+    1090:	80 81       	ld	r24, Z
+    1092:	48 2f       	mov	r20, r24
+    1094:	89 81       	ldd	r24, Y+1	; 0x01
+    1096:	28 2f       	mov	r18, r24
+    1098:	30 e0       	ldi	r19, 0x00	; 0
+    109a:	c9 01       	movw	r24, r18
+    109c:	88 0f       	add	r24, r24
+    109e:	99 1f       	adc	r25, r25
+    10a0:	82 0f       	add	r24, r18
+    10a2:	93 1f       	adc	r25, r19
+    10a4:	fc 01       	movw	r30, r24
+    10a6:	ea 59       	subi	r30, 0x9A	; 154
+    10a8:	ff 4f       	sbci	r31, 0xFF	; 255
+    10aa:	80 81       	ld	r24, Z
+    10ac:	88 2f       	mov	r24, r24
+    10ae:	90 e0       	ldi	r25, 0x00	; 0
+    10b0:	9c 01       	movw	r18, r24
+    10b2:	28 50       	subi	r18, 0x08	; 8
+    10b4:	30 40       	sbci	r19, 0x00	; 0
+    10b6:	81 e0       	ldi	r24, 0x01	; 1
+    10b8:	90 e0       	ldi	r25, 0x00	; 0
+    10ba:	02 2e       	mov	r0, r18
+    10bc:	02 c0       	rjmp	.+4      	; 0x10c2 <DIO_Read+0xe6>
+    10be:	88 0f       	add	r24, r24
+    10c0:	99 1f       	adc	r25, r25
+    10c2:	0a 94       	dec	r0
+    10c4:	e2 f7       	brpl	.-8      	; 0x10be <DIO_Read+0xe2>
+    10c6:	84 23       	and	r24, r20
+    10c8:	ea 81       	ldd	r30, Y+2	; 0x02
+    10ca:	fb 81       	ldd	r31, Y+3	; 0x03
+    10cc:	80 83       	st	Z, r24
+    10ce:	7b c0       	rjmp	.+246    	; 0x11c6 <DIO_Read+0x1ea>
+		}//end else if
+		else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 16) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 24))	//if portc
+    10d0:	89 81       	ldd	r24, Y+1	; 0x01
+    10d2:	28 2f       	mov	r18, r24
+    10d4:	30 e0       	ldi	r19, 0x00	; 0
+    10d6:	c9 01       	movw	r24, r18
+    10d8:	88 0f       	add	r24, r24
+    10da:	99 1f       	adc	r25, r25
+    10dc:	82 0f       	add	r24, r18
+    10de:	93 1f       	adc	r25, r19
+    10e0:	fc 01       	movw	r30, r24
+    10e2:	ea 59       	subi	r30, 0x9A	; 154
+    10e4:	ff 4f       	sbci	r31, 0xFF	; 255
+    10e6:	80 81       	ld	r24, Z
+    10e8:	80 31       	cpi	r24, 0x10	; 16
+    10ea:	80 f1       	brcs	.+96     	; 0x114c <DIO_Read+0x170>
+    10ec:	89 81       	ldd	r24, Y+1	; 0x01
+    10ee:	28 2f       	mov	r18, r24
+    10f0:	30 e0       	ldi	r19, 0x00	; 0
+    10f2:	c9 01       	movw	r24, r18
+    10f4:	88 0f       	add	r24, r24
+    10f6:	99 1f       	adc	r25, r25
+    10f8:	82 0f       	add	r24, r18
+    10fa:	93 1f       	adc	r25, r19
+    10fc:	fc 01       	movw	r30, r24
+    10fe:	ea 59       	subi	r30, 0x9A	; 154
+    1100:	ff 4f       	sbci	r31, 0xFF	; 255
+    1102:	80 81       	ld	r24, Z
+    1104:	88 31       	cpi	r24, 0x18	; 24
+    1106:	10 f5       	brcc	.+68     	; 0x114c <DIO_Read+0x170>
+		{
+			*pu8_Data = GET_BIT(PINC_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 16));
+    1108:	e3 e3       	ldi	r30, 0x33	; 51
+    110a:	f0 e0       	ldi	r31, 0x00	; 0
+    110c:	80 81       	ld	r24, Z
+    110e:	48 2f       	mov	r20, r24
+    1110:	89 81       	ldd	r24, Y+1	; 0x01
+    1112:	28 2f       	mov	r18, r24
+    1114:	30 e0       	ldi	r19, 0x00	; 0
+    1116:	c9 01       	movw	r24, r18
+    1118:	88 0f       	add	r24, r24
+    111a:	99 1f       	adc	r25, r25
+    111c:	82 0f       	add	r24, r18
+    111e:	93 1f       	adc	r25, r19
+    1120:	fc 01       	movw	r30, r24
+    1122:	ea 59       	subi	r30, 0x9A	; 154
+    1124:	ff 4f       	sbci	r31, 0xFF	; 255
+    1126:	80 81       	ld	r24, Z
+    1128:	88 2f       	mov	r24, r24
+    112a:	90 e0       	ldi	r25, 0x00	; 0
+    112c:	9c 01       	movw	r18, r24
+    112e:	20 51       	subi	r18, 0x10	; 16
+    1130:	30 40       	sbci	r19, 0x00	; 0
+    1132:	81 e0       	ldi	r24, 0x01	; 1
+    1134:	90 e0       	ldi	r25, 0x00	; 0
+    1136:	02 2e       	mov	r0, r18
+    1138:	02 c0       	rjmp	.+4      	; 0x113e <DIO_Read+0x162>
+    113a:	88 0f       	add	r24, r24
+    113c:	99 1f       	adc	r25, r25
+    113e:	0a 94       	dec	r0
+    1140:	e2 f7       	brpl	.-8      	; 0x113a <DIO_Read+0x15e>
+    1142:	84 23       	and	r24, r20
+    1144:	ea 81       	ldd	r30, Y+2	; 0x02
+    1146:	fb 81       	ldd	r31, Y+3	; 0x03
+    1148:	80 83       	st	Z, r24
+    114a:	3d c0       	rjmp	.+122    	; 0x11c6 <DIO_Read+0x1ea>
+		}//end else if
+		else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 24) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 32))	//if portd
+    114c:	89 81       	ldd	r24, Y+1	; 0x01
+    114e:	28 2f       	mov	r18, r24
+    1150:	30 e0       	ldi	r19, 0x00	; 0
+    1152:	c9 01       	movw	r24, r18
+    1154:	88 0f       	add	r24, r24
+    1156:	99 1f       	adc	r25, r25
+    1158:	82 0f       	add	r24, r18
+    115a:	93 1f       	adc	r25, r19
+    115c:	fc 01       	movw	r30, r24
+    115e:	ea 59       	subi	r30, 0x9A	; 154
+    1160:	ff 4f       	sbci	r31, 0xFF	; 255
+    1162:	80 81       	ld	r24, Z
+    1164:	88 31       	cpi	r24, 0x18	; 24
+    1166:	78 f1       	brcs	.+94     	; 0x11c6 <DIO_Read+0x1ea>
+    1168:	89 81       	ldd	r24, Y+1	; 0x01
+    116a:	28 2f       	mov	r18, r24
+    116c:	30 e0       	ldi	r19, 0x00	; 0
+    116e:	c9 01       	movw	r24, r18
+    1170:	88 0f       	add	r24, r24
+    1172:	99 1f       	adc	r25, r25
+    1174:	82 0f       	add	r24, r18
+    1176:	93 1f       	adc	r25, r19
+    1178:	fc 01       	movw	r30, r24
+    117a:	ea 59       	subi	r30, 0x9A	; 154
+    117c:	ff 4f       	sbci	r31, 0xFF	; 255
+    117e:	80 81       	ld	r24, Z
+    1180:	80 32       	cpi	r24, 0x20	; 32
+    1182:	08 f5       	brcc	.+66     	; 0x11c6 <DIO_Read+0x1ea>
+		{
+			*pu8_Data = GET_BIT(PIND_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 24));
+    1184:	e0 e3       	ldi	r30, 0x30	; 48
+    1186:	f0 e0       	ldi	r31, 0x00	; 0
+    1188:	80 81       	ld	r24, Z
+    118a:	48 2f       	mov	r20, r24
+    118c:	89 81       	ldd	r24, Y+1	; 0x01
+    118e:	28 2f       	mov	r18, r24
+    1190:	30 e0       	ldi	r19, 0x00	; 0
+    1192:	c9 01       	movw	r24, r18
+    1194:	88 0f       	add	r24, r24
+    1196:	99 1f       	adc	r25, r25
+    1198:	82 0f       	add	r24, r18
+    119a:	93 1f       	adc	r25, r19
+    119c:	fc 01       	movw	r30, r24
+    119e:	ea 59       	subi	r30, 0x9A	; 154
+    11a0:	ff 4f       	sbci	r31, 0xFF	; 255
+    11a2:	80 81       	ld	r24, Z
+    11a4:	88 2f       	mov	r24, r24
+    11a6:	90 e0       	ldi	r25, 0x00	; 0
+    11a8:	9c 01       	movw	r18, r24
+    11aa:	28 51       	subi	r18, 0x18	; 24
+    11ac:	30 40       	sbci	r19, 0x00	; 0
+    11ae:	81 e0       	ldi	r24, 0x01	; 1
+    11b0:	90 e0       	ldi	r25, 0x00	; 0
+    11b2:	02 2e       	mov	r0, r18
+    11b4:	02 c0       	rjmp	.+4      	; 0x11ba <DIO_Read+0x1de>
+    11b6:	88 0f       	add	r24, r24
+    11b8:	99 1f       	adc	r25, r25
+    11ba:	0a 94       	dec	r0
+    11bc:	e2 f7       	brpl	.-8      	; 0x11b6 <DIO_Read+0x1da>
+    11be:	84 23       	and	r24, r20
+    11c0:	ea 81       	ldd	r30, Y+2	; 0x02
+    11c2:	fb 81       	ldd	r31, Y+3	; 0x03
+    11c4:	80 83       	st	Z, r24
+		}//end else if
+
+		return E_OK;
+    11c6:	81 e0       	ldi	r24, 0x01	; 1
+    11c8:	8c 83       	std	Y+4, r24	; 0x04
+    11ca:	8c 81       	ldd	r24, Y+4	; 0x04
+	}//end else
+}//end DIO_Read
+    11cc:	0f 90       	pop	r0
+    11ce:	0f 90       	pop	r0
+    11d0:	0f 90       	pop	r0
+    11d2:	0f 90       	pop	r0
+    11d4:	cf 91       	pop	r28
+    11d6:	df 91       	pop	r29
+    11d8:	08 95       	ret
+
+000011da <DIO_toggle>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to toggle the selected DIO pin
+*************************************************************************************************/
+enuErrorStatus_t DIO_toggle(uint8_t u8_GroupId)
+{
+    11da:	df 93       	push	r29
+    11dc:	cf 93       	push	r28
+    11de:	0f 92       	push	r0
+    11e0:	cd b7       	in	r28, 0x3d	; 61
+    11e2:	de b7       	in	r29, 0x3e	; 62
+    11e4:	89 83       	std	Y+1, r24	; 0x01
+	if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 0) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 8))	//if porta
+    11e6:	89 81       	ldd	r24, Y+1	; 0x01
+    11e8:	28 2f       	mov	r18, r24
+    11ea:	30 e0       	ldi	r19, 0x00	; 0
+    11ec:	c9 01       	movw	r24, r18
+    11ee:	88 0f       	add	r24, r24
+    11f0:	99 1f       	adc	r25, r25
+    11f2:	82 0f       	add	r24, r18
+    11f4:	93 1f       	adc	r25, r19
+    11f6:	fc 01       	movw	r30, r24
+    11f8:	ea 59       	subi	r30, 0x9A	; 154
+    11fa:	ff 4f       	sbci	r31, 0xFF	; 255
+    11fc:	80 81       	ld	r24, Z
+    11fe:	88 30       	cpi	r24, 0x08	; 8
+    1200:	f8 f4       	brcc	.+62     	; 0x1240 <DIO_toggle+0x66>
+	{
+		TOGGLE_BIT(PORTA_R, astrDIOConfigParameters[u8_GroupId].enuPinNo);
+    1202:	ab e3       	ldi	r26, 0x3B	; 59
+    1204:	b0 e0       	ldi	r27, 0x00	; 0
+    1206:	eb e3       	ldi	r30, 0x3B	; 59
+    1208:	f0 e0       	ldi	r31, 0x00	; 0
+    120a:	80 81       	ld	r24, Z
+    120c:	48 2f       	mov	r20, r24
+    120e:	89 81       	ldd	r24, Y+1	; 0x01
+    1210:	28 2f       	mov	r18, r24
+    1212:	30 e0       	ldi	r19, 0x00	; 0
+    1214:	c9 01       	movw	r24, r18
+    1216:	88 0f       	add	r24, r24
+    1218:	99 1f       	adc	r25, r25
+    121a:	82 0f       	add	r24, r18
+    121c:	93 1f       	adc	r25, r19
+    121e:	fc 01       	movw	r30, r24
+    1220:	ea 59       	subi	r30, 0x9A	; 154
+    1222:	ff 4f       	sbci	r31, 0xFF	; 255
+    1224:	80 81       	ld	r24, Z
+    1226:	28 2f       	mov	r18, r24
+    1228:	30 e0       	ldi	r19, 0x00	; 0
+    122a:	81 e0       	ldi	r24, 0x01	; 1
+    122c:	90 e0       	ldi	r25, 0x00	; 0
+    122e:	02 2e       	mov	r0, r18
+    1230:	02 c0       	rjmp	.+4      	; 0x1236 <DIO_toggle+0x5c>
+    1232:	88 0f       	add	r24, r24
+    1234:	99 1f       	adc	r25, r25
+    1236:	0a 94       	dec	r0
+    1238:	e2 f7       	brpl	.-8      	; 0x1232 <DIO_toggle+0x58>
+    123a:	84 27       	eor	r24, r20
+    123c:	8c 93       	st	X, r24
+    123e:	b9 c0       	rjmp	.+370    	; 0x13b2 <DIO_toggle+0x1d8>
+	}//end if
+	else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 8) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 16))	//if portb
+    1240:	89 81       	ldd	r24, Y+1	; 0x01
+    1242:	28 2f       	mov	r18, r24
+    1244:	30 e0       	ldi	r19, 0x00	; 0
+    1246:	c9 01       	movw	r24, r18
+    1248:	88 0f       	add	r24, r24
+    124a:	99 1f       	adc	r25, r25
+    124c:	82 0f       	add	r24, r18
+    124e:	93 1f       	adc	r25, r19
+    1250:	fc 01       	movw	r30, r24
+    1252:	ea 59       	subi	r30, 0x9A	; 154
+    1254:	ff 4f       	sbci	r31, 0xFF	; 255
+    1256:	80 81       	ld	r24, Z
+    1258:	88 30       	cpi	r24, 0x08	; 8
+    125a:	80 f1       	brcs	.+96     	; 0x12bc <DIO_toggle+0xe2>
+    125c:	89 81       	ldd	r24, Y+1	; 0x01
+    125e:	28 2f       	mov	r18, r24
+    1260:	30 e0       	ldi	r19, 0x00	; 0
+    1262:	c9 01       	movw	r24, r18
+    1264:	88 0f       	add	r24, r24
+    1266:	99 1f       	adc	r25, r25
+    1268:	82 0f       	add	r24, r18
+    126a:	93 1f       	adc	r25, r19
+    126c:	fc 01       	movw	r30, r24
+    126e:	ea 59       	subi	r30, 0x9A	; 154
+    1270:	ff 4f       	sbci	r31, 0xFF	; 255
+    1272:	80 81       	ld	r24, Z
+    1274:	80 31       	cpi	r24, 0x10	; 16
+    1276:	10 f5       	brcc	.+68     	; 0x12bc <DIO_toggle+0xe2>
+	{
+		TOGGLE_BIT(PORTB_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 8));
+    1278:	a8 e3       	ldi	r26, 0x38	; 56
+    127a:	b0 e0       	ldi	r27, 0x00	; 0
+    127c:	e8 e3       	ldi	r30, 0x38	; 56
+    127e:	f0 e0       	ldi	r31, 0x00	; 0
+    1280:	80 81       	ld	r24, Z
+    1282:	48 2f       	mov	r20, r24
+    1284:	89 81       	ldd	r24, Y+1	; 0x01
+    1286:	28 2f       	mov	r18, r24
+    1288:	30 e0       	ldi	r19, 0x00	; 0
+    128a:	c9 01       	movw	r24, r18
+    128c:	88 0f       	add	r24, r24
+    128e:	99 1f       	adc	r25, r25
+    1290:	82 0f       	add	r24, r18
+    1292:	93 1f       	adc	r25, r19
+    1294:	fc 01       	movw	r30, r24
+    1296:	ea 59       	subi	r30, 0x9A	; 154
+    1298:	ff 4f       	sbci	r31, 0xFF	; 255
+    129a:	80 81       	ld	r24, Z
+    129c:	88 2f       	mov	r24, r24
+    129e:	90 e0       	ldi	r25, 0x00	; 0
+    12a0:	9c 01       	movw	r18, r24
+    12a2:	28 50       	subi	r18, 0x08	; 8
+    12a4:	30 40       	sbci	r19, 0x00	; 0
+    12a6:	81 e0       	ldi	r24, 0x01	; 1
+    12a8:	90 e0       	ldi	r25, 0x00	; 0
+    12aa:	02 2e       	mov	r0, r18
+    12ac:	02 c0       	rjmp	.+4      	; 0x12b2 <DIO_toggle+0xd8>
+    12ae:	88 0f       	add	r24, r24
+    12b0:	99 1f       	adc	r25, r25
+    12b2:	0a 94       	dec	r0
+    12b4:	e2 f7       	brpl	.-8      	; 0x12ae <DIO_toggle+0xd4>
+    12b6:	84 27       	eor	r24, r20
+    12b8:	8c 93       	st	X, r24
+    12ba:	7b c0       	rjmp	.+246    	; 0x13b2 <DIO_toggle+0x1d8>
+	}//end else if
+	else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 16) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 24))	//if portc
+    12bc:	89 81       	ldd	r24, Y+1	; 0x01
+    12be:	28 2f       	mov	r18, r24
+    12c0:	30 e0       	ldi	r19, 0x00	; 0
+    12c2:	c9 01       	movw	r24, r18
+    12c4:	88 0f       	add	r24, r24
+    12c6:	99 1f       	adc	r25, r25
+    12c8:	82 0f       	add	r24, r18
+    12ca:	93 1f       	adc	r25, r19
+    12cc:	fc 01       	movw	r30, r24
+    12ce:	ea 59       	subi	r30, 0x9A	; 154
+    12d0:	ff 4f       	sbci	r31, 0xFF	; 255
+    12d2:	80 81       	ld	r24, Z
+    12d4:	80 31       	cpi	r24, 0x10	; 16
+    12d6:	80 f1       	brcs	.+96     	; 0x1338 <DIO_toggle+0x15e>
+    12d8:	89 81       	ldd	r24, Y+1	; 0x01
+    12da:	28 2f       	mov	r18, r24
+    12dc:	30 e0       	ldi	r19, 0x00	; 0
+    12de:	c9 01       	movw	r24, r18
+    12e0:	88 0f       	add	r24, r24
+    12e2:	99 1f       	adc	r25, r25
+    12e4:	82 0f       	add	r24, r18
+    12e6:	93 1f       	adc	r25, r19
+    12e8:	fc 01       	movw	r30, r24
+    12ea:	ea 59       	subi	r30, 0x9A	; 154
+    12ec:	ff 4f       	sbci	r31, 0xFF	; 255
+    12ee:	80 81       	ld	r24, Z
+    12f0:	88 31       	cpi	r24, 0x18	; 24
+    12f2:	10 f5       	brcc	.+68     	; 0x1338 <DIO_toggle+0x15e>
+	{
+		TOGGLE_BIT(PORTC_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 16));
+    12f4:	a5 e3       	ldi	r26, 0x35	; 53
+    12f6:	b0 e0       	ldi	r27, 0x00	; 0
+    12f8:	e5 e3       	ldi	r30, 0x35	; 53
+    12fa:	f0 e0       	ldi	r31, 0x00	; 0
+    12fc:	80 81       	ld	r24, Z
+    12fe:	48 2f       	mov	r20, r24
+    1300:	89 81       	ldd	r24, Y+1	; 0x01
+    1302:	28 2f       	mov	r18, r24
+    1304:	30 e0       	ldi	r19, 0x00	; 0
+    1306:	c9 01       	movw	r24, r18
+    1308:	88 0f       	add	r24, r24
+    130a:	99 1f       	adc	r25, r25
+    130c:	82 0f       	add	r24, r18
+    130e:	93 1f       	adc	r25, r19
+    1310:	fc 01       	movw	r30, r24
+    1312:	ea 59       	subi	r30, 0x9A	; 154
+    1314:	ff 4f       	sbci	r31, 0xFF	; 255
+    1316:	80 81       	ld	r24, Z
+    1318:	88 2f       	mov	r24, r24
+    131a:	90 e0       	ldi	r25, 0x00	; 0
+    131c:	9c 01       	movw	r18, r24
+    131e:	20 51       	subi	r18, 0x10	; 16
+    1320:	30 40       	sbci	r19, 0x00	; 0
+    1322:	81 e0       	ldi	r24, 0x01	; 1
+    1324:	90 e0       	ldi	r25, 0x00	; 0
+    1326:	02 2e       	mov	r0, r18
+    1328:	02 c0       	rjmp	.+4      	; 0x132e <DIO_toggle+0x154>
+    132a:	88 0f       	add	r24, r24
+    132c:	99 1f       	adc	r25, r25
+    132e:	0a 94       	dec	r0
+    1330:	e2 f7       	brpl	.-8      	; 0x132a <DIO_toggle+0x150>
+    1332:	84 27       	eor	r24, r20
+    1334:	8c 93       	st	X, r24
+    1336:	3d c0       	rjmp	.+122    	; 0x13b2 <DIO_toggle+0x1d8>
+	}//end else if
+	else if((astrDIOConfigParameters[u8_GroupId].enuPinNo >= 24) && (astrDIOConfigParameters[u8_GroupId].enuPinNo < 32))	//if portd
+    1338:	89 81       	ldd	r24, Y+1	; 0x01
+    133a:	28 2f       	mov	r18, r24
+    133c:	30 e0       	ldi	r19, 0x00	; 0
+    133e:	c9 01       	movw	r24, r18
+    1340:	88 0f       	add	r24, r24
+    1342:	99 1f       	adc	r25, r25
+    1344:	82 0f       	add	r24, r18
+    1346:	93 1f       	adc	r25, r19
+    1348:	fc 01       	movw	r30, r24
+    134a:	ea 59       	subi	r30, 0x9A	; 154
+    134c:	ff 4f       	sbci	r31, 0xFF	; 255
+    134e:	80 81       	ld	r24, Z
+    1350:	88 31       	cpi	r24, 0x18	; 24
+    1352:	78 f1       	brcs	.+94     	; 0x13b2 <DIO_toggle+0x1d8>
+    1354:	89 81       	ldd	r24, Y+1	; 0x01
+    1356:	28 2f       	mov	r18, r24
+    1358:	30 e0       	ldi	r19, 0x00	; 0
+    135a:	c9 01       	movw	r24, r18
+    135c:	88 0f       	add	r24, r24
+    135e:	99 1f       	adc	r25, r25
+    1360:	82 0f       	add	r24, r18
+    1362:	93 1f       	adc	r25, r19
+    1364:	fc 01       	movw	r30, r24
+    1366:	ea 59       	subi	r30, 0x9A	; 154
+    1368:	ff 4f       	sbci	r31, 0xFF	; 255
+    136a:	80 81       	ld	r24, Z
+    136c:	80 32       	cpi	r24, 0x20	; 32
+    136e:	08 f5       	brcc	.+66     	; 0x13b2 <DIO_toggle+0x1d8>
+	{
+		TOGGLE_BIT(PORTD_R,(astrDIOConfigParameters[u8_GroupId].enuPinNo - 24));
+    1370:	a2 e3       	ldi	r26, 0x32	; 50
+    1372:	b0 e0       	ldi	r27, 0x00	; 0
+    1374:	e2 e3       	ldi	r30, 0x32	; 50
+    1376:	f0 e0       	ldi	r31, 0x00	; 0
+    1378:	80 81       	ld	r24, Z
+    137a:	48 2f       	mov	r20, r24
+    137c:	89 81       	ldd	r24, Y+1	; 0x01
+    137e:	28 2f       	mov	r18, r24
+    1380:	30 e0       	ldi	r19, 0x00	; 0
+    1382:	c9 01       	movw	r24, r18
+    1384:	88 0f       	add	r24, r24
+    1386:	99 1f       	adc	r25, r25
+    1388:	82 0f       	add	r24, r18
+    138a:	93 1f       	adc	r25, r19
+    138c:	fc 01       	movw	r30, r24
+    138e:	ea 59       	subi	r30, 0x9A	; 154
+    1390:	ff 4f       	sbci	r31, 0xFF	; 255
+    1392:	80 81       	ld	r24, Z
+    1394:	88 2f       	mov	r24, r24
+    1396:	90 e0       	ldi	r25, 0x00	; 0
+    1398:	9c 01       	movw	r18, r24
+    139a:	28 51       	subi	r18, 0x18	; 24
+    139c:	30 40       	sbci	r19, 0x00	; 0
+    139e:	81 e0       	ldi	r24, 0x01	; 1
+    13a0:	90 e0       	ldi	r25, 0x00	; 0
+    13a2:	02 2e       	mov	r0, r18
+    13a4:	02 c0       	rjmp	.+4      	; 0x13aa <DIO_toggle+0x1d0>
+    13a6:	88 0f       	add	r24, r24
+    13a8:	99 1f       	adc	r25, r25
+    13aa:	0a 94       	dec	r0
+    13ac:	e2 f7       	brpl	.-8      	; 0x13a6 <DIO_toggle+0x1cc>
+    13ae:	84 27       	eor	r24, r20
+    13b0:	8c 93       	st	X, r24
+	}//end else if
+
+	return E_OK;
+    13b2:	81 e0       	ldi	r24, 0x01	; 1
+}//end DIO_toggle
+    13b4:	0f 90       	pop	r0
+    13b6:	cf 91       	pop	r28
+    13b8:	df 91       	pop	r29
+    13ba:	08 95       	ret
+
+000013bc <LED_Init>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to initialize the led
+*************************************************************************************************/
+enuErrorStatus_t	LED_Init(void)
+{
+    13bc:	df 93       	push	r29
+    13be:	cf 93       	push	r28
+    13c0:	cd b7       	in	r28, 0x3d	; 61
+    13c2:	de b7       	in	r29, 0x3e	; 62
+	return DIO_Init();
+    13c4:	0e 94 f4 01 	call	0x3e8	; 0x3e8 <DIO_Init>
+}//end LED_Init
+    13c8:	cf 91       	pop	r28
+    13ca:	df 91       	pop	r29
+    13cc:	08 95       	ret
+
+000013ce <LED_ON>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to turn the led on
+*************************************************************************************************/
+enuErrorStatus_t	LED_ON(uint8_t u8_LedNum)
+{
+    13ce:	df 93       	push	r29
+    13d0:	cf 93       	push	r28
+    13d2:	0f 92       	push	r0
+    13d4:	cd b7       	in	r28, 0x3d	; 61
+    13d6:	de b7       	in	r29, 0x3e	; 62
+    13d8:	89 83       	std	Y+1, r24	; 0x01
+	DIO_Write(u8_LedNum, HIGH);
+    13da:	89 81       	ldd	r24, Y+1	; 0x01
+    13dc:	61 e0       	ldi	r22, 0x01	; 1
+    13de:	0e 94 06 06 	call	0xc0c	; 0xc0c <DIO_Write>
+	return E_OK;
+    13e2:	81 e0       	ldi	r24, 0x01	; 1
+}//end LED_ON
+    13e4:	0f 90       	pop	r0
+    13e6:	cf 91       	pop	r28
+    13e8:	df 91       	pop	r29
+    13ea:	08 95       	ret
+
+000013ec <LED_OFF>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to turn the led off
+*************************************************************************************************/
+enuErrorStatus_t	LED_OFF(uint8_t u8_LedNum)
+{
+    13ec:	df 93       	push	r29
+    13ee:	cf 93       	push	r28
+    13f0:	0f 92       	push	r0
+    13f2:	cd b7       	in	r28, 0x3d	; 61
+    13f4:	de b7       	in	r29, 0x3e	; 62
+    13f6:	89 83       	std	Y+1, r24	; 0x01
+	DIO_Write(u8_LedNum, LOW);
+    13f8:	89 81       	ldd	r24, Y+1	; 0x01
+    13fa:	60 e0       	ldi	r22, 0x00	; 0
+    13fc:	0e 94 06 06 	call	0xc0c	; 0xc0c <DIO_Write>
+	return E_OK;
+    1400:	81 e0       	ldi	r24, 0x01	; 1
+
+}//end LED_OFF
+    1402:	0f 90       	pop	r0
+    1404:	cf 91       	pop	r28
+    1406:	df 91       	pop	r29
+    1408:	08 95       	ret
+
+0000140a <LED_toggle>:
+* Parameters (out): None
+* Return Value    : enuErrorStatus_t - For error handling if the user input an invalid parameter
+* Description     : A function to toggle the led
+*************************************************************************************************/
+enuErrorStatus_t	LED_toggle(uint8_t u8_LedNum)
+{
+    140a:	df 93       	push	r29
+    140c:	cf 93       	push	r28
+    140e:	0f 92       	push	r0
+    1410:	cd b7       	in	r28, 0x3d	; 61
+    1412:	de b7       	in	r29, 0x3e	; 62
+    1414:	89 83       	std	Y+1, r24	; 0x01
+	DIO_toggle(u8_LedNum);
+    1416:	89 81       	ldd	r24, Y+1	; 0x01
+    1418:	0e 94 ed 08 	call	0x11da	; 0x11da <DIO_toggle>
+	return E_OK;
+    141c:	81 e0       	ldi	r24, 0x01	; 1
+}
+    141e:	0f 90       	pop	r0
+    1420:	cf 91       	pop	r28
+    1422:	df 91       	pop	r29
+    1424:	08 95       	ret
+
+00001426 <main>:
+/*- INCLUDES--------------------------------------------------*/
+#include "../MCAL/DIO/DIO_init.h"
+#include "../MCAL/UART/UART.h"
+/*- MAIN FUNCTION---------------------------------------------*/
+int main(void)
+{
+    1426:	df 93       	push	r29
+    1428:	cf 93       	push	r28
+    142a:	cd b7       	in	r28, 0x3d	; 61
+    142c:	de b7       	in	r29, 0x3e	; 62
+    142e:	cf 5f       	subi	r28, 0xFF	; 255
+    1430:	d0 40       	sbci	r29, 0x00	; 0
+    1432:	0f b6       	in	r0, 0x3f	; 63
+    1434:	f8 94       	cli
+    1436:	de bf       	out	0x3e, r29	; 62
+    1438:	0f be       	out	0x3f, r0	; 63
+    143a:	cd bf       	out	0x3d, r28	; 61
+	uint8_t pu8String[255];
+	DIO_Init();
+    143c:	0e 94 f4 01 	call	0x3e8	; 0x3e8 <DIO_Init>
+	UART_Init();
+    1440:	0e 94 49 00 	call	0x92	; 0x92 <UART_Init>
+
+	while(1)
+	{
+		UART_ReceiveString(pu8String);
+    1444:	ce 01       	movw	r24, r28
+    1446:	01 96       	adiw	r24, 0x01	; 1
+    1448:	0e 94 72 01 	call	0x2e4	; 0x2e4 <UART_ReceiveString>
+
+		UART_SendString(pu8String);
+    144c:	ce 01       	movw	r24, r28
+    144e:	01 96       	adiw	r24, 0x01	; 1
+    1450:	0e 94 31 01 	call	0x262	; 0x262 <UART_SendString>
+    1454:	f7 cf       	rjmp	.-18     	; 0x1444 <main+0x1e>
+
+00001456 <_exit>:
+    1456:	f8 94       	cli
+
+00001458 <__stop_program>:
+    1458:	ff cf       	rjmp	.-2      	; 0x1458 <__stop_program>
